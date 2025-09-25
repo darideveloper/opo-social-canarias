@@ -1,1 +1,46 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #f5f3f0; /* A warmer, creamy off-white */
+  --color-foreground: #4a3f3a; /* A softer, dark brown */
+  --color-card: #ffffff;
+  --color-card-foreground: #4a3f3a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #4a3f3a;
+  --color-primary: #8b5cf6; /* Vibrant, energetic purple */
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f3f2ff; /* Light purple/gray */
+  --color-secondary-foreground: #3d3a4a;
+  --color-muted: #f4f3ff;
+  --color-muted-foreground: #8b7f8b;
+  --color-accent: #ff6b35; /* Warm, friendly orange */
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  --color-border: #e5e3ff;
+  --color-input: #e5e3ff;
+  --color-ring: #8b5cf6;
+  --color-chart-1: #7c3aed;
+  --color-chart-2: #ff6b35;
+  --color-chart-3: #10b981;
+  --color-chart-4: #3b82f6;
+  --color-chart-5: #ec4899;
+  --color-radius: 0.5rem;
+  --color-sidebar-background: #f5f3f0;
+  --color-sidebar-foreground: #1a1625;
+  --color-sidebar-primary: #8b5cf6;
+  --color-sidebar-primary-foreground: #f8fafc;
+  --color-sidebar-accent: #e5e3ff;
+  --color-sidebar-accent-foreground: #1a1625;
+  --color-sidebar-border: #d1c7ff;
+  --color-sidebar-ring: #8b5cf6;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
