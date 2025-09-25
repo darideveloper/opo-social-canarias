@@ -1,0 +1,243 @@
+---
+alwaysApply: false
+description: Astro project structure best practices
+globs:
+    - "**/*.astro"
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.js"
+    - "**/*.jsx"
+---
+# Astro Project Structure Best Practices
+
+## 🏗️ Project Architecture Overview
+
+This rule defines the recommended structure for Astro projects following modern best practices and modular architecture principles.
+
+## 📁 Directory Structure
+
+### Root Level
+- **`public/`** - Static assets served directly by the web server
+  - `favicon.ico`, `robots.txt`, `sitemap.xml`
+  - Images, fonts, and other static files that don't need processing
+- **`src/`** - Source code directory (all application logic goes here)
+- **`tests/`** - Test files organized by type
+- **Configuration files** - `astro.config.mjs`, `tsconfig.json`, `package.json`
+
+### Source Directory (`src/`)
+
+#### Core Directories
+- **`assets/`** - Static assets that need processing (images, fonts, icons)
+- **`components/`** - Reusable UI components organized by scope
+- **`features/`** - Domain-driven feature modules
+- **`lib/`** - Utility functions, helpers, and shared logic
+- **`pages/`** - **🔑 All routes go here in Astro** (this is Astro's routing system)
+- **`styles/`** - Global CSS, Tailwind configuration, CSS variables
+- **`types/`** - TypeScript type definitions and interfaces
+
+#### Component Organization (`src/components/`)
+```
+components/
+├─ ui/           # Atomic components (buttons, inputs, icons)
+├─ sections/     # Page sections (Hero, Features, CallToAction)
+└─ layout/       # Layout components (Header, Footer, Navigation)
+```
+
+#### Feature Modules (`src/features/`)
+```
+features/
+├─ auth/         # Authentication feature
+│  ├─ components/    # Feature-specific UI components
+│  ├─ services/      # Business logic and API wrappers
+│  └─ types/         # Feature-specific types
+├─ products/     # Products feature
+│  ├─ components/
+│  ├─ services/
+│  └─ types/
+└─ [other-features]/
+```
+
+#### Library Utilities (`src/lib/`)
+```
+lib/
+├─ api/          # API call methods and HTTP clients
+│  ├─ auth.api.ts
+│  ├─ products.api.ts
+│  └─ index.ts
+├─ utils/        # Helper functions, validators, constants
+├─ constants/    # Application constants
+└─ validators/   # Data validation schemas
+```
+
+#### Pages Directory (`src/pages/`)
+- **🔑 This is where ALL routes are defined in Astro**
+- File-based routing: `index.astro` → `/`, `about.astro` → `/about`
+- Dynamic routes: `[id].astro`, `[...slug].astro`
+- API routes: `api/users.ts` → `/api/users`
+
+#### Styles Directory (`src/styles/`)
+```
+styles/
+├─ global.css        # Global styles and CSS variables
+├─ components.css    # Component-specific styles
+├─ utilities.css     # Utility classes
+└─ variables.css     # CSS custom properties
+```
+
+#### Types Directory (`src/types/`)
+```
+types/
+├─ global.ts         # Global type definitions
+├─ api.ts           # API-related types
+├─ components.ts    # Component prop types
+└─ features/        # Feature-specific types
+    ├─ auth.types.ts
+    └─ products.types.ts
+```
+
+## 🚀 Best Practices
+
+### 1. File Naming Conventions
+- **Components**: PascalCase (`Button.astro`, `UserProfile.tsx`)
+- **Pages**: kebab-case (`user-profile.astro`, `product-details.astro`)
+- **Utilities**: camelCase (`formatDate.ts`, `apiClient.ts`)
+- **Types**: camelCase with `.types.ts` suffix (`user.types.ts`)
+
+### 2. Import Organization
+```typescript
+// 1. External libraries
+import React from 'react';
+import { z } from 'zod';
+
+// 2. Internal utilities and types
+import { formatDate } from '@/lib/utils';
+import type { User } from '@/types/user.types';
+
+// 3. Components
+import { Button } from '@/components/ui/Button';
+import { Header } from '@/components/layout/Header';
+
+// 4. Feature-specific imports
+import { useAuth } from '@/features/auth/hooks/useAuth';
+```
+
+### 3. Component Structure
+```astro
+---
+// Frontmatter: imports, props, logic
+import { Button } from '@/components/ui/Button';
+import type { ComponentProps } from 'astro';
+
+interface Props extends ComponentProps<'div'> {
+  title: string;
+  description?: string;
+}
+
+const { title, description, ...rest } = Astro.props;
+---
+
+<!-- Template -->
+<div {...rest}>
+  <h1>{title}</h1>
+  {description && <p>{description}</p>}
+  <Button>Click me</Button>
+</div>
+
+<style>
+  /* Scoped styles */
+</style>
+```
+
+### 4. API Organization
+```typescript
+// src/lib/api/auth.api.ts
+export class AuthAPI {
+  static async login(credentials: LoginCredentials): Promise<AuthResponse> {
+    // Implementation
+  }
+  
+  static async logout(): Promise<void> {
+    // Implementation
+  }
+}
+
+// src/lib/api/index.ts
+export * from './auth.api';
+export * from './products.api';
+```
+
+### 5. Type Safety
+```typescript
+// src/types/user.types.ts
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+}
+
+export type UserRole = 'admin' | 'user' | 'moderator';
+
+// src/types/api.types.ts
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+}
+```
+
+## 🔧 Configuration Files
+
+### astro.config.mjs
+```javascript
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwindcss';
+
+export default defineConfig({
+  integrations: [react(), tailwind()],
+  vite: {
+    resolve: {
+      alias: {
+        '@': '/src',
+      },
+    },
+  },
+});
+```
+
+### tsconfig.json
+```json
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
+## 🔑 Key Principles
+
+1. **Separation of Concerns**: Keep features modular and self-contained
+2. **Reusability**: Create generic components in `ui/` and specific ones in `features/`
+3. **Type Safety**: Use TypeScript for all JavaScript files
+4. **Consistent Naming**: Follow established conventions across the project
+5. **Feature-First**: Organize by business domain, not technical concerns
+6. **Astro Routing**: Remember that `src/pages/` is where ALL routes are defined
+
+## 🚫 Common Anti-Patterns to Avoid
+
+- Don't put components in the `pages/` directory
+- Don't mix feature logic with UI components
+- Don't create deeply nested component hierarchies
+- Don't forget to export types from feature modules
+- Don't put business logic in page components
+
+## 📚 Additional Resources
+
+- [Astro Documentation](https://docs.astro.build/)
+- [Astro File-based Routing](https://docs.astro.build/en/core-concepts/routing/)
+- [Astro Component Syntax](https://docs.astro.build/en/core-concepts/astro-components/)
