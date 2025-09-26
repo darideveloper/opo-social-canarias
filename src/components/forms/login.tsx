@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Card from '../ui/Card';
 import CardHeader from '../ui/CardHeader';
 import CardContent from '../ui/CardContent';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
-import { useAuth } from '../../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function LoginNewPage() {
   const [email, setEmail] = useState('');
@@ -14,18 +14,18 @@ export default function LoginNewPage() {
   const [error, setError] = useState('');
   const [isClient, setIsClient] = useState(false);
   
-  // Only use auth context on client side
-  const authContext = isClient ? useAuth() : null;
+  // Safely access auth context with fallback for SSR
+  const authContext = useContext(AuthContext);
   const login = authContext?.login;
   const isAuthenticated = authContext?.isAuthenticated || false;
 
   // Set client flag on mount
-  React.useEffect(() => {
+  useEffect(() => {
     setIsClient(true);
   }, []);
 
   // Redirect if already authenticated
-  React.useEffect(() => {
+  useEffect(() => {
     if (isClient && isAuthenticated) {
       window.location.href = '/';
     }
@@ -34,7 +34,7 @@ export default function LoginNewPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!login) {
+    if (!isClient || !authContext || !login) {
       setError('Authentication not available. Please refresh the page.');
       return;
     }
@@ -57,6 +57,20 @@ export default function LoginNewPage() {
       setIsLoading(false);
     }
   };
+
+  // Show loading state during SSR or before client hydration
+  if (!isClient || !authContext) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <Card>
+          <CardHeader className="text-center">
+            <h1 className="text-2xl font-headline font-semibold leading-none tracking-tight">Iniciar Sesión</h1>
+            <p className="text-sm text-muted-foreground">Cargando...</p>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
