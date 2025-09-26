@@ -23,7 +23,34 @@ export class AuthService {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = '/api/auth';
+    // Use environment variable for API base URL, fallback to relative path
+    this.baseUrl = import.meta.env.PUBLIC_API_BASE_URL 
+      ? `${import.meta.env.PUBLIC_API_BASE_URL}/auth`
+      : '/api/auth';
+  }
+
+  // Get API base URL
+  getApiBaseUrl(): string {
+    return import.meta.env.PUBLIC_API_BASE_URL || '/api';
+  }
+
+  // Check if running in development mode
+  isDevelopment(): boolean {
+    return import.meta.env.DEV || false;
+  }
+
+  // Check if running in production mode
+  isProduction(): boolean {
+    return import.meta.env.PROD || false;
+  }
+
+  // Get environment-specific configuration
+  getConfig() {
+    return {
+      apiBaseUrl: this.getApiBaseUrl(),
+      isDevelopment: this.isDevelopment(),
+      isProduction: this.isProduction(),
+    };
   }
 
   // Login
@@ -85,7 +112,12 @@ export class AuthService {
   // Make authenticated requests
   async getProtectedData(): Promise<ProtectedDataResponse> {
     try {
-      const response = await fetch('/api/protected', {
+      // Use environment variable for protected endpoint URL
+      const protectedUrl = import.meta.env.PUBLIC_API_BASE_URL 
+        ? `${import.meta.env.PUBLIC_API_BASE_URL}/protected`
+        : '/api/protected';
+        
+      const response = await fetch(protectedUrl, {
         credentials: 'include' // Include cookies automatically
       });
       
