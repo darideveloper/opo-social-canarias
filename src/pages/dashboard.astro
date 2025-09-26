@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import DashboardComponent from '../components/Dashboard.tsx'
 import { AuthProvider } from '../contexts/AuthContext.tsx'
-import HomePage from '../components/HomePage.tsx'
 ---
 
-<Layout title="Welcome to OpoSocial">
+<Layout title="Dashboard">
 	<AuthProvider client:load>
-		<HomePage client:load />
+		<DashboardComponent client:load />
 	</AuthProvider>
 </Layout>

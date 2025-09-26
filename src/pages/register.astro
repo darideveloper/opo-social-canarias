@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import RegisterForm from '../components/forms/register.tsx'
 import { AuthProvider } from '../contexts/AuthContext.tsx'
-import HomePage from '../components/HomePage.tsx'
 ---
 
-<Layout title="Welcome to OpoSocial">
+<Layout title="Register">
 	<AuthProvider client:load>
-		<HomePage client:load />
+		<RegisterForm client:load />
 	</AuthProvider>
 </Layout>

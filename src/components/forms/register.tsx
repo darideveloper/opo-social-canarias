@@ -7,16 +7,18 @@ import Button from '../ui/Button';
 import Label from '../ui/Label';
 import { useAuth } from '../../contexts/AuthContext';
 
-export default function LoginNewPage() {
+export default function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isClient, setIsClient] = useState(false);
   
   // Only use auth context on client side
   const authContext = isClient ? useAuth() : null;
-  const login = authContext?.login;
+  const register = authContext?.register;
   const isAuthenticated = authContext?.isAuthenticated || false;
 
   // Set client flag on mount
@@ -34,7 +36,7 @@ export default function LoginNewPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!login) {
+    if (!register) {
       setError('Authentication not available. Please refresh the page.');
       return;
     }
@@ -42,14 +44,26 @@ export default function LoginNewPage() {
     setIsLoading(true);
     setError('');
 
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await login(email, password);
+      const response = await register(email, password, name);
       
       if (response.success) {
         // Redirect to home page or dashboard
         window.location.href = '/';
       } else {
-        setError(response.message || 'Login failed');
+        setError(response.message || 'Registration failed');
       }
     } catch (err) {
       setError('An unexpected error occurred');
@@ -62,8 +76,8 @@ export default function LoginNewPage() {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card>
         <CardHeader className="text-center">
-          <h1 className="text-2xl font-headline font-semibold leading-none tracking-tight">Iniciar Sesión</h1>
-          <p className="text-sm text-muted-foreground">Accede a tu panel de control.</p>
+          <h1 className="text-2xl font-headline font-semibold leading-none tracking-tight">Registrarse</h1>
+          <p className="text-sm text-muted-foreground">Crea tu cuenta para comenzar.</p>
         </CardHeader>
         <CardContent>
           {error && (
@@ -73,6 +87,18 @@ export default function LoginNewPage() {
           )}
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Nombre (opcional)</Label>
+              <Input 
+                id="name" 
+                type="text" 
+                placeholder="Tu nombre" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input 
@@ -85,34 +111,44 @@ export default function LoginNewPage() {
                 disabled={isLoading}
               />
             </div>
+            
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Contraseña</Label>
-                <a href="/recuperar-contrasena" className="text-xs text-muted-foreground hover:text-primary underline">
-                    ¿Olvidaste tu contraseña?
-                </a>
-              </div>
+              <Label htmlFor="password">Contraseña</Label>
               <Input 
                 id="password" 
                 type="password" 
+                placeholder="Mínimo 6 caracteres"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
                 disabled={isLoading}
               />
             </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
+              <Input 
+                id="confirmPassword" 
+                type="password" 
+                placeholder="Repite tu contraseña"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required 
+                disabled={isLoading}
+              />
+            </div>
+            
             <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Iniciando sesión...' : 'Entrar'}
+                {isLoading ? 'Creando cuenta...' : 'Registrarse'}
             </Button>
           </form>
           
           <div className="mt-4 text-center text-sm">
-            ¿No tienes una cuenta?{" "}
-            <a href="/register" className="underline">
-              Regístrate
+            ¿Ya tienes una cuenta?{" "}
+            <a href="/login" className="underline">
+              Inicia sesión
             </a>
           </div>
-          
         </CardContent>
       </Card>
     </div>

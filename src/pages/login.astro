@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import LoginNewPage from '../components/forms/login.tsx'
+import { AuthProvider } from '../contexts/AuthContext.tsx'
 ---
 
 <Layout title="Login">
-	<LoginNewPage client:load />
+	<AuthProvider client:load>
+		<LoginNewPage client:load />
+	</AuthProvider>
 </Layout>
