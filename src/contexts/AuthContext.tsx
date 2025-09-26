@@ -58,7 +58,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const checkAuth = async () => {
     try {
       setIsLoading(true);
-      const response = await authService.checkAuth();
+      
+      // Add a timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Auth check timeout')), 5000)
+      );
+      
+      const response = await Promise.race([
+        authService.checkAuth(),
+        timeoutPromise
+      ]) as any;
+      
       if (response.success && response.user) {
         setUser(response.user);
       } else {

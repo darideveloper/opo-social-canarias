@@ -34,7 +34,7 @@ export default function LoginNewPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isClient || !authContext || !login) {
+    if (!isClient) {
       setError('Authentication not available. Please refresh the page.');
       return;
     }
@@ -43,7 +43,15 @@ export default function LoginNewPage() {
     setError('');
 
     try {
-      const response = await login(email, password);
+      // If authContext is available, use it; otherwise, call authService directly
+      let response;
+      if (authContext && login) {
+        response = await login(email, password);
+      } else {
+        // Fallback: call authService directly
+        const { authService } = await import('../../lib/auth');
+        response = await authService.login(email, password);
+      }
       
       if (response.success) {
         // Redirect to home page or dashboard
@@ -58,8 +66,8 @@ export default function LoginNewPage() {
     }
   };
 
-  // Show loading state during SSR or before client hydration
-  if (!isClient || !authContext) {
+  // Show loading state only during SSR
+  if (!isClient) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
         <Card>
