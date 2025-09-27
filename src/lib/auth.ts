@@ -235,6 +235,41 @@ export class AuthService {
     }
   }
 
+  // Activate account
+  async activateAccount(token: string): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/activate/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Account activated successfully',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Account activation failed',
+          data: data.data
+        }
+      }
+    } catch (error) {
+      console.error('Activation error:', error)
+      return {
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Network error occurred',
+      }
+    }
+  }
+
   // Refresh token when needed
   async refreshToken(): Promise<AuthResponse> {
     try {
