@@ -7,7 +7,7 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
 import Toaster from '../ui/Toaster';
-import { useAuth } from '../../contexts/AuthContext';
+import { authService } from '../../lib/auth';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -16,33 +16,9 @@ export default function RegisterForm() {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isClient, setIsClient] = useState(false);
-  
-  // Only use auth context on client side
-  const authContext = isClient ? useAuth() : null;
-  const register = authContext?.register;
-  const isAuthenticated = authContext?.isAuthenticated || false;
-
-  // Set client flag on mount
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Redirect if already authenticated
-  React.useEffect(() => {
-    if (isClient && isAuthenticated) {
-      window.location.href = '/';
-    }
-  }, [isClient, isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!register) {
-      setError('Authentication not available. Please refresh the page.');
-      return;
-    }
-    
     setIsLoading(true);
     setError('');
 
@@ -59,9 +35,10 @@ export default function RegisterForm() {
     }
 
     try {
-      const response = await register(email, password, name);
+      const response = await authService.register(email, password, name);
       
       if (response.success) {
+        toast.success('¡Registro exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';
       } else {
@@ -153,6 +130,7 @@ export default function RegisterForm() {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 }

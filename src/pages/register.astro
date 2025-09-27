@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import RegisterForm from '../components/forms/register.tsx'
-import { AuthProvider } from '../contexts/AuthContext.tsx'
 ---
 
 <Layout title="Register">
-	<AuthProvider client:load>
-		<RegisterForm client:load />
-	</AuthProvider>
+	<RegisterForm client:load />
 </Layout>

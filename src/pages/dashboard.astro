@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import DashboardComponent from '../components/Dashboard.tsx'
-import { AuthProvider } from '../contexts/AuthContext.tsx'
 ---
 
 <Layout title="Dashboard">
-	<AuthProvider client:load>
-		<DashboardComponent client:load />
-	</AuthProvider>
+	<DashboardComponent client:load />
 </Layout>

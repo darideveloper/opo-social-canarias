@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import Card from '../ui/Card';
 import CardHeader from '../ui/CardHeader';
@@ -7,53 +7,21 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
 import Toaster from '../ui/Toaster';
-import { AuthContext } from '../../contexts/AuthContext';
+import { authService } from '../../lib/auth';
 
 export default function LoginNewPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  
-  // Safely access auth context with fallback for SSR
-  const authContext = useContext(AuthContext);
-  const login = authContext?.login;
-  const isAuthenticated = authContext?.isAuthenticated || false;
-
-  // Set client flag on mount
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isClient && isAuthenticated) {
-      window.location.href = '/';
-    }
-  }, [isClient, isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!isClient) {
-      toast.error('Authentication not available. Please refresh the page.');
-      return;
-    }
-    
     setIsLoading(true);
 
     try {
-      // If authContext is available, use it; otherwise, call authService directly
-      let response;
-      if (authContext && login) {
-        response = await login(email, password);
-      } else {
-        // Fallback: call authService directly
-        const { authService } = await import('../../lib/auth');
-        response = await authService.login(email, password);
-      }
+      const response = await authService.login(email, password);
       
-      if (response.status === 'ok') {
+      if (response.success) {
         toast.success('¡Inicio de sesión exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';
@@ -66,20 +34,6 @@ export default function LoginNewPage() {
       setIsLoading(false);
     }
   };
-
-  // Show loading state only during SSR
-  if (!isClient) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <Card>
-          <CardHeader className="text-center">
-            <h1 className="text-2xl font-headline font-semibold leading-none tracking-tight">Iniciar Sesión</h1>
-            <p className="text-sm text-muted-foreground">Cargando...</p>
-          </CardHeader>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">

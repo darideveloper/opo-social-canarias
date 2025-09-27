@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import { authService } from '../lib/auth';
 import Card from './ui/Card';
 import CardHeader from './ui/CardHeader';
@@ -7,28 +6,32 @@ import CardContent from './ui/CardContent';
 import Button from './ui/Button';
 
 export default function Dashboard() {
-  const [isClient, setIsClient] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const [protectedData, setProtectedData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
-  // Only use auth context on client side
-  const authContext = isClient ? useAuth() : null;
-  const user = authContext?.user;
-  const logout = authContext?.logout;
-  const isAuthenticated = authContext?.isAuthenticated || false;
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Set client flag on mount
+  // Check authentication on mount
   useEffect(() => {
-    setIsClient(true);
+    const checkAuth = async () => {
+      try {
+        const response = await authService.checkAuth();
+        if (response.success && response.user) {
+          setUser(response.user);
+        } else {
+          window.location.href = '/login';
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        window.location.href = '/login';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
-
-  // Redirect if not authenticated
-  useEffect(() => {
-    if (isClient && !isAuthenticated) {
-      window.location.href = '/login';
-    }
-  }, [isClient, isAuthenticated]);
 
   const fetchProtectedData = async () => {
     setLoading(true);
@@ -49,21 +52,23 @@ export default function Dashboard() {
   };
 
   const handleLogout = async () => {
-    if (!logout) {
-      console.error('Logout function not available');
-      return;
-    }
-    
     try {
-      await logout();
+      await authService.logout();
       window.location.href = '/login';
     } catch (err) {
       console.error('Logout error:', err);
     }
   };
 
-  if (!isAuthenticated) {
-    return <div>Redirecting...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

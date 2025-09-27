@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import jwt from 'jsonwebtoken';
+import type { Locals } from 'astro';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this-in-production';
 
@@ -28,7 +29,7 @@ function verifyToken(token: string): AuthenticatedUser | null {
   }
 }
 
-export const onRequest = defineMiddleware(async ({ request, cookies, locals }, next) => {
+export const onRequest = defineMiddleware(async ({ request, cookies, locals }: { request: Request; cookies: any; locals: Locals }, next) => {
   // Skip authentication for static assets only
   const url = new URL(request.url);
   const pathname = url.pathname;

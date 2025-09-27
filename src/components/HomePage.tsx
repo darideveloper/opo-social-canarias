@@ -1,30 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
+import { authService } from '../lib/auth';
 import Card from './ui/Card';
 import CardHeader from './ui/CardHeader';
 import CardContent from './ui/CardContent';
 import Button from './ui/Button';
 
 export default function HomePage() {
-  const [isClient, setIsClient] = useState(false);
-  
-  // Safely access auth context with fallback for SSR
-  const authContext = useContext(AuthContext);
-  const user = authContext?.user;
-  const isAuthenticated = authContext?.isAuthenticated || false;
-  const isLoading = authContext?.isLoading || false;
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Set client flag on mount
+  // Check authentication on mount
   useEffect(() => {
-    setIsClient(true);
+    const checkAuth = async () => {
+      try {
+        const response = await authService.checkAuth();
+        if (response.success && response.user) {
+          setUser(response.user);
+        } else {
+          window.location.href = '/login';
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        window.location.href = '/login';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
-
-  // Redirect to login if not authenticated and not loading
-  useEffect(() => {
-    if (isClient && !isLoading && !isAuthenticated) {
-      window.location.href = '/login';
-    }
-  }, [isClient, isLoading, isAuthenticated]);
 
   if (isLoading) {
     return (
@@ -37,10 +41,6 @@ export default function HomePage() {
     );
   }
 
-  // Don't render anything if not authenticated (will redirect)
-  if (!isAuthenticated) {
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-8">
