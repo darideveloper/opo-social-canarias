@@ -56,13 +56,13 @@ export class AuthService {
   // Login
   async login(email: string, password: string): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/auth/token`, {
+      const response = await fetch(`${this.baseUrl}/auth/token/`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
         },
         credentials: 'include', // Important: include cookies
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ "username": email, "password": password })
       });
       
       const data = await response.json();
@@ -84,7 +84,7 @@ export class AuthService {
   // Register
   async register(email: string, password: string, name?: string): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/auth/register`, {
+      const response = await fetch(`${this.baseUrl}/auth/register/`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export class AuthService {
   // Refresh token when needed
   async refreshToken(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/auth/token/refresh`, {
+      const response = await fetch(`${this.baseUrl}/auth/token/refresh/`, {
         method: 'POST',
         credentials: 'include' // Uses refresh_token cookie
       });
@@ -136,7 +136,7 @@ export class AuthService {
   // Logout
   async logout(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/auth/logout`, {
+      const response = await fetch(`${this.baseUrl}/auth/logout/`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -160,7 +160,7 @@ export class AuthService {
   // Check if user is authenticated
   async checkAuth(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/users/me`, {
+      const response = await fetch(`${this.baseUrl}/users/me/`, {
         credentials: 'include'
       });
       

@@ -17,14 +17,14 @@ This project now includes a complete JWT authentication system with cookie stora
 ## API Endpoints
 
 ### Authentication Endpoints
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/logout` - User logout
-- `POST /api/auth/refresh` - Refresh access token
-- `GET /api/auth/me` - Get current user info
+- `POST /api/auth/login/` - User login
+- `POST /api/auth/register/` - User registration
+- `POST /api/auth/logout/` - User logout
+- `POST /api/auth/refresh/` - Refresh access token
+- `GET /api/auth/me/` - Get current user info
 
 ### Protected Endpoints
-- `GET /api/protected` - Example protected endpoint
+- `GET /api/protected/` - Example protected endpoint
 
 ## Pages
 
