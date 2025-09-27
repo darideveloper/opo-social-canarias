@@ -53,7 +53,7 @@ export default function LoginNewPage() {
         response = await authService.login(email, password);
       }
       
-      if (response.success) {
+      if (response.status === 'ok') {
         toast.success('¡Inicio de sesión exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';

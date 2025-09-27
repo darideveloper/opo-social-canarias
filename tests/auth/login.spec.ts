@@ -10,10 +10,15 @@ test.describe('Login', () => {
 
 
   async function validate_wrong_login(page: Page) {
+
+    // Wait 2 seconds
+    await page.waitForTimeout(2000)
+
+    // Check current page
     await expect(page).toHaveURL('http://localhost:4321/login')
 
     // Check toast error message
-    await expect(page.locator('body')).toHaveText(
+    await expect(page.locator('[role="status"]')).toHaveText(
       'La combinación de credenciales no tiene una cuenta activa'
     )
   }
@@ -25,7 +30,7 @@ test.describe('Login', () => {
     await page.click('button[type="submit"]')
     
     // Validate wrong login
-    validate_wrong_login(page)
+    await validate_wrong_login(page)
 
   })
 
@@ -36,10 +41,10 @@ test.describe('Login', () => {
     await page.click('button[type="submit"]')
     
     // Validate wrong login
-    validate_wrong_login(page)
+    await validate_wrong_login(page)
   })
 
-  test('should login', async ({ page }) => {
+  test('valid credentials', async ({ page }) => {
     await page.fill('input[type="email"]', process.env.TEST_LOGIN_USERNAME!)
     await page.fill('input[type="password"]', process.env.TEST_LOGIN_PASSWORD!)
     await page.click('button[type="submit"]')

@@ -29,13 +29,12 @@ function verifyToken(token: string): AuthenticatedUser | null {
 }
 
 export const onRequest = defineMiddleware(async ({ request, cookies, locals }, next) => {
-  // Skip authentication for auth endpoints and static assets
+  // Skip authentication for static assets only
   const url = new URL(request.url);
   const pathname = url.pathname;
   
-  // Skip auth for auth endpoints, static files
+  // Skip auth for static files only (no local API endpoints)
   if (
-    pathname.startsWith('/api/auth/') ||
     pathname.startsWith('/_astro/') ||
     pathname.startsWith('/favicon') ||
     pathname === '/favicon.svg' ||
@@ -56,20 +55,7 @@ export const onRequest = defineMiddleware(async ({ request, cookies, locals }, n
     }
   }
 
-  // For protected API routes, check authentication
-  if (pathname.startsWith('/api/protected')) {
-    if (!locals.user) {
-      return new Response(JSON.stringify({
-        success: false,
-        message: 'Authentication required'
-      }), {
-        status: 401,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    }
-  }
+  // No local API routes to protect - all API calls go to external backend
 
   // For protected pages, redirect to login if not authenticated
   const protectedPages = ['/dashboard'];

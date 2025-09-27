@@ -1,47 +1,46 @@
 export interface LoginCredentials {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface AuthResponse {
-  success: boolean;
-  message: string;
+  status: string
+  success: boolean
+  message: string
   user?: {
-    id: string;
-    email: string;
-    name?: string;
-  };
+    id: string
+    email: string
+    name?: string
+  }
 }
 
 export interface ProtectedDataResponse {
-  success: boolean;
-  data?: any;
-  message?: string;
+  success: boolean
+  data?: any
+  message?: string
 }
 
 export class AuthService {
-  private baseUrl: string;
+  private baseUrl: string
 
   constructor() {
-    // Use environment variable for API base URL, fallback to relative path
-    this.baseUrl = import.meta.env.PUBLIC_API_BASE_URL 
-      ? `${import.meta.env.PUBLIC_API_BASE_URL}`
-      : '/api/auth';
+    // Use environment variable for external backend API base URL
+    this.baseUrl = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:8000'
   }
 
   // Get API base URL
   getApiBaseUrl(): string {
-    return import.meta.env.PUBLIC_API_BASE_URL || '/api';
+    return this.baseUrl
   }
 
   // Check if running in development mode
   isDevelopment(): boolean {
-    return import.meta.env.DEV || false;
+    return import.meta.env.DEV || false
   }
 
   // Check if running in production mode
   isProduction(): boolean {
-    return import.meta.env.PROD || false;
+    return import.meta.env.PROD || false
   }
 
   // Get environment-specific configuration
@@ -50,7 +49,7 @@ export class AuthService {
       apiBaseUrl: this.getApiBaseUrl(),
       isDevelopment: this.isDevelopment(),
       isProduction: this.isProduction(),
-    };
+    }
   }
 
   // Login
@@ -58,54 +57,60 @@ export class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/auth/token/`, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include', // Important: include cookies
-        body: JSON.stringify({ "username": email, "password": password })
-      });
-      
-      const data = await response.json();
-      
+        body: JSON.stringify({ username: email, password: password }),
+      })
+
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || 'Login failed')
       }
-      
-      return data;
+
+      return data
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Login error:', error)
       return {
+        status: 'error',
         success: false,
-        message: error instanceof Error ? error.message : 'Login failed'
-      };
+        message: error instanceof Error ? error.message : 'Login failed',
+      }
     }
   }
 
   // Register
-  async register(email: string, password: string, name?: string): Promise<AuthResponse> {
+  async register(
+    email: string,
+    password: string,
+    name?: string
+  ): Promise<AuthResponse> {
     try {
       const response = await fetch(`${this.baseUrl}/auth/register/`, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ email, password, name })
-      });
-      
-      const data = await response.json();
-      
+        body: JSON.stringify({ email, password, name }),
+      })
+
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || 'Registration failed')
       }
-      
-      return data;
+
+      return data
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Registration error:', error)
       return {
+        status: 'error',
         success: false,
-        message: error instanceof Error ? error.message : 'Registration failed'
-      };
+        message: error instanceof Error ? error.message : 'Registration failed',
+      }
     }
   }
 
@@ -114,22 +119,24 @@ export class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/auth/token/refresh/`, {
         method: 'POST',
-        credentials: 'include' // Uses refresh_token cookie
-      });
-      
-      const data = await response.json();
-      
+        credentials: 'include', // Uses refresh_token cookie
+      })
+
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error(data.message || 'Token refresh failed');
+        throw new Error(data.message || 'Token refresh failed')
       }
-      
-      return data;
+
+      return data
     } catch (error) {
-      console.error('Token refresh error:', error);
+      console.error('Token refresh error:', error)
       return {
+        status: 'error',
         success: false,
-        message: error instanceof Error ? error.message : 'Token refresh failed'
-      };
+        message:
+          error instanceof Error ? error.message : 'Token refresh failed',
+      }
     }
   }
 
@@ -138,22 +145,23 @@ export class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/auth/logout/`, {
         method: 'POST',
-        credentials: 'include'
-      });
-      
-      const data = await response.json();
-      
+        credentials: 'include',
+      })
+
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error(data.message || 'Logout failed');
+        throw new Error(data.message || 'Logout failed')
       }
-      
-      return data;
+
+      return data
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Logout error:', error)
       return {
+        status: 'error',
         success: false,
-        message: error instanceof Error ? error.message : 'Logout failed'
-      };
+        message: error instanceof Error ? error.message : 'Logout failed',
+      }
     }
   }
 
@@ -161,25 +169,29 @@ export class AuthService {
   async checkAuth(): Promise<AuthResponse> {
     try {
       const response = await fetch(`${this.baseUrl}/users/me/`, {
-        credentials: 'include'
-      });
-      
-      const data = await response.json();
-      
+        credentials: 'include',
+      })
+
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error(data.message || 'Authentication check failed');
+        throw new Error(data.message || 'Authentication check failed')
       }
-      
-      return data;
+
+      return data
     } catch (error) {
-      console.error('Auth check error:', error);
+      console.error('Auth check error:', error)
       return {
+        status: 'error',
         success: false,
-        message: error instanceof Error ? error.message : 'Authentication check failed'
-      };
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Authentication check failed',
+      }
     }
   }
 }
 
 // Export a singleton instance
-export const authService = new AuthService();
+export const authService = new AuthService()
