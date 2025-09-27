@@ -24,8 +24,10 @@ export class AuthService {
   private baseUrl: string
 
   constructor() {
-    // Use environment variable for external backend API base URL
-    this.baseUrl = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:8000'
+    // Use proxy in development, environment variable in production
+    this.baseUrl = import.meta.env.DEV 
+      ? '/api'  // Use proxy in development
+      : (import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:8000')  // Use env var in production
   }
 
   // Get API base URL
