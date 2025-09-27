@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
+  --font-title: 'Belleza', sans-serif;
+  --font-sans: 'Inter', sans-serif;
   --color-background: #f5f3f0; /* A warmer, creamy off-white */
   --color-foreground: #4a3f3a; /* A softer, dark brown */
   --color-card: #ffffff;
@@ -43,4 +45,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.title, h1, h2, h3, h4, h5, h6 {
+  @apply font-title;
 }
