@@ -5,10 +5,11 @@
  * - Both passwords match
  * - Password be at least 6 characters
  * - Successfully register a new user
- * - Replice inactive user data in second register
- * - don't allow to register with existing email
- * - don't allow to submit with missing fields
- * - don't login after register (activation required)
+ * - Replace inactive user data in second register
+ * - Don't allow to register with existing email
+ * - Don't allow to submit with missing fields
+ * - Don't login after register (activation required)
+ * - Validate email format
 
  * Prerequisites:
  * - Environment variables must be set for test credentials
@@ -89,16 +90,28 @@ test.describe(
       email: string
       password: string
     }> {
-      const name = `test-${Math.random().toString(36).substring(2, 15)}`
-      const email = `test-${Math.random()
-        .toString(36)
-        .substring(2, 15)}@example.com`
-      const password = `test-${Math.random().toString(36).substring(2, 15)}`
+      // Create random string of 6 chars (only letters and numbers)
+      const randomString = Math.random().toString(36).substring(2, 8)
+
+      const name = `test-${randomString}`
+      const email = `test-${randomString}@gmail.com`
+      const password = `test-${randomString}`
       return { name, email, password }
     }
 
+    async function validateSuccessRegistration(page: Page) {
+      // Wait extra time to see the messages
+      await page.waitForTimeout(2000)
+
+      // Assert: Verify successful registration and redirect
+      await validateMessage(
+        page,
+        '¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta'
+      )
+    }
+
     test(
-      'should both passwords match',
+      'both passwords match',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random email and password
@@ -113,7 +126,7 @@ test.describe(
     )
 
     test(
-      'should password be at least 6 characters',
+      'password be at least 6 characters',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random email and password
@@ -131,7 +144,7 @@ test.describe(
     )
 
     test(
-      'should successfully register a new user',
+      'successfully register a new user',
       { tag: ['@positive', '@smoke'] },
       async ({ page }) => {
         // Arrange: use random email and password
@@ -141,47 +154,100 @@ test.describe(
         await fillFormData(page, name, email, password)
 
         // Assert: Verify successful registration and redirect
-        await validateMessage(page, '¡Registro exitoso!')
+        await validateSuccessRegistration(page)
+      }
+    )
+
+    test(
+      'replace inactive user data in second register',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: use random name and already registered email and password
+        const { name } = await getRandomData()
+        const email = process.env.TEST_LOGIN_USERNAME_INACTIVE!
+        const password = process.env.TEST_LOGIN_PASSWORD!
+
+        // Act: Submit register form with random credentials (but different passwords)
+        await fillFormData(page, name, email, password)
+
+        // Assert: Verify successful registration and redirect
+        await validateSuccessRegistration(page)
+      }
+    )
+
+    test(
+      'not allow to register with existing email',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: use random name and password, but already registered (and active) email
+        const { name, password } = await getRandomData()
+        const email = process.env.TEST_LOGIN_USERNAME!
+
+        // Act: Submit register form with random credentials (but different passwords)
+        await fillFormData(page, name, email, password)
+
+        // Assert: Verify error message
+        await validateMessage(page, 'El email ya está registrado')
+      }
+    )
+
+    test(
+      'not allow to submit with missing fields',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Click in submit form without data
+        await page.click('button[type="submit"]')
+
+        // Assert: Verify no toast (form does not submit)
+        await expect(page.locator('[role="status"]')).not.toBeVisible()
+      }
+    )
+
+    test(
+      'not login after register (activation required)',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: use random email and password
+        const { email, name, password } = await getRandomData()
+
+        // Act: Submit register form with random credentials
+        await fillFormData(page, name, email, password)
+
+        // Assert: Verify successful registration and redirect
+        await validateSuccessRegistration(page)
+
+        // Act: go to login page
+        await page.goto(`${BASE_URL}/login`)
+        await page.waitForTimeout(1000)
+
+        // Act: submit login form with same credentials
+        await page.fill('input[type="email"]', email)
+        await page.fill('input[type="password"]', password)
+        await page.click('button[type="submit"]')
+
+        // Assert: Verify error message
         await validateMessage(
           page,
-          'Por favor, verifica tu correo electrónico para activar tu cuenta'
+          'La combinación de credenciales no tiene una cuenta activa'
         )
       }
     )
 
     test(
-      'should replicate inactive user data in second register',
+      'not allow to register with invalid email format',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random email and password
-        const { email, name } = await getRandomData()
-      }
-    )
+        let { email, name, password } = await getRandomData()
 
-    test(
-      'should not allow to register with existing email',
-      { tag: ['@negative'] },
-      async ({ page }) => {
-        // Arrange: use random email and password
-        const { email, name } = await getRandomData()
-      }
-    )
+        // Arrange: add random symbols to email
+        email = email + '!@#$%^&*()'
 
-    test(
-      'should not allow to submit with missing fields',
-      { tag: ['@negative'] },
-      async ({ page }) => {
-        // Arrange: use random email and password
-        const { email, name } = await getRandomData()
-      }
-    )
+        // Act: Submit register form with random credentials
+        await fillFormData(page, name, email, password)
 
-    test(
-      'should not login after register (activation required)',
-      { tag: ['@negative'] },
-      async ({ page }) => {
-        // Arrange: use random email and password
-        const { email, name } = await getRandomData()
+        // Assert: Verify error message
+        await validateMessage(page, 'Por favor, ingresa un email válido')
       }
     )
   }

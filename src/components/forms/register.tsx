@@ -22,6 +22,14 @@ export default function RegisterForm() {
     setIsLoading(true);
     setError('');
 
+    // Email format validation - more restrictive for username part
+    const emailRegex = /^[a-zA-Z0-9._-]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Por favor, ingresa un email válido');
+      setIsLoading(false);
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error('Las contraseñas no coinciden');
       setIsLoading(false);
@@ -36,13 +44,19 @@ export default function RegisterForm() {
 
     try {
       const response = await authService.register(email, password, name);
+      console.log(response.data)
       
       if (response.status === 'ok') {
         // Show confirmation messages
-        toast.success('¡Registro exitoso!');
-        toast.success('Por favor, verifica tu correo electrónico para activar tu cuenta');
+        toast.success('¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta');
       } else {
-        toast.error(response.message || 'Registration failed');
+        // Check for specific error cases
+        if (response.status === 'error' && 
+            response.data?.email?.includes('duplicated_email')) {
+          toast.error('El email ya está registrado');
+        } else {
+          toast.error(response.message || 'Registration failed');
+        }
       }
     } catch (err) {
       toast.error('Ha ocurrido un error inesperado');

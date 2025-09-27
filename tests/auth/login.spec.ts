@@ -89,7 +89,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   }
 
   test(
-    'should reject invalid credentials with proper error message',
+    'reject invalid credentials with proper error message',
     { tag: ['@negative'] },
     async ({ page }) => {
       // Arrange: Set up test data with invalid credentials
@@ -107,7 +107,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   )
 
   test(
-    'should handle inactive user accounts gracefully',
+    'handle inactive user accounts gracefully',
     { tag: ['@negative', '@edge-case'] },
     async ({ page }) => {
       // Arrange: Use inactive user credentials from environment
@@ -123,7 +123,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   )
 
   test(
-    'should successfully authenticate valid users',
+    'successfully authenticate valid users',
     { tag: ['@positive', '@smoke'] },
     async ({ page }) => {
       // Arrange: Use valid user credentials from environment
@@ -139,7 +139,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   )
 
   test(
-    'should refresh access token after expiration',
+    'refresh access token after expiration',
     { tag: ['@token', '@long-running'] },
     async ({ page }) => {
       // Set custom timeout for this long-running test
@@ -180,7 +180,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   )
 
   test(
-    'should logout after refresh token fails',
+    'logout after refresh token fails',
     { tag: ['@token', '@long-running'] },
     async ({ page }) => {
       // Arrange: Set custom timeout for this long-running test
@@ -208,13 +208,16 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
   )
 
   test(
-    'should not allow to login with missing fields',
+    'not allow to login with missing fields',
     { tag: ['@negative'] },
     async ({ page }) => {
       // Arrange: Submit login form with missing fields
       await submitForm(page, '', '')
 
-      // Assert: form never submits
+      // Assert: Verify no toast (form does not submit)
+      await expect(page.locator('[role="status"]')).not.toBeVisible()
+
+      // Assert: Verify still at login page
       await expect(page).toHaveURL(`${BASE_URL}/login`)
     }
   )

@@ -12,6 +12,7 @@ export interface AuthResponse {
       email: string
       name?: string
     }
+    email?: [string]
   }
 }
 
@@ -221,6 +222,7 @@ export class AuthService {
         return {
           status: 'error',
           message: data.message || 'Registration failed',
+          data: data.data
         }
       }
     } catch (error) {
@@ -228,6 +230,7 @@ export class AuthService {
       return {
         status: 'error',
         message: error instanceof Error ? error.message : 'Network error occurred',
+        data: {},
       }
     }
   }
