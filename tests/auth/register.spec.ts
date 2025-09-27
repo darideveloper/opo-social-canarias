@@ -28,6 +28,15 @@ test.describe(
   { tag: ['@auth', '@smoke'] },
   () => {
     /**
+     * Navigate to login page and wait for it to fully load
+     */
+    test.beforeEach(async ({ page }) => {
+      // Navigate to login page and wait for it to fully load
+      await page.goto(`${BASE_URL}/register`)
+      await page.waitForTimeout(2000)
+    })
+
+    /**
      * Fill form data
      * @param page - Playwright page instance
      * @param name - User name
@@ -44,9 +53,6 @@ test.describe(
       confirmPassword: string | null = null,
       submit: boolean = true
     ) {
-      // Load register page
-      await page.goto(`${BASE_URL}/register`)
-      await page.waitForTimeout(2000)
 
       // Fill data
       if (name) {
@@ -110,20 +116,16 @@ test.describe(
       )
     }
 
-    test(
-      'both passwords match',
-      { tag: ['@negative'] },
-      async ({ page }) => {
-        // Arrange: use random email and password
-        const { email, password, name } = await getRandomData()
+    test('both passwords match', { tag: ['@negative'] }, async ({ page }) => {
+      // Arrange: use random email and password
+      const { email, password, name } = await getRandomData()
 
-        // Act: Submit register form with random credentials (but different passwords)
-        await fillFormData(page, name, email, password, password + '1')
+      // Act: Submit register form with random credentials (but different passwords)
+      await fillFormData(page, name, email, password, password + '1')
 
-        // Assert: Verify both passwords match
-        await validateMessage(page, 'Las contraseñas no coinciden')
-      }
-    )
+      // Assert: Verify both passwords match
+      await validateMessage(page, 'Las contraseñas no coinciden')
+    })
 
     test(
       'password be at least 6 characters',
@@ -241,7 +243,7 @@ test.describe(
         let { email, name, password } = await getRandomData()
 
         // Arrange: add random symbols to email
-        email = email + '!@#$%^&*()'
+        email = email.replace('test', '!#$%^&*')
 
         // Act: Submit register form with random credentials
         await fillFormData(page, name, email, password)
