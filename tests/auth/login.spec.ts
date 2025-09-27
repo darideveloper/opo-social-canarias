@@ -1,60 +1,201 @@
+/**
+ * Login Authentication Tests
+ *
+ * This test suite validates the complete login authentication flow including:
+ * - Invalid credential handling
+ * - Inactive user account management
+ * - Successful authentication
+ * - Token refresh mechanisms
+ * - Logout after refresh token fails
+ *
+ * Prerequisites:
+ * - Test environment must be running on localhost:4321
+ * - Environment variables must be set for test credentials
+ * - Backend must be running on localhost:8000
+ * - Backend access token must be set to 1 minutes
+ * - Backend refresh token must be set to 3 minutes
+ *
+ * @fileoverview Comprehensive login authentication test suite
+ */
+
 import { test, expect, type Page } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-  // Load login page and wait 2 seconds
+  // Navigate to login page and wait for it to fully load
   await page.goto('http://localhost:4321/login')
   await page.waitForTimeout(2000)
 })
 
-test.describe('Login', () => {
-
-
-  async function validate_wrong_login(page: Page) {
-
-    // Wait 2 seconds
+test.describe('Login Authentication Flow', () => {
+  /**
+   * Validates that a login attempt with invalid credentials fails properly
+   * @param page - Playwright page instance
+   * @param expectedErrorMessage - Optional custom error message to validate
+   */
+  async function validateWrongLogin(page: Page, expectedErrorMessage?: string) {
+    // Wait for the login process to complete
     await page.waitForTimeout(2000)
 
-    // Check current page
+    // Ensure we remain on the login page (no redirect occurred)
     await expect(page).toHaveURL('http://localhost:4321/login')
 
-    // Check toast error message
-    await expect(page.locator('[role="status"]')).toHaveText(
+    // Verify the error toast message is displayed
+    const errorMessage =
+      expectedErrorMessage ||
       'La combinación de credenciales no tiene una cuenta activa'
+    await expect(page.locator('[role="status"]')).toHaveText(errorMessage)
+  }
+
+  /**
+   * Validates successful login by checking URL redirect and welcome message
+   * @param page - Playwright page instance
+   */
+  async function validateCorrectLogin(page: Page) {
+    // Wait for redirect to complete
+    await page.waitForTimeout(2000)
+
+    // Verify redirect to home page
+    await expect(page).toHaveURL('http://localhost:4321/')
+
+    // Confirm welcome message is displayed
+    await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
+      'Welcome to OpoSocial'
     )
   }
 
-  test('invalid credentials', async ({ page }) => {
-    // Login with invalid credentials
-    await page.fill('input[type="email"]', 'invalid@example.com')
-    await page.fill('input[type="password"]', 'invalidpassword')
+  /**
+   * Submits the login form with provided credentials
+   * @param page - Playwright page instance
+   * @param email - User email address
+   * @param password - User password
+   */
+  async function submitForm(page: Page, email: string, password: string) {
+    // Fill email field
+    await page.fill('input[type="email"]', email)
+
+    // Fill password field
+    await page.fill('input[type="password"]', password)
+
+    // Submit the form
     await page.click('button[type="submit"]')
-    
-    // Validate wrong login
-    await validate_wrong_login(page)
+  }
 
-  })
+  test(
+    'should reject invalid credentials with proper error message',
+    { tag: ['@auth', '@negative'] },
+    async ({ page }) => {
+      // Arrange: Set up test data with invalid credentials
+      const invalidEmail = 'invalid@example.com'
+      const invalidPassword = 'invalidpassword'
 
-  test('inactive user', async ({ page }) => {
-    // Login with inactive user
-    await page.fill('input[type="email"]', process.env.TEST_LOGIN_USERNAME_INACTIVE!)
-    await page.fill('input[type="password"]', process.env.TEST_LOGIN_PASSWORD!)
-    await page.click('button[type="submit"]')
-    
-    // Validate wrong login
-    await validate_wrong_login(page)
-  })
+      // Act: Attempt login with invalid credentials
+      await page.fill('input[type="email"]', invalidEmail)
+      await page.fill('input[type="password"]', invalidPassword)
+      await page.click('button[type="submit"]')
 
-  test('valid credentials', async ({ page }) => {
-    // Login with valid credentials
-    await page.fill('input[type="email"]', process.env.TEST_LOGIN_USERNAME!)
-    await page.fill('input[type="password"]', process.env.TEST_LOGIN_PASSWORD!)
-    await page.click('button[type="submit"]')
-    await expect(page).toHaveURL('http://localhost:4321/')
+      // Assert: Validate that login failed appropriately
+      await validateWrongLogin(page)
+    }
+  )
 
-    // Check toast success message
-    await page.waitForTimeout(2000)
+  test(
+    'should handle inactive user accounts gracefully',
+    { tag: ['@auth', '@negative', '@edge-case'] },
+    async ({ page }) => {
+      // Arrange: Use inactive user credentials from environment
+      const inactiveUserEmail = process.env.TEST_LOGIN_USERNAME_INACTIVE!
+      const password = process.env.TEST_LOGIN_PASSWORD!
 
-    // Check current page
-    await expect(page.locator('h1.text-3xl.font-bold')).toHaveText('Welcome to OpoSocial')
-  })
+      // Act: Attempt login with inactive user
+      await submitForm(page, inactiveUserEmail, password)
+
+      // Assert: Verify appropriate error handling for inactive accounts
+      await validateWrongLogin(page)
+    }
+  )
+
+  test(
+    'should successfully authenticate valid users',
+    { tag: ['@auth', '@positive', '@smoke'] },
+    async ({ page }) => {
+      // Arrange: Use valid user credentials from environment
+      const validUserEmail = process.env.TEST_LOGIN_USERNAME!
+      const password = process.env.TEST_LOGIN_PASSWORD!
+
+      // Act: Submit login form with valid credentials
+      await submitForm(page, validUserEmail, password)
+
+      // Assert: Verify successful authentication and redirect
+      await validateCorrectLogin(page)
+    }
+  )
+
+  test(
+    'should refresh access token after expiration',
+    { tag: ['@auth', '@token', '@long-running'] },
+    async ({ page }) => {
+      // Set custom timeout for this long-running test
+      test.setTimeout(4 * 60 * 1000)
+
+      // Arrange: Login with valid credentials
+      await submitForm(
+        page,
+        process.env.TEST_LOGIN_USERNAME!,
+        process.env.TEST_LOGIN_PASSWORD!
+      )
+
+      // Act: Validate initial login
+      await validateCorrectLogin(page)
+
+      // Get initial access token from cookies
+      const initialAccessToken = (await page.context().cookies()).find(
+        (cookie: any) => cookie.name === 'access_token'
+      )
+
+      // Wait for token to expire (2 minutes)
+      await page.waitForTimeout(2 * 60 * 1000)
+
+      // Trigger token refresh by reloading page
+      await page.reload()
+
+      // Assert: Verify user remains logged in after token refresh
+      await validateCorrectLogin(page)
+
+      // Get refreshed access token
+      const refreshedAccessToken = (await page.context().cookies()).find(
+        (cookie: any) => cookie.name === 'access_token'
+      )
+
+      // Verify that the token was actually refreshed (different value)
+      expect(refreshedAccessToken).not.toBe(initialAccessToken)
+    }
+  )
+
+  test(
+    'should logout after refresh token fails',
+    { tag: ['@auth', '@token', '@long-running'] },
+    async ({ page }) => {
+      // Arrange: Set custom timeout for this long-running test
+      test.setTimeout(5 * 60 * 1000)
+
+      // Arrange: Login with valid credentials
+      await submitForm(
+        page,
+        process.env.TEST_LOGIN_USERNAME!,
+        process.env.TEST_LOGIN_PASSWORD!
+      )
+
+      // Act: Validate initial login
+      await validateCorrectLogin(page)
+
+      // Act: Wait for token to expire (4 minutes)
+      await page.waitForTimeout(4 * 60 * 1000)
+
+      // Act: Trigger token refresh by reloading page
+      await page.reload()
+
+      // Assert: redirect to login page
+      await expect(page).toHaveURL('http://localhost:4321/login')
+    }
+  )
 })

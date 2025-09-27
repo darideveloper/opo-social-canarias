@@ -30,7 +30,7 @@ console.log('Production mode:', isProd);
  */
 export default defineConfig({
   testDir: './tests',              // folder for tests
-  timeout: 120 * 1000,              // 120s per test
+  timeout: 2 * 60 * 1000,              // 2 minutes per test
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -46,7 +46,7 @@ export default defineConfig({
     command: isProd ? 'npm run build && npm run preview' : 'npm run dev',
     port: 4321,
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes for build + preview
+    timeout: 5 * 60 * 1000, // 5 minutes for build + preview
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
