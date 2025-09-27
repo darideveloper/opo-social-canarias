@@ -19,6 +19,8 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
+import { testConnection, query } from '../utils/db'
+import { cleanupTestData, getProfileByUserId, getUserByEmail } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -31,6 +33,10 @@ test.describe(
      * Navigate to login page and wait for it to fully load
      */
     test.beforeEach(async ({ page }) => {
+      // Connect to db
+      await testConnection()
+      await cleanupTestData()
+
       // Navigate to login page and wait for it to fully load
       await page.goto(`${BASE_URL}/register`)
       await page.waitForTimeout(2000)
@@ -53,7 +59,6 @@ test.describe(
       confirmPassword: string | null = null,
       submit: boolean = true
     ) {
-
       // Fill data
       if (name) {
         await page.fill('input#name', name)
@@ -157,6 +162,10 @@ test.describe(
 
         // Assert: Verify successful registration and redirect
         await validateSuccessRegistration(page)
+
+        // validate user inactive in db
+        const user = await getUserByEmail(email)
+        expect(user.is_active).toBe(false)
       }
     )
 
@@ -174,6 +183,11 @@ test.describe(
 
         // Assert: Verify successful registration and redirect
         await validateSuccessRegistration(page)
+
+        // Validate username updated in databse
+        const user = await getUserByEmail(email)
+        const profile = await getProfileByUserId(user.id)
+        expect(profile.name).toBe(name)
       }
     )
 

@@ -23,6 +23,12 @@ if (fs.existsSync(envFile)) {
   console.warn(`Environment file ${envFile} not found, using base .env`);
 }
 
+// Load test environment variables if available
+if (fs.existsSync('.env.test')) {
+  dotenv.config({ path: '.env.test' });
+  console.log('Test environment file loaded');
+}
+
 console.log('Production mode:', isProd);
 
 /**
