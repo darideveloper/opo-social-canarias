@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import Card from '../ui/Card';
 import CardHeader from '../ui/CardHeader';
 import CardContent from '../ui/CardContent';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
+import Toaster from '../ui/Toaster';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function RegisterForm() {

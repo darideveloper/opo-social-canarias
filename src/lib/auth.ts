@@ -25,7 +25,7 @@ export class AuthService {
   constructor() {
     // Use environment variable for API base URL, fallback to relative path
     this.baseUrl = import.meta.env.PUBLIC_API_BASE_URL 
-      ? `${import.meta.env.PUBLIC_API_BASE_URL}/auth`
+      ? `${import.meta.env.PUBLIC_API_BASE_URL}`
       : '/api/auth';
   }
 
@@ -56,7 +56,7 @@ export class AuthService {
   // Login
   async login(email: string, password: string): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/login`, {
+      const response = await fetch(`${this.baseUrl}/auth/token`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export class AuthService {
   // Register
   async register(email: string, password: string, name?: string): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/register`, {
+      const response = await fetch(`${this.baseUrl}/auth/register`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -109,38 +109,10 @@ export class AuthService {
     }
   }
 
-  // Make authenticated requests
-  async getProtectedData(): Promise<ProtectedDataResponse> {
-    try {
-      // Use environment variable for protected endpoint URL
-      const protectedUrl = import.meta.env.PUBLIC_API_BASE_URL 
-        ? `${import.meta.env.PUBLIC_API_BASE_URL}/protected`
-        : '/api/protected';
-        
-      const response = await fetch(protectedUrl, {
-        credentials: 'include' // Include cookies automatically
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch protected data');
-      }
-      
-      return data;
-    } catch (error) {
-      console.error('Protected data error:', error);
-      return {
-        success: false,
-        message: error instanceof Error ? error.message : 'Failed to fetch protected data'
-      };
-    }
-  }
-
   // Refresh token when needed
   async refreshToken(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/refresh`, {
+      const response = await fetch(`${this.baseUrl}/auth/token/refresh`, {
         method: 'POST',
         credentials: 'include' // Uses refresh_token cookie
       });
@@ -164,7 +136,7 @@ export class AuthService {
   // Logout
   async logout(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/logout`, {
+      const response = await fetch(`${this.baseUrl}/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -188,7 +160,7 @@ export class AuthService {
   // Check if user is authenticated
   async checkAuth(): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${this.baseUrl}/me`, {
+      const response = await fetch(`${this.baseUrl}/users/me`, {
         credentials: 'include'
       });
       

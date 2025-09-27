@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
+import toast from 'react-hot-toast';
 import Card from '../ui/Card';
 import CardHeader from '../ui/CardHeader';
 import CardContent from '../ui/CardContent';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
+import Toaster from '../ui/Toaster';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function LoginNewPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const [isClient, setIsClient] = useState(false);
   
   // Safely access auth context with fallback for SSR
@@ -35,12 +36,11 @@ export default function LoginNewPage() {
     e.preventDefault();
     
     if (!isClient) {
-      setError('Authentication not available. Please refresh the page.');
+      toast.error('Authentication not available. Please refresh the page.');
       return;
     }
     
     setIsLoading(true);
-    setError('');
 
     try {
       // If authContext is available, use it; otherwise, call authService directly
@@ -54,13 +54,14 @@ export default function LoginNewPage() {
       }
       
       if (response.success) {
+        toast.success('¡Inicio de sesión exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';
       } else {
-        setError(response.message || 'Login failed');
+        toast.error(response.message || 'Credenciales incorrectas');
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      toast.error('Ha ocurrido un error inesperado');
     } finally {
       setIsLoading(false);
     }
@@ -88,12 +89,6 @@ export default function LoginNewPage() {
           <p className="text-sm text-muted-foreground">Accede a tu panel de control.</p>
         </CardHeader>
         <CardContent>
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-sm text-red-600">{error}</p>
-            </div>
-          )}
-          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -139,6 +134,7 @@ export default function LoginNewPage() {
           
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 }
