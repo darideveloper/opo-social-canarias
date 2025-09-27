@@ -9,6 +9,7 @@
  * - Backend must be running on localhost:8000
  * - Backend access token must be set to 1 minutes
  * - Backend refresh token must be set to 3 minutes
+ * - Backend temp token must be set to 2 minutes
  *
  * @fileoverview Comprehensive login authentication test suite
  */
@@ -71,7 +72,70 @@ test.describe(
     }
 
     /**
+     * Check if user is active
+     * @param page - Playwright page instance
+     * @param active - True if user is active, false otherwise
+     */
+    async function checkIsUserActive(page: Page, active: boolean = true) {
+      // Go to login page
+      await page.goto(`${BASE_URL}/login`)
+      await page.waitForTimeout(2000)
+
+      // Fill credentials
+      await page.fill('input[type="email"]', currentEmail)
+      await page.fill('input[type="password"]', currentPassword)
+      await page.click('button[type="submit"]')
+
+      // Wait after login
+      await page.waitForTimeout(2000)
+
+      // Assert: validate login
+      if (active) {
+        await expect(page.url()).toBe(`${BASE_URL}/`)
+        await expect(page.locator('h1.text-3xl')).toHaveText(
+          'Welcome to OpoSocial'
+        )
+      } else {
+        await expect(page.url()).toBe(`${BASE_URL}/login`)
+      }
+    }
+
+    /**
+     * Validate activate account success screen
+     * @param page - Playwright page instance
+     */
+    async function validateActivationSuccessScreen(page: Page) {
+      // Assert: validate activate account
+      await expect(page.locator('h1.text-2xl')).toHaveText(
+        'Activación de Cuenta'
+      )
+      await expect(page.locator('h1 + p')).toHaveText(
+        'Tu cuenta ha sido activada exitosamente.'
+      )
+      await expect(page.locator('button.bg-primary')).toHaveText('Ir al Login')
+    }
+
+    /**
+     * Validate activate account error screen
+     * @param page - Playwright page instance
+     */
+    async function validateActivationErrorScreen(page: Page) {
+      // Assert: validate activate account
+      await expect(page.locator('h1.text-2xl')).toHaveText(
+        'Activación de Cuenta'
+      )
+      await expect(page.locator('h1 + p')).toHaveText(
+        'Hubo un problema con la activación.'
+      )
+      await expect(page.locator('button.bg-primary')).toHaveText('Ir al Login')
+      await expect(page.locator('button.bg-background')).toHaveText(
+        'Reintentar'
+      )
+    }
+
+    /**
      * Setup db and register a new user
+     * @param page - Playwright page instance
      */
     test.beforeEach(async ({ page }) => {
       // Connect to db
@@ -88,36 +152,108 @@ test.describe(
     })
 
     /**
-     * Validate activate account
+     * Validate activate account:
+     * - Navigate to activate page
+     * - Validate activate account (from db)
+     * - Login with credentials
+     * - Validate login
      */
-    test('validate activate account', { tag: ['@positive'] }, async ({ page }) => {
-      // Arrange: get token from email
-      const token = await getTokenFromEmail(currentEmail)
+    test(
+      'success',
+      { tag: ['@positive'] },
+      async ({ page }) => {
+        // Arrange: get token from email
+        const token = await getTokenFromEmail(currentEmail)
 
-      // Act: navigate to activate page
-      await page.goto(`${BASE_URL}/activate/${token}`)
-      await page.waitForTimeout(2000)
+        // Act: navigate to activate page
+        await page.goto(`${BASE_URL}/activate/${token}`)
+        await page.waitForTimeout(2000)
 
-      // Assert: validate activate account
-      await expect(page.locator('h1.text-2xl')).toHaveText('Activación de Cuenta')
-      await expect(page.locator('h1 + p')).toHaveText(
-        'Tu cuenta ha sido activada exitosamente.'
-      )
-      await expect(page.locator('button.bg-primary')).toHaveText('Ir al Login')
-      await page.click('button')
-      await page.waitForTimeout(2000)
+        // Assert: validate activate account
+        await validateActivationSuccessScreen(page)
 
-      // Validate login with credentials
-      await expect(page.url()).toBe(`${BASE_URL}/login`)
+        // Assert: validate user is active
+        await checkIsUserActive(page, true)
+      }
+    )
 
-      await page.fill('input[type="email"]', currentEmail)
-      await page.fill('input[type="password"]', currentPassword)
-      await page.click('button[type="submit"]')
-      await page.waitForTimeout(2000)
+    /**
+     * Validate activate account with invalid token
+     * - Navigate to activate page with invalid token
+     * - Try to Validate activate account
+     * - Check error page
+     * - Confirm user no activated
+     */
+    test(
+      'invalid token',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: navigate to activate page with invalid token
+        await page.goto(`${BASE_URL}/activate/invalid-token`)
+        await page.waitForTimeout(2000)
 
-      // Assert: validate login
-      await expect(page.url()).toBe(`${BASE_URL}/`)
-      await expect(page.locator('h1.text-3xl')).toHaveText('Welcome to OpoSocial')
-    })
+        // Assert: validate activate account
+        await validateActivationErrorScreen(page)
+
+        // Assert: validate user is active
+        await checkIsUserActive(page, false)
+      }
+    )
+
+    /**
+     * Validate activate account with expired token
+     * - Navigate to activate page with expired token
+     * - Try to Validate activate account
+     * - Check error page
+     * - Confirm user no activated
+     */
+    test(
+      'expired token',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: get token from email
+        const token = await getTokenFromEmail(currentEmail)
+
+        // Wait 3 minutes
+        await page.waitForTimeout(3 * 60 * 1000)
+
+        // Act: navigate to activate page with expired token
+        await page.goto(`${BASE_URL}/activate/${token}`)
+        await page.waitForTimeout(2000)
+
+        // Assert: validate activate account
+        await validateActivationErrorScreen(page)
+
+        // Assert: validate user is active
+        await checkIsUserActive(page, false)
+      }
+    )
+
+    /**
+     * Validate activate account with an already used token
+     * - Navigate to activate page with an already used token
+     * - Try to Validate activate account
+     * - Check error page
+     * - Confirm user no activated
+     */
+    test(
+      'already used token',
+      { tag: ['@negative'] },
+      async ({ page }) => {
+        // Arrange: get token from email
+        const token = await getTokenFromEmail(currentEmail)
+
+        // Act: navigate to activate page with an already used token
+        await page.goto(`${BASE_URL}/activate/${token}`)
+        await page.waitForTimeout(2000)
+
+        // Act: try to activate account again
+        await page.goto(`${BASE_URL}/activate/${token}`)
+        await page.waitForTimeout(2000)
+
+        // Assert: validate activate account
+        await validateActivationErrorScreen(page)
+      }
+    )
   }
 )
