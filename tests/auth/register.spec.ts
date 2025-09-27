@@ -19,7 +19,6 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import { testConnection, closeConnection } from '../utils/db'
 import {
   cleanupTestData,
   getProfileByUserId,
@@ -37,18 +36,12 @@ test.describe(
      * Navigate to login page and wait for it to fully load
      */
     test.beforeEach(async ({ page }) => {
-      // Connect to db
-      await testConnection()
+      // Clean up test data before each test
       await cleanupTestData()
 
       // Navigate to login page and wait for it to fully load
       await page.goto(`${BASE_URL}/register`)
       await page.waitForTimeout(2000)
-    })
-
-    // Add this afterAll hook
-    test.afterAll(async () => {
-      await closeConnection()
     })
 
     /**

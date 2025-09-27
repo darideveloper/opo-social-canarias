@@ -15,7 +15,6 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import { testConnection, closeConnection } from '../utils/db'
 import { cleanupTestData, getTokenFromEmail } from '../helpers/db-helpers'
 
 // Main settings
@@ -138,17 +137,11 @@ test.describe(
      * @param page - Playwright page instance
      */
     test.beforeEach(async ({ page }) => {
-      // Connect to db
-      await testConnection()
+      // Clean up test data before each test
       await cleanupTestData()
 
       // Register a new user
       await registerUser(page)
-    })
-
-    // Add this afterAll hook
-    test.afterAll(async () => {
-      await closeConnection()
     })
 
     /**
@@ -209,8 +202,11 @@ test.describe(
      */
     test(
       'expired token',
-      { tag: ['@negative'] },
+      { tag: ['@negative', '@long-running'] },
       async ({ page }) => {
+        // Set custom timeout for this long-running test
+        test.setTimeout(4 * 60 * 1000)
+
         // Arrange: get token from email
         const token = await getTokenFromEmail(currentEmail)
 

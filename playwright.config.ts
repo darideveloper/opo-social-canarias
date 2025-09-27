@@ -37,6 +37,9 @@ console.log('Production mode:', isProd);
 export default defineConfig({
   testDir: './tests',              // folder for tests
   timeout: 2 * 60 * 1000,              // 2 minutes per test
+  /* Global setup and teardown for database connection management */
+  globalSetup: './tests/global-setup.ts',
+  globalTeardown: './tests/global-teardown.ts',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
