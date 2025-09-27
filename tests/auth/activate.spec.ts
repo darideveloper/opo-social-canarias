@@ -7,8 +7,6 @@
  * Prerequisites:
  * - Environment variables must be set for test credentials
  * - Backend must be running on localhost:8000
- * - Backend access token must be set to 1 minutes
- * - Backend refresh token must be set to 3 minutes
  * - Backend temp token must be set to 2 minutes
  *
  * @fileoverview Comprehensive login authentication test suite
@@ -211,7 +209,7 @@ test.describe(
         const token = await getTokenFromEmail(currentEmail)
 
         // Wait 3 minutes
-        await page.waitForTimeout(3 * 60 * 1000)
+        await page.waitForTimeout(2 * 60 * 1000)
 
         // Act: navigate to activate page with expired token
         await page.goto(`${BASE_URL}/activate/${token}`)
