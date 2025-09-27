@@ -55,7 +55,7 @@ export default function RegisterForm() {
             response.data?.email?.includes('duplicated_email')) {
           toast.error('El email ya está registrado');
         } else {
-          toast.error(response.message || 'Registration failed');
+          toast.error(response.message || 'Error al crear tu cuenta. Intente mas tarde');
         }
       }
     } catch (err) {
