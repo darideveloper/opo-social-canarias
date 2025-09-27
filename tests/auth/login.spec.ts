@@ -45,9 +45,16 @@ test.describe('Login', () => {
   })
 
   test('valid credentials', async ({ page }) => {
+    // Login with valid credentials
     await page.fill('input[type="email"]', process.env.TEST_LOGIN_USERNAME!)
     await page.fill('input[type="password"]', process.env.TEST_LOGIN_PASSWORD!)
     await page.click('button[type="submit"]')
     await expect(page).toHaveURL('http://localhost:4321/')
+
+    // Check toast success message
+    await page.waitForTimeout(2000)
+
+    // Check current page
+    await expect(page.locator('h1.text-3xl.font-bold')).toHaveText('Welcome to OpoSocial')
   })
 })
