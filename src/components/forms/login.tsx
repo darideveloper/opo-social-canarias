@@ -20,8 +20,9 @@ export default function LoginNewPage() {
 
     try {
       const response = await authService.login(email, password);
+      console.log({response})
       
-      if (response.success) {
+      if (response.status === 'ok') {
         toast.success('¡Inicio de sesión exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';

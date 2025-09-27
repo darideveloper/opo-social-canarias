@@ -5,12 +5,13 @@ export interface LoginCredentials {
 
 export interface AuthResponse {
   status: string
-  success: boolean
   message: string
-  user?: {
-    id: string
-    email: string
-    name?: string
+  data?: {
+    user?: {
+      id: string
+      email: string
+      name?: string
+    }
   }
 }
 
@@ -68,17 +69,25 @@ export class AuthService {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed')
+      // Use HTTP status codes to determine success/failure
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Login successful',
+          data: data.data
+        }
+      } else {
+        // For non-2xx responses, return the error from backend
+        return {
+          status: 'error',
+          message: data.message || 'Login failed',
+        }
       }
-
-      return data
     } catch (error) {
       console.error('Login error:', error)
       return {
         status: 'error',
-        success: false,
-        message: error instanceof Error ? error.message : 'Login failed',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       }
     }
   }
@@ -101,17 +110,23 @@ export class AuthService {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed')
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Registration successful',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Registration failed',
+        }
       }
-
-      return data
     } catch (error) {
       console.error('Registration error:', error)
       return {
         status: 'error',
-        success: false,
-        message: error instanceof Error ? error.message : 'Registration failed',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       }
     }
   }
@@ -126,18 +141,23 @@ export class AuthService {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Token refresh failed')
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Token refreshed successfully',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Token refresh failed',
+        }
       }
-
-      return data
     } catch (error) {
       console.error('Token refresh error:', error)
       return {
         status: 'error',
-        success: false,
-        message:
-          error instanceof Error ? error.message : 'Token refresh failed',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       }
     }
   }
@@ -152,17 +172,23 @@ export class AuthService {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Logout failed')
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Logout successful',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Logout failed',
+        }
       }
-
-      return data
     } catch (error) {
       console.error('Logout error:', error)
       return {
         status: 'error',
-        success: false,
-        message: error instanceof Error ? error.message : 'Logout failed',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       }
     }
   }
@@ -176,20 +202,23 @@ export class AuthService {
 
       const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Authentication check failed')
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Authentication successful',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Authentication check failed',
+        }
       }
-
-      return data
     } catch (error) {
       console.error('Auth check error:', error)
       return {
         status: 'error',
-        success: false,
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Authentication check failed',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       }
     }
   }
