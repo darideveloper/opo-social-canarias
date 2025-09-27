@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro'
+import ActivatePage from '../../components/forms/activate.tsx'
+---
+
+<Layout title="Activación de Cuenta">
+	<ActivatePage token={Astro.params.token || ''} client:load />
+</Layout>

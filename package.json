@@ -13,6 +13,7 @@
     "test:prod:ui": "NODE_ENV=production playwright test --ui --config=playwright.config.ts"
   },
   "dependencies": {
+    "@astrojs/node": "^9.4.4",
     "@astrojs/react": "^4.4.0",
     "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/belleza": "^5.2.8",
