@@ -199,6 +199,7 @@ export class AuthService {
       const response = await fetch(`${this.baseUrl}/users/me/`, {
         credentials: 'include',
       })
+      console.log({response})
 
       const data = await response.json()
 

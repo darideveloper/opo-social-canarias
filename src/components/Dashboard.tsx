@@ -17,8 +17,8 @@ export default function Dashboard() {
     const checkAuth = async () => {
       try {
         const response = await authService.checkAuth();
-        if (response.success && response.user) {
-          setUser(response.user);
+        if (response.status === 'ok' && response.data?.user) {
+          setUser(response.data.user);
         } else {
           window.location.href = '/login';
         }
@@ -32,24 +32,6 @@ export default function Dashboard() {
 
     checkAuth();
   }, []);
-
-  const fetchProtectedData = async () => {
-    setLoading(true);
-    setError('');
-    
-    try {
-      const response = await authService.getProtectedData();
-      if (response.success) {
-        setProtectedData(response.data);
-      } else {
-        setError(response.message || 'Failed to fetch data');
-      }
-    } catch (err) {
-      setError('An unexpected error occurred');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -97,10 +79,7 @@ export default function Dashboard() {
             <h2 className="text-xl font-semibold">Protected Data</h2>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Button onClick={fetchProtectedData} disabled={loading}>
-              {loading ? 'Loading...' : 'Fetch Protected Data'}
-            </Button>
-            
+
             {error && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-md">
                 <p className="text-sm text-red-600">{error}</p>

@@ -20,6 +20,14 @@ export default defineConfig({
                 proxyReq.setHeader('cookie', req.headers.cookie);
               }
             });
+            
+            // Forward Set-Cookie headers from backend response
+            proxy.on('proxyRes', (proxyRes, req, res) => {
+              if (proxyRes.headers['set-cookie']) {
+                // Forward all Set-Cookie headers
+                res.setHeader('set-cookie', proxyRes.headers['set-cookie']);
+              }
+            });
           }
         }
       }

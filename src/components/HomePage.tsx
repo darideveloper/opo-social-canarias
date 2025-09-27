@@ -14,14 +14,16 @@ export default function HomePage() {
     const checkAuth = async () => {
       try {
         const response = await authService.checkAuth();
-        if (response.success && response.user) {
-          setUser(response.user);
-        } else {
-          window.location.href = '/login';
+        console.log({response})
+        if (response.status === 'ok' && response.data?.user) {
+          setUser(response.data.user);
         }
+        // } else {
+        //   window.location.href = '/login';
+        // }
       } catch (err) {
         console.error('Auth check failed:', err);
-        window.location.href = '/login';
+        // window.location.href = '/login';
       } finally {
         setIsLoading(false);
       }
