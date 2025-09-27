@@ -23,13 +23,13 @@ export default function RegisterForm() {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Las contraseñas no coinciden');
       setIsLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError('La contraseña debe tener al menos 6 caracteres');
       setIsLoading(false);
       return;
     }
@@ -37,7 +37,7 @@ export default function RegisterForm() {
     try {
       const response = await authService.register(email, password, name);
       
-      if (response.success) {
+      if (response.status === 'ok') {
         toast.success('¡Registro exitoso!');
         // Redirect to home page or dashboard
         window.location.href = '/';
