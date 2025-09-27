@@ -130,6 +130,11 @@ test.describe(
       )
     }
 
+    /**
+     * Both passwords match
+     * - Submit register form with random credentials (but different passwords)
+     * - Validate error message
+     */
     test('both passwords match', { tag: ['@negative'] }, async ({ page }) => {
       // Arrange: use random email and password
       const { email, password, name } = await getRandomData()
@@ -141,6 +146,11 @@ test.describe(
       await validateMessage(page, 'Las contraseñas no coinciden')
     })
 
+    /**
+     * Password be at least 6 characters
+     * - Submit register form with random credentials (but password is less than 6 characters)
+     * - Validate error message
+     */
     test(
       'password be at least 6 characters',
       { tag: ['@negative'] },
@@ -159,6 +169,12 @@ test.describe(
       }
     )
 
+    /**
+     * Successfully register a new user
+     * - Submit register form with random credentials
+     * - Validate successful registration
+     * - Validate user inactive in db
+     */
     test(
       'successfully register a new user',
       { tag: ['@positive', '@smoke'] },
@@ -178,6 +194,12 @@ test.describe(
       }
     )
 
+    /**
+     * Replace inactive user data in second register
+     * - Submit register form with inactive user credentials
+     * - Validate successful registration
+     * - Validate username updated in db
+     */
     test(
       'replace inactive user data in second register',
       { tag: ['@negative'] },
@@ -200,8 +222,13 @@ test.describe(
       }
     )
 
+    /**
+     * Register with existing email
+     * - Submit register form with already registered email
+     * - Validate error message
+     */
     test(
-      'not allow to register with existing email',
+      'register with existing email',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random name and password, but already registered (and active) email
@@ -216,8 +243,13 @@ test.describe(
       }
     )
 
+    /**
+     * Submit with missing fields
+     * - Submit register form with missing fields
+     * - Validate no toast (form does not submit)
+     */
     test(
-      'not allow to submit with missing fields',
+      'submit with missing fields',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Click in submit form without data
@@ -228,8 +260,14 @@ test.describe(
       }
     )
 
+    /**
+     * Login after register (activation required)
+     * - Submit register form with random credentials
+     * - Validate successful registration
+     * - Validate user inactive in db
+     */
     test(
-      'not login after register (activation required)',
+      'login after register (activation required)',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random email and password
@@ -258,8 +296,13 @@ test.describe(
       }
     )
 
+    /**
+     * Register with invalid email format
+     * - Submit register form with invalid email format
+     * - Validate error message
+     */
     test(
-      'not allow to register with invalid email format',
+      'register with invalid email format',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: use random email and password

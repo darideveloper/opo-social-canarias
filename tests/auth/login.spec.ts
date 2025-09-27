@@ -88,6 +88,11 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     await page.click('button[type="submit"]')
   }
 
+  /**
+   * Reject invalid credentials with proper error message
+   * - Fill invalid credentials
+   * - Validate error message
+   */
   test(
     'reject invalid credentials with proper error message',
     { tag: ['@negative'] },
@@ -106,6 +111,11 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     }
   )
 
+  /**
+   * Handle inactive user accounts gracefully
+   * - Fill inactive user credentials
+   * - Validate error message
+   */
   test(
     'handle inactive user accounts gracefully',
     { tag: ['@negative', '@edge-case'] },
@@ -122,6 +132,11 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     }
   )
 
+  /**
+   * Successfully authenticate valid users
+   * - Fill valid user credentials
+   * - Validate successful authentication
+   */
   test(
     'successfully authenticate valid users',
     { tag: ['@positive', '@smoke'] },
@@ -138,6 +153,15 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     }
   )
 
+  /**
+   * Refresh access token after expiration
+   * - Fill valid user credentials
+   * - Validate successful authentication
+   * - Wait for token to expire
+   * - Trigger token refresh by reloading page
+   * - Validate successful authentication
+   * - Validate refreshed access token
+   */
   test(
     'refresh access token after expiration',
     { tag: ['@token', '@long-running'] },
@@ -179,6 +203,14 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     }
   )
 
+  /**
+   * Logout after refresh token fails
+   * - Fill valid user credentials
+   * - Validate successful authentication
+   * - Wait for token to expire
+   * - Trigger token refresh by reloading page
+   * - Validate redirect to login page
+   */
   test(
     'logout after refresh token fails',
     { tag: ['@token', '@long-running'] },
@@ -207,6 +239,12 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
     }
   )
 
+  /**
+   * Not allow to login with missing fields
+   * - Submit login form with missing fields
+   * - Validate no toast (form does not submit)
+   * - Validate still at login page
+   */
   test(
     'not allow to login with missing fields',
     { tag: ['@negative'] },
