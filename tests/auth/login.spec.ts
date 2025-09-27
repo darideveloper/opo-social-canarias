@@ -7,9 +7,9 @@
  * - Successful authentication
  * - Token refresh mechanisms
  * - Logout after refresh token fails
+ * - don't allow to login with missing fields
  *
  * Prerequisites:
- * - Test environment must be running on localhost:4321
  * - Environment variables must be set for test credentials
  * - Backend must be running on localhost:8000
  * - Backend access token must be set to 1 minutes
@@ -20,13 +20,21 @@
 
 import { test, expect, type Page } from '@playwright/test'
 
-test.beforeEach(async ({ page }) => {
-  // Navigate to login page and wait for it to fully load
-  await page.goto('http://localhost:4321/login')
-  await page.waitForTimeout(2000)
-})
+// Main settings
+const BASE_URL = 'http://localhost:4321'
 
-test.describe('Login Authentication Flow', () => {
+
+test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
+  
+  /**
+   * Navigate to login page and wait for it to fully load
+   */
+  test.beforeEach(async ({ page }) => {
+    // Navigate to login page and wait for it to fully load
+    await page.goto(`${BASE_URL}/login`)
+    await page.waitForTimeout(2000)
+  })
+  
   /**
    * Validates that a login attempt with invalid credentials fails properly
    * @param page - Playwright page instance
@@ -37,7 +45,7 @@ test.describe('Login Authentication Flow', () => {
     await page.waitForTimeout(2000)
 
     // Ensure we remain on the login page (no redirect occurred)
-    await expect(page).toHaveURL('http://localhost:4321/login')
+    await expect(page).toHaveURL(`${BASE_URL}/login`)
 
     // Verify the error toast message is displayed
     const errorMessage =
@@ -55,7 +63,7 @@ test.describe('Login Authentication Flow', () => {
     await page.waitForTimeout(2000)
 
     // Verify redirect to home page
-    await expect(page).toHaveURL('http://localhost:4321/')
+    await expect(page).toHaveURL(`${BASE_URL}/`)
 
     // Confirm welcome message is displayed
     await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
@@ -82,7 +90,7 @@ test.describe('Login Authentication Flow', () => {
 
   test(
     'should reject invalid credentials with proper error message',
-    { tag: ['@auth', '@negative'] },
+    { tag: ['@negative'] },
     async ({ page }) => {
       // Arrange: Set up test data with invalid credentials
       const invalidEmail = 'invalid@example.com'
@@ -100,7 +108,7 @@ test.describe('Login Authentication Flow', () => {
 
   test(
     'should handle inactive user accounts gracefully',
-    { tag: ['@auth', '@negative', '@edge-case'] },
+    { tag: ['@negative', '@edge-case'] },
     async ({ page }) => {
       // Arrange: Use inactive user credentials from environment
       const inactiveUserEmail = process.env.TEST_LOGIN_USERNAME_INACTIVE!
@@ -116,7 +124,7 @@ test.describe('Login Authentication Flow', () => {
 
   test(
     'should successfully authenticate valid users',
-    { tag: ['@auth', '@positive', '@smoke'] },
+    { tag: ['@positive', '@smoke'] },
     async ({ page }) => {
       // Arrange: Use valid user credentials from environment
       const validUserEmail = process.env.TEST_LOGIN_USERNAME!
@@ -132,7 +140,7 @@ test.describe('Login Authentication Flow', () => {
 
   test(
     'should refresh access token after expiration',
-    { tag: ['@auth', '@token', '@long-running'] },
+    { tag: ['@token', '@long-running'] },
     async ({ page }) => {
       // Set custom timeout for this long-running test
       test.setTimeout(4 * 60 * 1000)
@@ -173,7 +181,7 @@ test.describe('Login Authentication Flow', () => {
 
   test(
     'should logout after refresh token fails',
-    { tag: ['@auth', '@token', '@long-running'] },
+    { tag: ['@token', '@long-running'] },
     async ({ page }) => {
       // Arrange: Set custom timeout for this long-running test
       test.setTimeout(5 * 60 * 1000)
@@ -195,7 +203,19 @@ test.describe('Login Authentication Flow', () => {
       await page.reload()
 
       // Assert: redirect to login page
-      await expect(page).toHaveURL('http://localhost:4321/login')
+      await expect(page).toHaveURL(`${BASE_URL}/login`)
+    }
+  )
+
+  test(
+    'should not allow to login with missing fields',
+    { tag: ['@negative'] },
+    async ({ page }) => {
+      // Arrange: Submit login form with missing fields
+      await submitForm(page, '', '')
+
+      // Assert: form never submits
+      await expect(page).toHaveURL(`${BASE_URL}/login`)
     }
   )
 })

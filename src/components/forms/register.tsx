@@ -23,13 +23,13 @@ export default function RegisterForm() {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      toast.error('Las contraseñas no coinciden');
       setIsLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      toast.error('La contraseña debe tener al menos 6 caracteres');
       setIsLoading(false);
       return;
     }
@@ -38,14 +38,14 @@ export default function RegisterForm() {
       const response = await authService.register(email, password, name);
       
       if (response.status === 'ok') {
+        // Show confirmation messages
         toast.success('¡Registro exitoso!');
-        // Redirect to home page or dashboard
-        window.location.href = '/';
+        toast.success('Por favor, verifica tu correo electrónico para activar tu cuenta');
       } else {
-        setError(response.message || 'Registration failed');
+        toast.error(response.message || 'Registration failed');
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      toast.error('Ha ocurrido un error inesperado');
     } finally {
       setIsLoading(false);
     }
@@ -59,15 +59,10 @@ export default function RegisterForm() {
           <p className="text-sm text-muted-foreground">Crea tu cuenta para comenzar.</p>
         </CardHeader>
         <CardContent>
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-sm text-red-600">{error}</p>
-            </div>
-          )}
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Nombre (opcional)</Label>
+              <Label htmlFor="name">Nombre</Label>
               <Input 
                 id="name" 
                 type="text" 
@@ -75,6 +70,7 @@ export default function RegisterForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={isLoading}
+                required
               />
             </div>
             
