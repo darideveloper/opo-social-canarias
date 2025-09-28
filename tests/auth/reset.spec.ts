@@ -13,7 +13,7 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import { cleanupTestData, getTokenFromEmail } from '../helpers/db-helpers'
+import { cleanupTestData, getTokenFromEmail, updateToken } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -202,9 +202,6 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       // Act: Submit email form
       await submitEmailForm(page, currentEmail)
 
-      // Wait 2 seconds
-      await page.waitForTimeout(2000)
-
       // Assert: toast message
       await validateMessage(
         page,
@@ -301,7 +298,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
    * - Validate token disabled in database
    */
   test(
-    'put - reset password with token',
+    'put - reset password with valid token',
     { tag: ['@positive'] },
     async ({ page }) => {
       // Arrange: generate token submiting form with email
@@ -449,6 +446,93 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
+    }
+  )
+
+  /**
+   * Try to reset password with an expired token
+   * - Generate token submiting form with email
+   * - Wait 3 minutes
+   * - Get token generated from db
+   * - Navigate to reset password page with token
+   * - Fill password fields
+   * - Submit form
+   * - Validate error screen
+   * - Validate token not active in db
+   */
+  test(
+    'put - reset password with an expired token',
+    { tag: ['@negative', '@long-running'] },
+    async ({ page }) => {
+      // Arrange: Set custom timeout for this long-running test
+      test.setTimeout(4 * 60 * 1000)
+
+      // Arrange: generate token submiting form with email
+      await submitEmailForm(page, currentEmail)
+
+      // Wait 2 seconds
+      await page.waitForTimeout(2000)
+
+      // Assert: get token generated in db and valdiate
+      let token = await getTokenFromEmail(currentEmail, 'pass')
+      expect(token).not.toBeNull()
+
+      // Wait 3 minutes
+      await page.waitForTimeout(3 * 60 * 1000)
+
+      // Act: fill password fields
+      await submitResetPasswordForm(page, '123456', '123456', token!)
+
+      // Assert: toast message
+      await validateMessage(
+        page,
+        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+      )
+
+      // Assert: token still active in db (but expired)
+      token = await getTokenFromEmail(currentEmail, 'pass')
+      expect(token).not.toBeNull()
+    }
+  )
+
+  /**
+   * Try to reset password with an disabled token
+   * - Generate token submiting form with email
+   * - Get token generated from db
+   * - Disable token in database
+   * - Navigate to reset password page with token
+   * - Fill password fields
+   * - Submit form
+   * - Validate error screen
+   * - Validate token not active in db
+   */
+  test(
+    'put - reset password with an disabled token',
+    { tag: ['@negative'] },
+    async ({ page }) => {
+      // Arrange: generate token submiting form with email
+      await submitEmailForm(page, currentEmail)
+
+      // Wait 2 seconds
+      await page.waitForTimeout(2000)
+
+      // Assert: get token generated in db and valdiate
+      let token = await getTokenFromEmail(currentEmail, 'pass')
+      expect(token).not.toBeNull()
+
+      // Act: disable token in database
+      await updateToken(token!, false)
+
+      // Act: fill password fields
+      await submitResetPasswordForm(page, '123456', '123456', token!)
+
+      // Assert: toast message
+      await validateMessage(page, 'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.')
+
+      // Assert: token not active in db
+      token = await getTokenFromEmail(currentEmail, 'pass')
+      expect(token).toBeNull()
+
     }
   )
 })

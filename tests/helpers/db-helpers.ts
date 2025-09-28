@@ -103,3 +103,18 @@ export async function getTokenFromEmail(
     return null
   }
 }
+
+
+export async function updateToken(token: string, isActive: boolean) {
+  try {
+    // Get token
+    await query('UPDATE jwt_auth_temptoken SET is_active = $1 WHERE token = $2', [isActive, token])
+    console.log(`🔑 Token ${token} updated`)
+  
+    // Save database changes
+    await query('COMMIT')
+  } catch (error) {
+    console.error('Error updating token:', error)
+    throw error
+  }
+}
