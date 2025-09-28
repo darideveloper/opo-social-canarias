@@ -231,7 +231,7 @@ test.describe(
      * - Confirm user no activated
      */
     test(
-      'already used token',
+      'already used token (disabled)',
       { tag: ['@negative'] },
       async ({ page }) => {
         // Arrange: get token from email
