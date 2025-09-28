@@ -7,11 +7,11 @@ import Button from '../ui/Button';
 import Toaster from '../ui/Toaster';
 import { authService } from '../../lib/auth';
 
-interface ResetPasswordPageProps {
+interface ResetPasswordRequestProps {
   token?: string;
 }
 
-export default function ResetPasswordPage({ token }: ResetPasswordPageProps) {
+export default function ResetPasswordRequest({ token }: ResetPasswordRequestProps) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

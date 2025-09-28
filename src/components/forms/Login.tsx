@@ -9,7 +9,7 @@ import Label from '../ui/Label';
 import Toaster from '../ui/Toaster';
 import { authService } from '../../lib/auth';
 
-export default function LoginNewPage() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);

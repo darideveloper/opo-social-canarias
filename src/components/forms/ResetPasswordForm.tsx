@@ -7,15 +7,15 @@ import Button from '../ui/Button'
 import Toaster from '../ui/Toaster'
 import { authService } from '../../lib/auth'
 
-interface ResetPasswordTokenPageProps {
+interface ResetPasswordFormProps {
   token: string
 }
 
 type ResetStatus = 'form' | 'error'
 
-export default function ResetPasswordTokenPage({
+export default function ResetPasswordForm({
   token,
-}: ResetPasswordTokenPageProps) {
+}: ResetPasswordFormProps) {
   const [status, setStatus] = useState<ResetStatus>('form')
   const [errorMessage, setErrorMessage] = useState('')
   const [password, setPassword] = useState('')

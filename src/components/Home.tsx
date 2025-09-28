@@ -5,7 +5,7 @@ import CardHeader from './ui/CardHeader';
 import CardContent from './ui/CardContent';
 import Button from './ui/Button';
 
-export default function HomePage() {
+export default function Home() {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 

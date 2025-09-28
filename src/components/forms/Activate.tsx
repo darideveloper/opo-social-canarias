@@ -8,13 +8,13 @@ import ActivateSuccess from './ActivateSuccess';
 import ActivateError from './ActivateError';
 import { authService } from '../../lib/auth';
 
-interface ActivatePageProps {
+interface ActivateProps {
   token: string;
 }
 
 type ActivationStatus = 'loading' | 'success' | 'error';
 
-export default function ActivatePage({ token }: ActivatePageProps) {
+export default function Activate({ token }: ActivateProps) {
   const [status, setStatus] = useState<ActivationStatus>('loading');
   const [errorMessage, setErrorMessage] = useState('');
   const [isRetrying, setIsRetrying] = useState(false);

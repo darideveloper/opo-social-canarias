@@ -317,13 +317,13 @@ export class AuthService {
       if (response.ok) {
         return {
           status: 'ok',
-          message: data.message || 'Contraseña restablecida exitosamente',
+          message:'Contraseña restablecida exitosamente',
           data: data.data
         }
       } else {
         return {
           status: 'error',
-          message: data.message || 'Error al restablecer la contraseña',
+          message: 'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.',
           data: data.data
         }
       }
