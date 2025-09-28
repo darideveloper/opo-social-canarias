@@ -1,0 +1,53 @@
+---
+import Badge from '../ui/Badge.tsx';
+import { BookCheck, Zap, ShieldCheck } from 'lucide-react';
+---
+
+<section id="features" class="w-full py-12 md:py-24 lg:py-32 bg-muted/30">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="flex flex-wrap justify-center gap-2 mb-4">
+        <Badge className="text-lg bg-yellow-400 text-black hover:bg-yellow-400/90">Ayuntamiento</Badge>
+        <Badge className="text-lg bg-yellow-400 text-black hover:bg-yellow-400/90">Cabildo</Badge>
+        <Badge className="text-lg bg-yellow-400 text-black hover:bg-yellow-400/90">Gobierno</Badge>
+        <Badge className="text-lg bg-yellow-400 text-black hover:bg-yellow-400/90">SCS</Badge>
+        <Badge className="text-lg bg-yellow-400 text-black hover:bg-yellow-400/90">Penitenciario</Badge>
+      </div>
+      <div class="space-y-2">
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline text-foreground">Prepárate para la Oposición como nunca antes</h2>
+        <p class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          Al registrarte, accederás a un ecosistema de herramientas enfocado en un solo objetivo: que consigas tu plaza.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid gap-12 lg:gap-16">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600" alt="Mujeres estudiando un temario" width="600" height="400" class="rounded-xl shadow-lg" />
+        <div class="space-y-3">
+          <BookCheck className="h-10 w-10 text-primary" />
+          <h3 class="text-2xl font-bold font-headline">Temario 100% Canario</h3>
+          <p class="text-muted-foreground">Accede a un temario general y específico siempre actualizado a la normativa y contexto de las Islas Canarias. ¡No estudies de más, ni de menos! Olvídate de los temarios genéricos y céntrate en lo que de verdad importa para tu oposición.</p>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-3 md:order-last">
+          <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?q=80&w=600" alt="Visualización de inteligencia artificial" width="600" height="400" class="rounded-xl shadow-lg" />
+        </div>
+        <div class="space-y-3">
+          <Zap className="h-10 w-10 text-primary" />
+          <h3 class="text-2xl font-bold font-headline">Casos Prácticos con IA</h3>
+          <p class="text-muted-foreground">Nuestro generador de IA crea infinitos casos prácticos basados en situaciones reales de los servicios sociales de Canarias. La práctica que necesitas, sin límites. Domina la parte práctica y ve con total seguridad al examen.</p>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600" alt="Mujer analizando un dashboard" width="600" height="400" class="rounded-xl shadow-lg" />
+        <div class="space-y-3">
+          <ShieldCheck className="h-10 w-10 text-primary" />
+          <h3 class="text-2xl font-bold font-headline">Seguimiento y Convocatorias</h3>
+          <p class="text-muted-foreground">Analiza tu progreso en cada área con estadísticas claras y no te pierdas ninguna convocatoria con nuestro widget de seguimiento en tiempo real. Controla tu evolución y no dejes pasar ni una oportunidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

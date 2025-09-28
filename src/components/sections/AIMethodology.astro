@@ -1,0 +1,50 @@
+---
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card.tsx';
+import { Target, BrainCircuit, Star } from 'lucide-react';
+---
+
+<section id="ai-methodology" class="w-full py-12 md:py-24 lg:py-32 bg-background">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline text-foreground">Una Metodología Inteligente</h2>
+      <p class="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
+        Usamos la inteligencia artificial para darte una ventaja decisiva. Cada herramienta está diseñada para optimizar tu tiempo y maximizar tus resultados.
+      </p>
+    </div>
+    <div class="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-1 md:grid-cols-3 lg:gap-12">
+      <Card className="text-center p-6 text-card-foreground">
+        <div class="flex justify-center mb-4">
+          <div class="flex items-center justify-center rounded-full bg-primary/10 p-4">
+            <Target className="h-10 w-10 text-primary" />
+          </div>
+        </div>
+        <CardTitle className="text-xl font-bold font-headline">Contenido Específico</CardTitle>
+        <CardContent className="p-0 mt-2">
+          <p class="text-muted-foreground">La IA analiza y adapta el temario a la legislación y el contexto 100% canario. Estudia solo lo que necesitas.</p>
+        </CardContent>
+      </Card>
+      <Card className="text-center p-6 text-card-foreground">
+        <div class="flex justify-center mb-4">
+          <div class="flex items-center justify-center rounded-full bg-primary/10 p-4">
+            <BrainCircuit className="h-10 w-10 text-primary" />
+          </div>
+        </div>
+        <CardTitle className="text-xl font-bold font-headline">Práctica Ilimitada</CardTitle>
+        <CardContent className="p-0 mt-2">
+          <p class="text-muted-foreground">Genera infinitos casos prácticos y test. La IA crea escenarios realistas para que domines cada supuesto.</p>
+        </CardContent>
+      </Card>
+      <Card className="text-center p-6 text-card-foreground">
+        <div class="flex justify-center mb-4">
+          <div class="flex items-center justify-center rounded-full bg-primary/10 p-4">
+            <Star className="h-10 w-10 text-primary" />
+          </div>
+        </div>
+        <CardTitle className="text-xl font-bold font-headline">Análisis de Progreso</CardTitle>
+        <CardContent className="p-0 mt-2">
+          <p class="text-muted-foreground">Nuestro sistema identifica tus puntos débiles y te sugiere dónde enfocar tu energía para un estudio más eficiente.</p>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</section>

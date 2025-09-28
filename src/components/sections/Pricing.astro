@@ -1,0 +1,93 @@
+---
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card.tsx';
+import Badge from '../ui/Badge.tsx';
+import Button from '../ui/Button.tsx';
+import { CheckCircle, Zap, FileArchive, Download } from 'lucide-react';
+---
+
+<section id="pricing" class="w-full py-12 md:py-24 lg:py-32 bg-muted/30">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center">
+      <div class="space-y-3">
+        <h2 class="text-3xl font-bold tracking-tighter md:text-4xl font-headline text-foreground">Un precio justo para tu futuro</h2>
+        <p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed">
+          Elige el plan que se adapte a ti. Todos los planes de pago son sin compromiso de permanencia.
+        </p>
+      </div>
+    </div>
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-12 lg:grid-cols-3 lg:gap-8 items-start">
+      <!-- Plan Mensual -->
+      <Card className="flex flex-col h-full">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-headline">Plan Mensual</CardTitle>
+          <CardDescription>Para empezar a prepararte sin ataduras.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 flex-1">
+          <div class="text-4xl font-bold">35€<span class="text-lg font-normal text-muted-foreground">/mes + IGIC</span></div>
+          <ul class="grid gap-2 text-sm text-left">
+            <li class="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary" />Temario completo y actualizado.</li>
+            <li class="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary" />Seguimiento de progreso.</li>
+            <li class="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary" />Widget de convocatorias.</li>
+            <li class="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary" />Generador de casos y tests (limitado).</li>
+            <li class="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary" />Buscador de recursos con IA (limitado).</li>
+          </ul>
+        </CardContent>
+        <div class="p-6 pt-0 mt-auto">
+          <a href="/register?plan=Mensual" class="w-full">
+            <Button className="w-full" variant="outline">Empezar ahora</Button>
+          </a>
+        </div>
+      </Card>
+
+      <!-- Plan Mensual Pro - Destacado -->
+      <Card className="border-2 border-primary flex flex-col relative overflow-hidden h-full scale-105">
+        <Badge className="absolute top-0 left-1/2 -translate-x-1/2" variant="default">MÁS POPULAR</Badge>
+        <CardHeader className="pb-4 pt-12">
+          <CardTitle className="text-2xl font-headline">Plan Mensual Pro</CardTitle>
+          <CardDescription>Desbloquea todo el poder de la IA sin permanencia.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 flex-1">
+          <div class="text-5xl font-bold">57€<span class="text-lg font-normal text-muted-foreground">/mes + IGIC</span></div>
+          <ul class="grid gap-2 text-sm text-left">
+            <li class="flex items-center gap-2 font-semibold"><CheckCircle className="h-4 w-4 text-primary" />Todo lo del plan mensual.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><Zap className="h-4 w-4" />Generación con IA ilimitada.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><FileArchive className="h-4 w-4" />Acceso a exámenes de convocatorias anteriores.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><Download className="h-4 w-4" />Descarga de todo el temario en PDF.</li>
+          </ul>
+        </CardContent>
+        <div class="p-6 pt-0 mt-auto">
+          <a href="/register?plan=Mensual Pro" class="w-full">
+            <Button className="w-full">Elegir Plan Pro</Button>
+          </a>
+        </div>
+      </Card>
+
+      <!-- Plan Anual Pro -->
+      <Card className="flex flex-col h-full relative overflow-hidden">
+        <Badge className="absolute top-0 right-0 bg-yellow-400 text-black hover:bg-yellow-400/90 rounded-none rounded-bl-lg">AHORRA 2 MESES</Badge>
+        <CardHeader className="pb-4 pt-12">
+          <CardTitle className="text-2xl font-headline">Plan Anual Pro</CardTitle>
+          <CardDescription>El compromiso definitivo con tu plaza. El mejor valor.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 flex-1">
+          <div class="text-4xl font-bold">570€<span class="text-lg font-normal text-muted-foreground">/año + IGIC</span></div>
+          <ul class="grid gap-2 text-sm text-left">
+            <li class="flex items-center gap-2 font-semibold"><CheckCircle className="h-4 w-4 text-primary" />Todo lo del plan Mensual Pro.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><Zap className="h-4 w-4" />Generación con IA ilimitada.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><FileArchive className="h-4 w-4" />Acceso a exámenes de convocatorias anteriores.</li>
+            <li class="flex items-center gap-2 font-bold text-primary"><Download className="h-4 w-4" />Descarga de todo el temario en PDF.</li>
+          </ul>
+          <p class="text-xs text-muted-foreground pt-4">La inversión más completa para asegurar tu preparación con las mejores herramientas del mercado.</p>
+        </CardContent>
+        <div class="p-6 pt-0 mt-auto">
+          <a href="/register?plan=Anual Pro" class="w-full">
+            <Button className="w-full" variant="outline">Apostar por mi futuro</Button>
+          </a>
+        </div>
+      </Card>
+    </div>
+    <div class="text-center mt-12">
+      <p class="text-muted-foreground">¿Aún no estás convencida? <a href="/register" class="font-bold text-primary underline">Empieza con una prueba gratuita de 24 horas</a> y accede a todo.</p>
+    </div>
+  </div>
+</section>
