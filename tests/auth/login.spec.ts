@@ -24,7 +24,7 @@ import { test, expect, type Page } from '@playwright/test'
 const BASE_URL = 'http://localhost:4321'
 
 
-test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
+test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
   
   /**
    * Navigate to login page and wait for it to fully load
@@ -139,7 +139,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth', '@smoke'] }, () => {
    */
   test(
     'successfully authenticate valid users',
-    { tag: ['@positive', '@smoke'] },
+    { tag: ['@positive'] },
     async ({ page }) => {
       // Arrange: Use valid user credentials from environment
       const validUserEmail = process.env.TEST_LOGIN_USERNAME!

@@ -30,7 +30,7 @@ const BASE_URL = 'http://localhost:4321'
 
 test.describe(
   'Register Authentication Flow',
-  { tag: ['@auth', '@smoke'] },
+  { tag: ['@auth'] },
   () => {
     /**
      * Navigate to login page and wait for it to fully load
@@ -170,7 +170,7 @@ test.describe(
      */
     test(
       'successfully register a new user',
-      { tag: ['@positive', '@smoke'] },
+      { tag: ['@positive'] },
       async ({ page }) => {
         // Arrange: use random email and password
         const { name, email, password } = await getRandomData()

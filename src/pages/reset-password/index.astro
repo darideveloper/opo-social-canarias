@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro'
+import ResetPasswordPage from '../../components/forms/reset-password.tsx'
+---
+
+<Layout title="Restablecer Contraseña">
+	<ResetPasswordPage client:load />
+</Layout>

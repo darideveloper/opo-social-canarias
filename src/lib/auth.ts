@@ -270,6 +270,72 @@ export class AuthService {
     }
   }
 
+  // Request password reset
+  async requestPasswordReset(email: string): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/password/reset/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      // Always return success for security (don't reveal if email exists or not)
+      return {
+        status: 'ok',
+        message: 'Si el email existe en nuestro sistema, recibirás un enlace para restablecer tu contraseña.',
+        data: data.data
+      }
+    } catch (error) {
+      console.error('Password reset request error:', error)
+      return {
+        status: 'ok', // Still return success for security
+        message: 'Si el email existe en nuestro sistema, recibirás un enlace para restablecer tu contraseña.',
+      }
+    }
+  }
+
+  // Reset password with token
+  async resetPasswordWithToken(token: string, newPassword: string): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/password/reset/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          token, 
+          new_password: newPassword 
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        return {
+          status: 'ok',
+          message: data.message || 'Contraseña restablecida exitosamente',
+          data: data.data
+        }
+      } else {
+        return {
+          status: 'error',
+          message: data.message || 'Error al restablecer la contraseña',
+          data: data.data
+        }
+      }
+    } catch (error) {
+      console.error('Password reset with token error:', error)
+      return {
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Error de conexión. Intenta más tarde.',
+      }
+    }
+  }
+
   // Refresh token when needed
   async refreshToken(): Promise<AuthResponse> {
     try {

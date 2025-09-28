@@ -2,7 +2,10 @@
  * Activate Authentication Tests
  *
  * This test suite validates the complete activate authentication flow including:
- * - test 1
+ * - Success
+ * - Invalid token
+ * - Expired token
+ * - Already used token (disabled)
  *
  * Prerequisites:
  * - Environment variables must be set for test credentials
@@ -23,7 +26,7 @@ let currentPassword = ''
 
 test.describe(
   'Activate Authentication Flow',
-  { tag: ['@auth', '@smoke'] },
+  { tag: ['@auth'] },
   () => {
     /**
      * Get random data

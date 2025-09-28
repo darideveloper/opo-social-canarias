@@ -78,21 +78,28 @@ export async function deleteUserByEmail(email: string) {
   }
 }
 
-export async function getTokenFromEmail(email: string) {
-
-  const user = await getUserByEmail(email)
-  console.log('🔑 User:', user)
-  const profile = await getProfileByUserId(user.id)
-  console.log('🔑 Profile:', profile)
-
+export async function getTokenFromEmail(
+  email: string,
+  type: string = 'sign_up',
+  isActive: boolean = true,
+  raiseError: boolean = true
+) {
+  
   try {
+    const user = await getUserByEmail(email)
+    console.log('🔑 User:', user)
+    const profile = await getProfileByUserId(user.id)
+    console.log('🔑 Profile:', profile)
     const result = await query(
-      'SELECT token FROM jwt_auth_temptoken WHERE profile_id = $1 AND type = $2',
-      [profile.id, 'sign_up']
+      'SELECT token FROM jwt_auth_temptoken WHERE profile_id = $1 AND type = $2 and is_active = $3',
+      [profile.id, type, isActive]
     )
-    return result.rows[0].token
+    return result?.rows[0]?.token || null
   } catch (error) {
     console.error('Error getting token from email:', error)
-    throw error
+    if (raiseError) {
+      throw error
+    }
+    return null
   }
 }
