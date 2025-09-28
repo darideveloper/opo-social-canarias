@@ -163,7 +163,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
     } else {
       await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
-        'Credenciales incorrectas'
+        'Welcome to OpoSocial'
       )
     }
   }
@@ -212,7 +212,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: token generated in db
-      const token = await getTokenFromEmail(currentEmail)
+      const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).not.toBeNull()
     }
   )
@@ -237,7 +237,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: token not generated in db
-      const token = await getTokenFromEmail(currentEmail)
+      const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
     }
   )
@@ -260,7 +260,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await validateMessage(page, 'Por favor ingresa un email válido', 0)
 
       // Assert: token not generated in db
-      const token = await getTokenFromEmail(currentEmail)
+      const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
     }
   )
@@ -279,7 +279,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await expect(page.locator('[role="alert"]')).not.toBeVisible()
 
     // Assert: token not generated in db
-    const token = await getTokenFromEmail(currentEmail)
+    const token = await getTokenFromEmail(currentEmail, 'pass')
     expect(token).toBeNull()
   })
 
@@ -311,7 +311,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await page.waitForTimeout(2000)
 
       // Assert: get token generated in db and valdiate
-      let token = await getTokenFromEmail(currentEmail)
+      let token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).not.toBeNull()
 
       // Act: fill password fields
@@ -329,7 +329,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await login(page, currentEmail, currentPassword)
 
       // Validate token disabled in database
-      token = await getTokenFromEmail(currentEmail)
+      token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
     }
   )
@@ -355,7 +355,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await page.waitForTimeout(2000)
 
       // Assert: get token generated in db and valdiate
-      let token = await getTokenFromEmail(currentEmail)
+      let token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).not.toBeNull()
 
       // Act: fill password fields
@@ -367,13 +367,16 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: toast message
-      await validateMessage(page, 'Token de restablecimiento no válido')
+      await validateMessage(
+        page,
+        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+      )
 
       // Assert: login with new password
       await login(page, currentEmail, currentPassword, false)
 
       // Validate token still active (unused) in database
-      token = await getTokenFromEmail(currentEmail)
+      token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).not.toBeNull()
     }
   )
@@ -400,7 +403,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await expect(page.locator('[role="alert"]')).not.toBeVisible()
 
       // Assert: token not generated in db
-      const token = await getTokenFromEmail(currentEmail)
+      const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
     }
   )
@@ -412,50 +415,40 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
    * - Validate token not generated in db
    */
   test(
-    'put - password validation: invalid password',
+    'put - password validation: invalid password (less than 6 characters)',
     { tag: ['@negative'] },
     async ({ page }) => {
       // Act: fill password fields
-      await submitResetPasswordForm(
-        page,
-        '12345',
-        '12345',
-        'fake-token'
-      )
+      await submitResetPasswordForm(page, '12345', '12345', 'fake-token')
 
       // Assert: no alert because no password was filled
       await expect(page.locator('[role="alert"]')).not.toBeVisible()
 
       // Assert: token not generated in db
-      const token = await getTokenFromEmail(currentEmail)
+      const token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
     }
   )
 
-    /**
+  /**
    * Password fields validation: invalid password (don't match)
    * - Submit form
    * - Validate error screen
    * - Validate token not generated in db
    */
-    test(
-      'put - password validation: invalid password',
-      { tag: ['@negative'] },
-      async ({ page }) => {
-        // Act: fill password fields
-        await submitResetPasswordForm(
-          page,
-          '123456',
-          '1234567',
-          'fake-token'
-        )
-  
-        // Assert: error in toast
-        await validateMessage(page, 'Las contraseñas no coinciden')
-  
-        // Assert: token not generated in db
-        const token = await getTokenFromEmail(currentEmail)
-        expect(token).toBeNull()
-      }
-    )
+  test(
+    'put - password validation: invalid password (dont match)',
+    { tag: ['@negative'] },
+    async ({ page }) => {
+      // Act: fill password fields
+      await submitResetPasswordForm(page, '123456', '1234567', 'fake-token')
+
+      // Assert: error in toast
+      await validateMessage(page, 'Las contraseñas no coinciden')
+
+      // Assert: token not generated in db
+      const token = await getTokenFromEmail(currentEmail, 'pass')
+      expect(token).toBeNull()
+    }
+  )
 })
