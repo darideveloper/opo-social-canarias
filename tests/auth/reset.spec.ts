@@ -253,8 +253,9 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       const email = 'a@a'
       await submitEmailForm(page, email)
 
-      // Assert: toast message
-      await validateMessage(page, 'Por favor ingresa un email válido', 0)
+      // Assert: error message
+      const errorMessageElement = page.locator('p.text-sm.text-destructive')
+      await expect(errorMessageElement).toHaveText('Por favor ingresa un email válido')
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -441,7 +442,8 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await submitResetPasswordForm(page, '123456', '1234567', 'fake-token')
 
       // Assert: error in toast
-      await validateMessage(page, 'Las contraseñas no coinciden')
+      const errorMessageElement = page.locator('p.text-sm.text-destructive')
+      await expect(errorMessageElement).toHaveText('Las contraseñas no coinciden')
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')

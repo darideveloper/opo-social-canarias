@@ -136,7 +136,8 @@ test.describe(
       await fillFormData(page, name, email, password, password + '1')
 
       // Assert: Verify both passwords match
-      await validateMessage(page, 'Las contraseñas no coinciden')
+      const errorMessageElement = page.locator('p.text-sm.text-destructive')
+      await expect(errorMessageElement).toHaveText('Las contraseñas no coinciden')
     })
 
     /**
@@ -154,11 +155,9 @@ test.describe(
         // Act: Submit register form with random credentials (but different passwords)
         await fillFormData(page, name, email, '123')
 
-        // Assert: Verify both passwords match
-        await validateMessage(
-          page,
-          'La contraseña debe tener al menos 6 caracteres'
-        )
+        // Assert: Verify error message
+        const errorMessageElement = page.locator('p.text-sm.text-destructive')
+        await expect(errorMessageElement).toHaveText('La contraseña debe tener al menos 6 caracteres')
       }
     )
 

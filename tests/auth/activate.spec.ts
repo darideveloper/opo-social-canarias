@@ -91,7 +91,7 @@ test.describe(
 
       // Assert: validate login
       if (active) {
-        await expect(page.url()).toBe(`${BASE_URL}/`)
+         await expect(page.url()).toBe(`${BASE_URL}/`)
         await expect(page.locator('main h1.text-3xl')).toHaveText(
           'Welcome to OpoSocial'
         )
@@ -112,7 +112,7 @@ test.describe(
       await expect(page.locator('main h1 + p')).toHaveText(
         'Tu cuenta ha sido activada exitosamente.'
       )
-      await expect(page.locator('main button.bg-primary')).toHaveText('Ir al Login')
+      await expect(page.locator('main a.bg-primary')).toHaveText('Ir al Login')
     }
 
     /**
@@ -127,7 +127,7 @@ test.describe(
       await expect(page.locator('main h1 + p')).toHaveText(
         'Hubo un problema con la activación.'
       )
-      await expect(page.locator('main button.bg-primary')).toHaveText('Ir al Login')
+      await expect(page.locator('main a.bg-primary')).toHaveText('Ir al Login')
       await expect(page.locator('main button.bg-background')).toHaveText(
         'Reintentar'
       )
