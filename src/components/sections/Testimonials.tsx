@@ -7,8 +7,24 @@ import { Avatar, AvatarImage, AvatarFallback } from '../ui/Avatar';
 
 export default function Testimonials() {
   const plugin = useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: true })
+    Autoplay({ delay: 5000, stopOnInteraction: true })
   );
+
+  const carouselOptions = {
+    slidesToScroll: 1,
+    containScroll: 'trimSnaps' as const,
+    align: 'start' as const,
+    breakpoints: {
+      '(min-width: 768px)': { 
+        slidesToScroll: 1,
+        align: 'start' as const
+      },
+      '(min-width: 1024px)': { 
+        slidesToScroll: 1,
+        align: 'start' as const
+      }
+    }
+  };
 
   const testimonials = [
     {
@@ -38,6 +54,20 @@ export default function Testimonials() {
       title: "Un antes y un después",
       text: "La herramienta de búsqueda con IA para encontrar recursos y normativa específica me ha volado la cabeza. Encuentro lo que necesito en segundos, no en horas.",
       rating: 5,
+    },
+    {
+      name: "María L.",
+      avatar: "ML",
+      title: "Recomendación total",
+      text: "La plataforma es intuitiva y los casos prácticos son muy realistas. Me siento mucho más preparada para las oposiciones.",
+      rating: 5,
+    },
+    {
+      name: "Ana C.",
+      avatar: "AC",
+      title: "Vale cada euro",
+      text: "El seguimiento de convocatorias me mantiene siempre informada. No me pierdo ninguna oportunidad de trabajo.",
+      rating: 5,
     }
   ];
 
@@ -53,28 +83,29 @@ export default function Testimonials() {
         
         <Carousel
           plugins={[plugin.current]}
-          className="w-full max-w-4xl mx-auto"
+          className="w-full max-w-6xl mx-auto"
+          opts={carouselOptions}
           onMouseEnter={plugin.current.stop}
           onMouseLeave={plugin.current.reset}
         >
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index}>
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 basis-full">
                 <div className="p-1">
-                  <Card className="h-full">
-                    <CardContent className="flex flex-col items-center justify-center p-6 text-center space-y-4">
-                      <Avatar className="w-20 h-20 border-2 border-primary">
+                  <Card className="h-full mx-1">
+                    <CardContent className="flex flex-col items-center justify-center p-4 text-center space-y-3">
+                      <Avatar className="w-16 h-16 border-2 border-primary">
                         <AvatarImage src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`} />
                         <AvatarFallback>{testimonial.avatar}</AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
-                        <h3 className="text-xl font-semibold">{testimonial.name}</h3>
+                        <h3 className="text-lg font-semibold">{testimonial.name}</h3>
                         <div className="flex items-center justify-center">
-                          {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+                          {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
                         </div>
                       </div>
-                      <blockquote className="text-lg font-semibold leading-snug font-headline">&ldquo;{testimonial.title}&rdquo;</blockquote>
-                      <p className="text-muted-foreground text-center max-w-md">&ldquo;{testimonial.text}&rdquo;</p>
+                      <blockquote className="text-base font-semibold leading-snug font-headline">&ldquo;{testimonial.title}&rdquo;</blockquote>
+                      <p className="text-muted-foreground text-center text-sm leading-relaxed">&ldquo;{testimonial.text}&rdquo;</p>
                     </CardContent>
                   </Card>
                 </div>

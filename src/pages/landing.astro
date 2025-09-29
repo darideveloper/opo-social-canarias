@@ -1,24 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/sections/Header.astro';
 import Hero from '../components/sections/Hero.astro';
 import Features from '../components/sections/Features.astro';
 import AIMethodology from '../components/sections/AIMethodology.astro';
 import Pricing from '../components/sections/Pricing.astro';
-import Footer from '../components/sections/Footer.astro';
 import Testimonials from '../components/sections/Testimonials.tsx';
 ---
 
 <Layout title="Oposocial Canarias - Tu plaza de Trabajo Social más cerca que nunca">
-  <div class="flex flex-col min-h-dvh bg-background font-body">
-    <Header />
-    <main class="flex-1">
-      <Hero />
-      <Features />
-      <AIMethodology />
-      <Pricing />
-      <Testimonials client:load />
-    </main>
-    <Footer />
-  </div>
+  <Hero />
+  <Features />
+  <AIMethodology />
+  <Pricing />
+  <Testimonials client:load />
 </Layout>

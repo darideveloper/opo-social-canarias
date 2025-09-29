@@ -43,7 +43,7 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-8">
+    <div className="min-h-[calc(100vh-8rem)] bg-background flex items-center justify-center p-8">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
           <h1 className="text-3xl font-bold">Welcome to OpoSocial</h1>

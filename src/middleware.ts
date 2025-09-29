@@ -38,7 +38,7 @@ export const onRequest = defineMiddleware(async ({ request, cookies, locals }: {
   if (
     pathname.startsWith('/_astro/') ||
     pathname.startsWith('/favicon') ||
-    pathname === '/favicon.svg' ||
+    pathname === '/favicon.ico' ||
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml'
   ) {

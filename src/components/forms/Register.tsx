@@ -101,7 +101,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
+    <div className="flex items-center justify-center min-h-[calc(100vh-8rem)] bg-background">
       <Card>
         <CardHeader className="text-center">
           <h1 className="text-2xl font-headline font-semibold leading-none tracking-tight">Registrarse</h1>
