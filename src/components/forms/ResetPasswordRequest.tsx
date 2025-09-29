@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import Card from '../ui/Card';
-import CardHeader from '../ui/CardHeader';
-import CardContent from '../ui/CardContent';
+import { Card, CardHeader, CardContent } from '../ui/Card';
 import Button from '../ui/Button';
+import Input from '../ui/Input';
+import Label from '../ui/Label';
+import Link from '../ui/Link';
+import { FormField } from '../ui/Form';
 import Toaster from '../ui/Toaster';
 import { authService } from '../../lib/auth';
 
@@ -14,19 +16,21 @@ interface ResetPasswordRequestProps {
 export default function ResetPasswordRequest({ token }: ResetPasswordRequestProps) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError('');
     
     if (!email) {
-      toast.error('Por favor ingresa tu email');
+      setEmailError('Por favor ingresa tu email');
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error('Por favor ingresa un email válido');
+      setEmailError('Por favor ingresa un email válido');
       return;
     }
 
@@ -50,9 +54,6 @@ export default function ResetPasswordRequest({ token }: ResetPasswordRequestProp
     }
   };
 
-  const handleGoToLogin = () => {
-    window.location.href = '/login';
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -67,47 +68,37 @@ export default function ResetPasswordRequest({ token }: ResetPasswordRequestProp
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                Email
-              </label>
-              <input
+            <FormField
+              label="Email"
+              error={emailError}
+              required
+            >
+              <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="tu@email.com"
-                className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                 disabled={isLoading}
+                error={!!emailError}
                 required
               />
-            </div>
+            </FormField>
             
             <Button 
               type="submit" 
               className="w-full"
-              disabled={isLoading}
+              loading={isLoading}
+              loadingText="Enviando..."
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <svg className="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  Enviando...
-                </div>
-              ) : (
-                'Enviar Email de Restablecimiento'
-              )}
+              Enviar Email de Restablecimiento
             </Button>
           </form>
           
           <div className="mt-6 text-center">
-            <button
-              onClick={handleGoToLogin}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link href="/login" variant="muted">
               ¿Recordaste tu contraseña? Inicia sesión
-            </button>
+            </Link>
           </div>
         </CardContent>
       </Card>

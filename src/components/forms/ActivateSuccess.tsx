@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../ui/Button';
+import Link from '../ui/Link';
 
 interface ActivateSuccessProps {
   isLoading: boolean;
@@ -38,12 +39,13 @@ export default function ActivateSuccess({ isLoading, onGoToLogin }: ActivateSucc
       <p className="text-sm text-muted-foreground mt-2">
         Ya puedes iniciar sesión con tus credenciales.
       </p>
-      <Button 
-        onClick={onGoToLogin} 
-        className="w-full mt-4"
+      <Link 
+        href="/login" 
+        variant="muted" 
+        className="w-full mt-4 text-center block py-2 px-4 bg-primary text-primary-foreground rounded-md border border-primary hover:bg-transparent hover:text-primary hover:border-primary"
       >
         Ir al Login
-      </Button>
+      </Link>
     </div>
   );
 }

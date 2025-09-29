@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import Card from '../ui/Card';
-import CardHeader from '../ui/CardHeader';
-import CardContent from '../ui/CardContent';
+import { Card, CardHeader, CardContent } from '../ui/Card';
 import Toaster from '../ui/Toaster';
 import ActivateSuccess from './ActivateSuccess';
 import ActivateError from './ActivateError';

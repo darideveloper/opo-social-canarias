@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
-import Card from '../ui/Card'
-import CardHeader from '../ui/CardHeader'
-import CardContent from '../ui/CardContent'
+import { Card, CardHeader, CardContent } from '../ui/Card'
 import Button from '../ui/Button'
+import Input from '../ui/Input'
+import Label from '../ui/Label'
+import Link from '../ui/Link'
+import { FormField } from '../ui/Form'
 import Toaster from '../ui/Toaster'
 import { authService } from '../../lib/auth'
 
@@ -21,6 +23,8 @@ export default function ResetPasswordForm({
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
+  const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
   useEffect(() => {
     if (!token) {
@@ -35,19 +39,21 @@ export default function ResetPasswordForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setPasswordError('')
+    setConfirmPasswordError('')
 
     if (!password) {
-      toast.error('Por favor ingresa tu nueva contraseña')
+      setPasswordError('Por favor ingresa tu nueva contraseña')
       return
     }
 
     if (password.length < 6) {
-      toast.error('La contraseña debe tener al menos 6 caracteres')
+      setPasswordError('La contraseña debe tener al menos 6 caracteres')
       return
     }
 
     if (password !== confirmPassword) {
-      toast.error('Las contraseñas no coinciden')
+      setConfirmPasswordError('Las contraseñas no coinciden')
       return
     }
 
@@ -81,13 +87,6 @@ export default function ResetPasswordForm({
     }
   }
 
-  const handleGoToLogin = () => {
-    window.location.href = '/login'
-  }
-
-  const handleRetry = () => {
-    window.location.href = '/reset-password'
-  }
 
   const renderContent = () => {
     switch (status) {
@@ -98,90 +97,62 @@ export default function ResetPasswordForm({
               onSubmit={handleSubmit}
               className='space-y-4'
             >
-              <div>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium text-foreground mb-2'
-                >
-                  Nueva Contraseña
-                </label>
-                <input
+              <FormField
+                label="Nueva Contraseña"
+                error={passwordError}
+                required
+              >
+                <Input
                   id='password'
                   type='password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder='Mínimo 6 caracteres'
-                  className='w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent'
                   disabled={isSubmitting}
+                  error={!!passwordError}
                   required
                   minLength={6}
                 />
-              </div>
+              </FormField>
 
-              <div>
-                <label
-                  htmlFor='confirmPassword'
-                  className='block text-sm font-medium text-foreground mb-2'
-                >
-                  Confirmar Contraseña
-                </label>
-                <input
+              <FormField
+                label="Confirmar Contraseña"
+                error={confirmPasswordError}
+                required
+              >
+                <Input
                   id='confirmPassword'
                   type='password'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder='Repite tu nueva contraseña'
-                  className='w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent'
                   disabled={isSubmitting}
+                  error={!!confirmPasswordError}
                   required
                   minLength={6}
                 />
-              </div>
+              </FormField>
 
               <Button
                 type='submit'
                 className='w-full'
-                disabled={isSubmitting}
+                loading={isSubmitting}
+                loadingText="Restableciendo..."
               >
-                {isSubmitting ? (
-                  <div className='flex items-center justify-center'>
-                    <svg
-                      className='w-4 h-4 mr-2 animate-spin'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
-                      />
-                    </svg>
-                    Restableciendo...
-                  </div>
-                ) : (
-                  'Restablecer Contraseña'
-                )}
+                Restablecer Contraseña
               </Button>
             </form>
 
              <div className='mt-6 space-y-2'>
                <div className='text-center'>
-                 <button
-                   onClick={handleGoToLogin}
-                   className='text-sm text-muted-foreground hover:text-foreground transition-colors'
-                 >
+                 <Link href="/login" variant="muted">
                    ¿Recordaste tu contraseña? Inicia sesión
-                 </button>
+                 </Link>
                </div>
                <div className='text-center'>
-                 <button
-                   onClick={handleRetry}
-                   className='text-sm text-muted-foreground hover:text-foreground transition-colors'
-                 >
+                 <Link href="/reset-password" variant="muted">
                    Solicitar nuevo enlace de restablecimiento
-                 </button>
+                 </Link>
                </div>
              </div>
           </>
@@ -211,19 +182,20 @@ export default function ResetPasswordForm({
                 'Hubo un problema al restablecer tu contraseña. Por favor, intenta nuevamente solicitando un nuevo enlace de restablecimiento.'}
             </p>
             <div className='flex gap-2 mt-4'>
-              <Button
-                onClick={handleRetry}
-                className='flex-1'
-                variant='outline'
+              <Link
+                href="/reset-password"
+                variant="muted"
+                className='flex-1 text-center py-2 px-4 border border-input rounded-md hover:bg-accent'
               >
                 Solicitar Nuevo Enlace
-              </Button>
-              <Button
-                onClick={handleGoToLogin}
-                className='flex-1'
+              </Link>
+              <Link
+                href="/login"
+                variant="muted"
+                className='flex-1 text-center py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'
               >
                 Ir al Login
-              </Button>
+              </Link>
             </div>
           </div>
         )
@@ -246,7 +218,7 @@ export default function ResetPasswordForm({
               'Se encontró un problema durante el proceso.'}
           </p>
         </CardHeader>
-        <CardContent className='text-center'>
+        <CardContent>
           <div className='space-y-4'>{renderContent()}</div>
         </CardContent>
       </Card>

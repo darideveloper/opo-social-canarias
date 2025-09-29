@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../ui/Button';
+import Link from '../ui/Link';
 
 interface ActivateErrorProps {
   errorMessage: string;
@@ -32,16 +33,18 @@ export default function ActivateError({
           onClick={onRetry} 
           className="flex-1"
           variant="outline"
-          disabled={isRetrying}
+          loading={isRetrying}
+          loadingText="Reintentando..."
         >
-          {isRetrying ? 'Reintentando...' : 'Reintentar'}
+          Reintentar
         </Button>
-        <Button 
-          onClick={onGoToLogin} 
-          className="flex-1"
+        <Link 
+          href="/login" 
+          variant="muted" 
+          className="flex-1 text-center py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
         >
           Ir al Login
-        </Button>
+        </Link>
       </div>
     </div>
   );

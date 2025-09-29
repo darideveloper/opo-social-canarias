@@ -6,6 +6,19 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * Card component for containing content
+ * 
+ * @example
+ * ```tsx
+ * <Card>
+ *   <CardHeader>
+ *     <CardTitle>Card Title</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>Card content goes here</CardContent>
+ * </Card>
+ * ```
+ */
 const Card = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

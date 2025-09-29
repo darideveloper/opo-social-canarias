@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { authService } from '../lib/auth';
-import Card from './ui/Card';
-import CardHeader from './ui/CardHeader';
-import CardContent from './ui/CardContent';
+import { Card, CardHeader, CardContent } from './ui/Card';
 import Button from './ui/Button';
 
 export default function Home() {

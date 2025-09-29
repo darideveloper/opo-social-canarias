@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import Card from '../ui/Card';
-import CardHeader from '../ui/CardHeader';
-import CardContent from '../ui/CardContent';
+import { Card, CardHeader, CardContent } from '../ui/Card';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
+import Link from '../ui/Link';
+import { FormField } from '../ui/Form';
 import Toaster from '../ui/Toaster';
 import { authService } from '../../lib/auth';
 
@@ -13,9 +13,24 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError('');
+    setPasswordError('');
+
+    if (!email) {
+      setEmailError('Por favor ingresa tu email');
+      return;
+    }
+
+    if (!password) {
+      setPasswordError('Por favor ingresa tu contraseña');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -45,8 +60,11 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <FormField
+              label="Email"
+              error={emailError}
+              required
+            >
               <Input 
                 id="email" 
                 type="email" 
@@ -55,36 +73,49 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required 
                 disabled={isLoading}
+                error={!!emailError}
                 autoComplete="email"
               />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Contraseña</Label>
-                <a href="/recuperar-contrasena" className="text-xs text-muted-foreground hover:text-primary underline">
-                    ¿Olvidaste tu contraseña?
-                </a>
-              </div>
+            </FormField>
+            <FormField
+              label="Contraseña"
+              error={passwordError}
+              required
+            >
               <Input 
                 id="password" 
                 type="password" 
+                placeholder="Tu contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
                 disabled={isLoading}
+                error={!!passwordError}
                 autoComplete="current-password"
               />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Iniciando sesión...' : 'Entrar'}
+            </FormField>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              loading={isLoading}
+              loadingText="Iniciando sesión..."
+            >
+              Entrar
             </Button>
           </form>
           
-          <div className="mt-4 text-center text-sm">
-            ¿No tienes una cuenta?{" "}
-            <a href="/register" className="underline">
-              Regístrate
-            </a>
+          <div className="mt-4 text-center text-sm space-y-2">
+            <div>
+              <Link href="/recuperar-contrasena" variant="muted">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+            <div>
+              ¿No tienes una cuenta?{" "}
+              <Link href="/register" variant="muted">
+                Regístrate
+              </Link>
+            </div>
           </div>
           
         </CardContent>

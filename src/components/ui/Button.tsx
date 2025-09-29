@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { LoadingSpinner } from './LoadingSpinner';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,21 +38,41 @@ const buttonVariants = cva(
   }
 );
 
+/**
+ * Button component with multiple variants and sizes
+ * 
+ * @example
+ * ```tsx
+ * <Button variant="default" size="lg">Click me</Button>
+ * <Button variant="outline" loading>Loading...</Button>
+ * <Button asChild><a href="/link">Link Button</a></Button>
+ * ```
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /** Render as child component using Radix Slot */
   asChild?: boolean;
+  /** Show loading state with spinner */
+  loading?: boolean;
+  /** Text to show when loading (defaults to "Loading...") */
+  loadingText?: string;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, loading = false, loadingText, children, disabled, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={disabled || loading}
         {...props}
-      />
+      >
+        {loading && <LoadingSpinner size="sm" className="mr-2" />}
+        {loading ? loadingText || 'Loading...' : children}
+      </Comp>
     );
   }
 );
