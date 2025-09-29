@@ -192,7 +192,7 @@ export default function ResetPasswordForm({
               <Link
                 href="/login"
                 variant="muted"
-                className='flex-1 text-center py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'
+                className='flex-1 text-center py-2 px-4 bg-primary text-primary-foreground rounded-md border border-primary hover:bg-transparent hover:text-primary hover:border-primary'
               >
                 Ir al Login
               </Link>
