@@ -51,7 +51,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
     const errorMessage =
       expectedErrorMessage ||
       'La combinación de credenciales no tiene una cuenta activa'
-    await expect(page.locator('[role="status"]')).toHaveText(errorMessage)
+    await expect(page.locator('main [role="status"]')).toHaveText(errorMessage)
   }
 
   /**
@@ -66,7 +66,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
     await expect(page).toHaveURL(`${BASE_URL}/`)
 
     // Confirm welcome message is displayed
-    await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
+    await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
       'Welcome to OpoSocial'
     )
   }
@@ -253,7 +253,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
       await submitForm(page, '', '')
 
       // Assert: Verify no toast (form does not submit)
-      await expect(page.locator('[role="status"]')).not.toBeVisible()
+      await expect(page.locator('main [role="status"]')).not.toBeVisible()
 
       // Assert: Verify still at login page
       await expect(page).toHaveURL(`${BASE_URL}/login`)

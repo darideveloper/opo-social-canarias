@@ -95,7 +95,7 @@ test.describe(
       await page.waitForTimeout(2000)
 
       // verify message
-      await expect(page.locator('[role="status"]')).toHaveText(message)
+      await expect(page.locator('main [role="status"]')).toHaveText(message)
     }
 
     async function getRandomData(): Promise<{
@@ -249,7 +249,7 @@ test.describe(
         await page.click('button[type="submit"]')
 
         // Assert: Verify no toast (form does not submit)
-        await expect(page.locator('[role="status"]')).not.toBeVisible()
+        await expect(page.locator('main [role="status"]')).not.toBeVisible()
       }
     )
 

@@ -92,7 +92,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await page.waitForTimeout(waitTime)
 
     // verify message
-    await expect(page.locator('[role="status"]')).toHaveText(message)
+    await expect(page.locator('main [role="status"]')).toHaveText(message)
   }
 
   /**
@@ -158,11 +158,11 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
 
     // Assert: welcome message is displayed
     if (validLogin) {
-      await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
+      await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
         'Welcome to OpoSocial'
       )
     } else {
-      await expect(page.locator('h1.text-3xl.font-bold')).toHaveText(
+      await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
         'Welcome to OpoSocial'
       )
     }
@@ -273,7 +273,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await submitEmailForm(page, '')
 
     // Assert: no alert because no email was filled
-    await expect(page.locator('[role="alert"]')).not.toBeVisible()
+    await expect(page.locator('main [role="alert"]')).not.toBeVisible()
 
     // Assert: token not generated in db
     const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -397,7 +397,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: no alert because no password was filled
-      await expect(page.locator('[role="alert"]')).not.toBeVisible()
+      await expect(page.locator('main [role="alert"]')).not.toBeVisible()
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -419,7 +419,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await submitResetPasswordForm(page, '12345', '12345', 'fake-token')
 
       // Assert: no alert because no password was filled
-      await expect(page.locator('[role="alert"]')).not.toBeVisible()
+      await expect(page.locator('main [role="alert"]')).not.toBeVisible()
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')

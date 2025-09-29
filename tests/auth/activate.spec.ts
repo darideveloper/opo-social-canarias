@@ -92,7 +92,7 @@ test.describe(
       // Assert: validate login
       if (active) {
         await expect(page.url()).toBe(`${BASE_URL}/`)
-        await expect(page.locator('h1.text-3xl')).toHaveText(
+        await expect(page.locator('main h1.text-3xl')).toHaveText(
           'Welcome to OpoSocial'
         )
       } else {
@@ -106,13 +106,13 @@ test.describe(
      */
     async function validateActivationSuccessScreen(page: Page) {
       // Assert: validate activate account
-      await expect(page.locator('h1.text-2xl')).toHaveText(
+      await expect(page.locator('main h1.text-2xl')).toHaveText(
         'Activación de Cuenta'
       )
-      await expect(page.locator('h1 + p')).toHaveText(
+      await expect(page.locator('main h1 + p')).toHaveText(
         'Tu cuenta ha sido activada exitosamente.'
       )
-      await expect(page.locator('button.bg-primary')).toHaveText('Ir al Login')
+      await expect(page.locator('main button.bg-primary')).toHaveText('Ir al Login')
     }
 
     /**
@@ -121,14 +121,14 @@ test.describe(
      */
     async function validateActivationErrorScreen(page: Page) {
       // Assert: validate activate account
-      await expect(page.locator('h1.text-2xl')).toHaveText(
+      await expect(page.locator('main h1.text-2xl')).toHaveText(
         'Activación de Cuenta'
       )
-      await expect(page.locator('h1 + p')).toHaveText(
+      await expect(page.locator('main h1 + p')).toHaveText(
         'Hubo un problema con la activación.'
       )
-      await expect(page.locator('button.bg-primary')).toHaveText('Ir al Login')
-      await expect(page.locator('button.bg-background')).toHaveText(
+      await expect(page.locator('main button.bg-primary')).toHaveText('Ir al Login')
+      await expect(page.locator('main button.bg-background')).toHaveText(
         'Reintentar'
       )
     }
