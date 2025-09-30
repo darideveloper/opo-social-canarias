@@ -23,11 +23,12 @@ export const onRequest = defineMiddleware(async ({ request, cookies, locals }: {
   const accessToken = cookies.get('access_token')?.value;
 
   // For protected pages, redirect to login if not authenticated
-  const protectedPages = ['/'];
-  if (protectedPages.includes(pathname) && accessToken === undefined) {
-    return Response.redirect(new URL('/login', request.url));
+  const protectedPages = ['/dashboard'];
+  for (const page of protectedPages) {
+    if (pathname.startsWith(page) && accessToken === undefined) {
+      return Response.redirect(new URL('/login', request.url));
+    }
   }
-
   // For login/register pages, redirect to dashboard if already authenticated
   const authPages = ['/login', '/register'];
   if (authPages.includes(pathname) && accessToken !== undefined) {
