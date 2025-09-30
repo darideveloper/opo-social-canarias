@@ -1,16 +1,5 @@
 ---
-import DashboardLayout from '../layouts/DashboardLayout.astro'
-import DashboardContent from '../components/DashboardContent.tsx'
-import DashboardLayoutReact from '../components/layout/DashboardLayout.tsx'
----
+export const prerender = false;
 
-<DashboardLayout title='Dashboard - Socialia'>
-  <DashboardLayoutReact
-    title='Panel de Control'
-    userRole='admin'
-    showAdminSection={true}
-    client:load
-  >
-    <DashboardContent client:load />
-  </DashboardLayoutReact>
-</DashboardLayout>
+return Astro.redirect('/dashboard');
+---
