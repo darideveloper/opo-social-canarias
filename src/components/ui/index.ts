@@ -29,3 +29,32 @@ export { Skeleton } from './Skeleton';
 
 // Form Components
 export { Form, FormField } from './Form';
+
+// Dashboard Components
+export { Progress } from './Progress';
+export type { ProgressProps } from './Progress';
+
+export { 
+  DropdownMenu, 
+  DropdownMenuTrigger, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator 
+} from './DropdownMenu';
+export type { DropdownMenuTriggerProps } from './DropdownMenu';
+
+export { 
+  SidebarProvider, 
+  Sidebar, 
+  SidebarHeader, 
+  SidebarContent, 
+  SidebarMenu, 
+  SidebarMenuItem, 
+  SidebarMenuButton, 
+  SidebarInset, 
+  SidebarTrigger, 
+  SidebarFooter 
+} from './Sidebar';
+
+export { default as AppLogo } from './AppLogo';

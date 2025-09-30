@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import Home from '../components/Home.tsx'
+import DashboardLayout from '../layouts/DashboardLayout.astro'
+import DashboardComponent from '../components/Dashboard.tsx'
 ---
 
-<Layout title="Welcome to Socialia">
-	<Home client:load />
-</Layout>
+<DashboardLayout title="Dashboard - Socialia">
+	<DashboardComponent client:load />
+</DashboardLayout>

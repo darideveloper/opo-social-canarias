@@ -1,0 +1,25 @@
+---
+// Fonts
+import '@fontsource-variable/inter';
+import '@fontsource/belleza';
+
+// css
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Dashboard - Socialia</title>
+	</head>
+	<body>
+		<div class="min-h-screen bg-background font-body">
+			<slot />
+		</div>
+		<div id="toaster"></div>
+	</body>
+</html>
