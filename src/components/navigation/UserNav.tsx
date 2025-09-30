@@ -71,14 +71,14 @@ const UserNav: React.FC<UserNavProps> = ({ userData }) => {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => {
               setIsOpen(false);
-              window.location.href = '/dashboard/profile';
+              window.location.href = '/profile';
             }}>
               <User className="mr-2 h-4 w-4" />
               <span>Perfil</span>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => {
               setIsOpen(false);
-              window.location.href = '/dashboard/settings';
+              window.location.href = '/settings';
             }}>
               <Settings className="mr-2 h-4 w-4" />
               <span>Configuración</span>

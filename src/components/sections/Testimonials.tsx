@@ -56,7 +56,7 @@ export default function Testimonials() {
       rating: 5,
     },
     {
-      name: "María L.",
+      name: "Mar\u00EDa L.",
       avatar: "ML",
       title: "Recomendación total",
       text: "La plataforma es intuitiva y los casos prácticos son muy realistas. Me siento mucho más preparada para las oposiciones.",

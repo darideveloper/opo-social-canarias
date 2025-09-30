@@ -35,7 +35,7 @@ import type { UserData } from '../types/navigation';
 const TOTAL_TOPICS = 42;
 
 const mockUserData: UserData = {
-  name: "María García",
+  name: "Mar\u00EDa Garc\u00EDa",
   email: "maria@example.com",
   photoURL: null,
   subscription: "Anual Pro",

@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 }) => {
   // Mock user data - in a real app, this would come from context or props
   const mockUserData: UserData = {
-    name: "María García",
+    name: "Mar\u00EDa Garc\u00EDa",
     email: "maria@example.com",
     photoURL: null,
     subscription: "Anual Pro",
