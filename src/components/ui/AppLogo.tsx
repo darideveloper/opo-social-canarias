@@ -25,7 +25,7 @@ const AppLogo = ({ className }: AppLogoProps) => {
       <div className="cursor-pointer p-1 sm:p-2">
         <img
           src="/logo.webp"
-          alt="Oposocial Canarias Logo"
+          alt="Socialia Logo"
           className={clsx(
             'h-6',
             'sm:h-8',

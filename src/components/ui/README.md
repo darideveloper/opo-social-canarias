@@ -335,4 +335,4 @@ When adding new components:
 
 ## 📄 License
 
-This component library is part of the OpoSocial project.
+This component library is part of the Socialia project.

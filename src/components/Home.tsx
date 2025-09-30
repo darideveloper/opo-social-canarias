@@ -46,7 +46,7 @@ export default function Home() {
     <div className="min-h-[calc(100vh-8rem)] bg-background flex items-center justify-center p-8">
       <Card className="max-w-md w-full">
         <CardHeader className="text-center">
-          <h1 className="text-3xl font-bold">Welcome to OpoSocial</h1>
+          <h1 className="text-3xl font-bold">Welcome to Socialia</h1>
           <p className="text-muted-foreground">You are logged in!</p>
         </CardHeader>
         <CardContent className="space-y-4">
