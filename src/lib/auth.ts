@@ -39,7 +39,7 @@ export class AuthService {
     // Use proxy in development, environment variable in production
     this.baseUrl = import.meta.env.DEV 
       ? '/api'  // Use proxy in development
-      : (import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:8000')  // Use env var in production
+      : import.meta.env.PUBLIC_API_BASE_URL  // Use env var in production
   }
 
   // Get API base URL
