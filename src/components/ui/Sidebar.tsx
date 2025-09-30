@@ -19,7 +19,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => (
 );
 
 const SidebarHeader = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex h-16 items-center border-b px-4 justify-center">
+  <div className="flex h-16 items-center border-b justify-center p-6">
     {children}
   </div>
 );
