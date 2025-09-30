@@ -83,6 +83,7 @@ export class AuthService {
 
     try {
       const response = await fetch(url, fetchOptions)
+      console.log({response})
 
       // If the request was successful or this is already a retry, return the response
       if (response.ok || isRetry) {
