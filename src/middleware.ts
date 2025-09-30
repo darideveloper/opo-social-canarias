@@ -59,7 +59,7 @@ export const onRequest = defineMiddleware(async ({ request, cookies, locals }: {
   // No local API routes to protect - all API calls go to external backend
 
   // For protected pages, redirect to login if not authenticated
-  const protectedPages = ['/dashboard'];
+  const protectedPages = ['/', '/dashboard'];
   if (protectedPages.includes(pathname) && !locals.user) {
     return Response.redirect(new URL('/login', request.url));
   }

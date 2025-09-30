@@ -69,16 +69,26 @@ const UserNav: React.FC<UserNavProps> = ({ userData }) => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setIsOpen(false)}>
+            <DropdownMenuItem onClick={() => {
+              setIsOpen(false);
+              window.location.href = '/dashboard/profile';
+            }}>
               <User className="mr-2 h-4 w-4" />
               <span>Perfil</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setIsOpen(false)}>
+            <DropdownMenuItem onClick={() => {
+              setIsOpen(false);
+              window.location.href = '/dashboard/settings';
+            }}>
               <Settings className="mr-2 h-4 w-4" />
               <span>Configuración</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setIsOpen(false)}>
+            <DropdownMenuItem onClick={() => {
+              setIsOpen(false);
+              // TODO: Implement proper logout logic with authService.logout()
+              window.location.href = '/login';
+            }}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Cerrar sesión</span>
             </DropdownMenuItem>

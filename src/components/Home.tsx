@@ -16,12 +16,10 @@ export default function Home() {
         if (response.status === 'ok' && response.data?.user) {
           setUser(response.data.user);
         }
-        // } else {
-        //   window.location.href = '/login';
-        // }
+        // Server-side middleware handles redirects, so we don't need client-side redirects here
       } catch (err) {
         console.error('Auth check failed:', err);
-        // window.location.href = '/login';
+        // Server-side middleware handles redirects, so we don't need client-side redirects here
       } finally {
         setIsLoading(false);
       }
@@ -41,6 +39,10 @@ export default function Home() {
     );
   }
 
+  // Only show dashboard if user is authenticated
+  if (!user) {
+    return null; // This should not happen due to redirect logic above, but safety check
+  }
 
   return (
     <div className="min-h-[calc(100vh-8rem)] bg-background flex items-center justify-center p-8">
