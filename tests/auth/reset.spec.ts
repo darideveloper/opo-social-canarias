@@ -13,7 +13,11 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import { cleanupTestData, getTokenFromEmail, updateToken } from '../helpers/db-helpers'
+import {
+  cleanupTestData,
+  getTokenFromEmail,
+  updateToken,
+} from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -184,6 +188,13 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
   })
 
   /**
+   * Clean up test data after each test
+   */
+  test.afterEach(async ({ page }) => {
+    await cleanupTestData()
+  })
+
+  /**
    * ------------------------------------------------------------
    * POST REQUESTS
    * ------------------------------------------------------------
@@ -255,7 +266,9 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
 
       // Assert: error message
       const errorMessageElement = page.locator('p.text-sm.text-destructive')
-      await expect(errorMessageElement).toHaveText('Por favor ingresa un email válido')
+      await expect(errorMessageElement).toHaveText(
+        'Por favor ingresa un email válido'
+      )
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -443,7 +456,9 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
 
       // Assert: error in toast
       const errorMessageElement = page.locator('p.text-sm.text-destructive')
-      await expect(errorMessageElement).toHaveText('Las contraseñas no coinciden')
+      await expect(errorMessageElement).toHaveText(
+        'Las contraseñas no coinciden'
+      )
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -529,12 +544,14 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await submitResetPasswordForm(page, '123456', '123456', token!)
 
       // Assert: toast message
-      await validateMessage(page, 'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.')
+      await validateMessage(
+        page,
+        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+      )
 
       // Assert: token not active in db
       token = await getTokenFromEmail(currentEmail, 'pass')
       expect(token).toBeNull()
-
     }
   )
 })

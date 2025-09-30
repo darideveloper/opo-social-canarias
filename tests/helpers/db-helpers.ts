@@ -3,7 +3,27 @@ import { query } from '../utils/db'
 // Clean up test data
 export async function cleanupTestData() {
   try {
-    await query('DELETE FROM auth_user WHERE email LIKE $1', ['test-'])
+    // Delete tokens
+    const deleteTokensResult = await query(
+      'DELETE FROM jwt_auth_temptoken WHERE profile_id IN (SELECT id FROM jwt_auth_profile WHERE user_id IN (SELECT id FROM auth_user WHERE email LIKE $1))',
+      ['test-%']
+    )
+    console.log('🗑️ Deleted tokens:', deleteTokensResult.rowCount)
+
+    // Delete profiles
+    const deleteProfilesResult = await query(
+      'DELETE FROM jwt_auth_profile WHERE user_id IN (SELECT id FROM auth_user WHERE email LIKE $1)',
+      ['test-%']
+    )
+    console.log('🗑️ Deleted profiles:', deleteProfilesResult.rowCount)
+
+    // Delete users
+    const deleteUsersResult = await query(
+      'DELETE FROM auth_user WHERE email LIKE $1',
+      ['test-%']
+    )
+    console.log('🗑️ Deleted users:', deleteUsersResult.rowCount)
+
     console.log('🧹 Test data cleaned up')
   } catch (error) {
     console.error('Error cleaning up test data:', error)
@@ -84,7 +104,6 @@ export async function getTokenFromEmail(
   isActive: boolean = true,
   raiseError: boolean = true
 ) {
-  
   try {
     const user = await getUserByEmail(email)
     console.log('🔑 User:', user)
@@ -104,13 +123,15 @@ export async function getTokenFromEmail(
   }
 }
 
-
 export async function updateToken(token: string, isActive: boolean) {
   try {
     // Get token
-    await query('UPDATE jwt_auth_temptoken SET is_active = $1 WHERE token = $2', [isActive, token])
+    await query(
+      'UPDATE jwt_auth_temptoken SET is_active = $1 WHERE token = $2',
+      [isActive, token]
+    )
     console.log(`🔑 Token ${token} updated`)
-  
+
     // Save database changes
     await query('COMMIT')
   } catch (error) {

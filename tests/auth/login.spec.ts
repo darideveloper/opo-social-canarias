@@ -19,13 +19,12 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
+import { cleanupTestData } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
 
-
 test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
-  
   /**
    * Navigate to login page and wait for it to fully load
    */
@@ -34,7 +33,14 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
     await page.goto(`${BASE_URL}/login`)
     await page.waitForTimeout(2000)
   })
-  
+
+  /**
+   * Clean up test data after each test
+   */
+  test.afterEach(async ({ page }) => {
+    await cleanupTestData()
+  })
+
   /**
    * Validates that a login attempt with invalid credentials fails properly
    * @param page - Playwright page instance

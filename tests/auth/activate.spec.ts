@@ -146,6 +146,13 @@ test.describe(
     })
 
     /**
+     * Clean up test data after each test
+     */
+    test.afterEach(async ({ page }) => {
+      await cleanupTestData()
+    })
+
+    /**
      * Validate activate account:
      * - Navigate to activate page
      * - Validate activate account (from db)
