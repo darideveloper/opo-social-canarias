@@ -16,7 +16,7 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import { cleanupTestData, getTokenFromEmail } from '../helpers/db-helpers'
+import { getTokenFromEmail } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -93,7 +93,7 @@ test.describe(
       if (active) {
          await expect(page.url()).toBe(`${BASE_URL}/`)
         await expect(page.locator('main h1.text-3xl')).toHaveText(
-          'Welcome to OpoSocial'
+          'Welcome to Socialia'
         )
       } else {
         await expect(page.url()).toBe(`${BASE_URL}/login`)
@@ -138,18 +138,8 @@ test.describe(
      * @param page - Playwright page instance
      */
     test.beforeEach(async ({ page }) => {
-      // Clean up test data before each test
-      await cleanupTestData()
-
       // Register a new user
       await registerUser(page)
-    })
-
-    /**
-     * Clean up test data after each test
-     */
-    test.afterEach(async ({ page }) => {
-      await cleanupTestData()
     })
 
     /**

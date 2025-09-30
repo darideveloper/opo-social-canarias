@@ -14,7 +14,6 @@
 
 import { test, expect, type Page } from '@playwright/test'
 import {
-  cleanupTestData,
   getTokenFromEmail,
   updateToken,
 } from '../helpers/db-helpers'
@@ -163,11 +162,11 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     // Assert: welcome message is displayed
     if (validLogin) {
       await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
-        'Welcome to OpoSocial'
+        'Welcome to Socialia'
       )
     } else {
       await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
-        'Welcome to OpoSocial'
+        'Welcome to Socialia'
       )
     }
   }
@@ -177,21 +176,12 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
    * @param page - Playwright page instance
    */
   test.beforeEach(async ({ page }) => {
-    // Clean up test data before each test
-    await cleanupTestData()
 
     // Register a new user
     await registerUser(page)
 
     // Activate user
     await activateUser(page)
-  })
-
-  /**
-   * Clean up test data after each test
-   */
-  test.afterEach(async ({ page }) => {
-    await cleanupTestData()
   })
 
   /**

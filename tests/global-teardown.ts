@@ -8,6 +8,7 @@
  */
 
 import { closeConnection } from './utils/db'
+import { cleanupTestData } from './helpers/db-helpers'
 
 /**
  * Global teardown function that runs after all tests
@@ -15,6 +16,9 @@ import { closeConnection } from './utils/db'
  */
 async function globalTeardown() {
   console.log('🧹 Starting global test teardown...')
+
+  // Delete test data
+  await cleanupTestData()
   
   try {
     // Close database connection

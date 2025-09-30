@@ -20,7 +20,6 @@
 
 import { test, expect, type Page } from '@playwright/test'
 import {
-  cleanupTestData,
   getProfileByUserId,
   getUserByEmail,
 } from '../helpers/db-helpers'
@@ -33,19 +32,9 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
    * Navigate to login page and wait for it to fully load
    */
   test.beforeEach(async ({ page }) => {
-    // Clean up test data before each test
-    await cleanupTestData()
-
     // Navigate to login page and wait for it to fully load
     await page.goto(`${BASE_URL}/register`)
     await page.waitForTimeout(2000)
-  })
-
-  /**
-   * Clean up test data after each test
-   */
-  test.afterEach(async ({ page }) => {
-    await cleanupTestData()
   })
 
   /**
