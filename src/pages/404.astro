@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NotFound from '../components/NotFound.tsx';
+
+// Configurar el status code 404
+Astro.response.status = 404;
+Astro.response.statusText = 'Not Found';
+---
+
+<Layout title="404 - Página no encontrada | Socialia">
+  <NotFound client:load />
+</Layout>
