@@ -79,7 +79,6 @@ export default function Register() {
 
     try {
       const response = await authService.register(email, password, name);
-      console.log(response.data)
       
       if (response.status === 'ok') {
         // Show confirmation messages

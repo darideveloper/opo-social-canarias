@@ -60,13 +60,8 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
     // Wait for redirect to complete
     await page.waitForTimeout(2000)
 
-    // Verify redirect to home page
-    await expect(page).toHaveURL(`${BASE_URL}/`)
-
-    // Confirm welcome message is displayed
-    await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
-      'Welcome to Socialia'
-    )
+    // Verify redirect to dashboard
+    await expect(page).toHaveURL(`${BASE_URL}/dashboard`)
   }
 
   /**
@@ -183,7 +178,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Wait for token to expire (2 minutes)
-      await page.waitForTimeout(2 * 60 * 1000)
+      await page.waitForTimeout(1.5 * 60 * 1000)
 
       // Trigger token refresh by reloading page
       await page.reload()

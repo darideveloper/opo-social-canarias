@@ -3,12 +3,21 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import node from "@astrojs/node";
+import dotenv from 'dotenv';
+import fs from 'fs';
+
+// Load environment variables from .env.local
+const envFile = '.env.local';
+if (fs.existsSync(envFile)) {
+  dotenv.config({ path: envFile });
+  console.log('✅ Loaded environment from .env.local');
+} else {
+  console.warn('⚠️ .env.local not found, using system environment variables');
+}
 
 // In config files, prefer direct process.env access
-// Playwright and other tools handle .env loading before starting
 const PUBLIC_API_BASE_URL = process.env.PUBLIC_API_BASE_URL;
-
-console.log('PUBLIC_API_BASE_URL:', PUBLIC_API_BASE_URL);
+console.log('🔧 PUBLIC_API_BASE_URL:', PUBLIC_API_BASE_URL || 'NOT SET');
 
 // https://astro.build/config
 export default defineConfig({

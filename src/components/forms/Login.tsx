@@ -35,7 +35,6 @@ export default function Login() {
 
     try {
       const response = await authService.login(email, password);
-      console.log({response})
       
       if (response.status === 'ok') {
         toast.success('¡Inicio de sesión exitoso!');

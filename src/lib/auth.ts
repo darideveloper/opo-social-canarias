@@ -83,11 +83,15 @@ export class AuthService {
 
     try {
       const response = await fetch(url, fetchOptions)
-      console.log({response})
 
-      // If the request was successful or this is already a retry, return the response
-      if (response.ok || isRetry) {
+      // If the request was successful, return the response
+      if (response.ok) {
         return response
+      }
+      
+      // If this is already a retry and still failed, throw error
+      if (isRetry) {
+        throw new Error(`Request failed after retry: ${response.status}`)
       }
 
       // Check if the error is due to token expiration
@@ -95,7 +99,9 @@ export class AuthService {
         console.log('Token expired, attempting refresh...')
         
         // Try to refresh the token
+        console.log('Attempting token refresh...')
         const refreshResult = await this.handleTokenRefresh()
+        console.log({refreshResult})
         
         if (refreshResult.status === 'ok') {
           // Token refreshed successfully, retry the original request
@@ -104,7 +110,11 @@ export class AuthService {
         } else {
           // Refresh failed, logout user
           console.error('Token refresh failed, logging out user...')
-          await this.logout()
+          try {
+            await this.logout()
+          } catch (logoutError) {
+            console.error('Logout failed:', logoutError)
+          }
           window.location.href = '/login'
           throw new Error('Authentication failed - please login again')
         }
@@ -119,9 +129,11 @@ export class AuthService {
 
   // Handle token refresh with queue management
   private async handleTokenRefresh(): Promise<AuthResponse> {
-    // If already refreshing, return the existing promise
+    // If already refreshing, queue this request
     if (this.refreshState.isRefreshing && this.refreshState.refreshPromise) {
-      return this.refreshState.refreshPromise
+      return new Promise((resolve, reject) => {
+        this.refreshState.failedQueue.push({ resolve, reject })
+      })
     }
 
     // Start refresh process
@@ -140,10 +152,12 @@ export class AuthService {
       this.processQueue(error as Error, null)
       throw error
     } finally {
-      // Reset refresh state
-      this.refreshState.isRefreshing = false
-      this.refreshState.refreshPromise = null
-      this.refreshState.failedQueue = []
+      // Delay reset to allow queue processing to complete
+      setTimeout(() => {
+        this.refreshState.isRefreshing = false
+        this.refreshState.refreshPromise = null
+        this.refreshState.failedQueue = []
+      }, 100)
     }
   }
 
@@ -342,6 +356,9 @@ export class AuthService {
     try {
       const response = await fetch(`${this.baseUrl}/auth/token/refresh/`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         credentials: 'include', // Uses refresh_token cookie
       })
 

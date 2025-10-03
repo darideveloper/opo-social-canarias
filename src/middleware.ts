@@ -1,6 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import type { Locals } from 'astro';
-import { AuthService } from './lib/auth';
+import { authService } from './lib/auth';
 
 
 export const onRequest = defineMiddleware(async ({ request, cookies, locals }: { request: Request; cookies: any; locals: Locals }, next) => {
