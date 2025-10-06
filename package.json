@@ -21,6 +21,7 @@
     "@types/react-dom": "^19.2.0",
     "aos": "^2.3.4",
     "astro": "^5.14.1",
+    "astro-show-tailwindcss-breakpoint": "^1.0.10",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
     "react": "^19.2.0",

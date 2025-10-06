@@ -12,6 +12,9 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 
+import showTailwindcssBreakpoint from 'astro-show-tailwindcss-breakpoint';
+
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://socialia.com',
@@ -22,7 +25,11 @@ export default defineConfig({
     mode: 'standalone',
   }),
 
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap(),
+    showTailwindcssBreakpoint(),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
