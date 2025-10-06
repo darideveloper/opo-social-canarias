@@ -1,11 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* Global fonts */
+@theme {
+  --font-title: 'Belleza', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .title {
+  font-family: var(--font-title);
+}
+
+/* Custom theme */
 @plugin "daisyui/theme" {
   name: "winter";
   default: false;
   prefersdark: false;
   color-scheme: "light";
+  /* Custom fonts */
   --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(97.466% 0.011 259.822);
   --color-base-300: oklch(93.268% 0.016 262.751);
