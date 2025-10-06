@@ -6,7 +6,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "NODE_ENV=local playwright test --config=playwright.config.ts",
+    "test:ui": "NODE_ENV=local playwright test --ui --config=playwright.config.ts",
+    "test:prod": "NODE_ENV=production playwright test --config=playwright.config.ts",
+    "test:prod:ui": "NODE_ENV=production playwright test --ui --config=playwright.config.ts"
   },
   "dependencies": {
     "@astrojs/node": "^9.4.4",
@@ -17,9 +21,14 @@
     "aos": "^2.3.4",
     "astro": "^5.14.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.7.0"
   }
 }
