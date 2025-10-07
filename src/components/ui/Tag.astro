@@ -1,0 +1,9 @@
+---
+interface Props{
+    class?: string;
+}
+
+const { class:ClassName = "" } = Astro.props as Props
+---
+
+<span class:list={["badge badge-warning", "text-xl", ClassName]}><slot/></span>
