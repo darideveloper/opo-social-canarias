@@ -1,19 +1,17 @@
 ---
-import Button from "../components/ui/Button";
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/ui/Card.astro";
+import Layout from '../layouts/Layout.astro'
+import Card from '../components/ui/Card.astro'
+import TestButtons from '../components/sections/TestButtons.tsx'
 ---
 
 <Layout>
-  <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
-    <Button >Regular</Button>
-    <Button isSoft>Soft</Button>
-
+  <main class:list={['container', 'mx-auto', 'px-4', 'py-12']}>
+    <TestButtons client:load />
     <div>
       <Card
-        title="lorem ipsum"
-        text="skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñjdsñlklkñldsñljdslj dsjksajkjsañljsañljlñk"
-        iconName="book"
+        title='lorem ipsum'
+        text='skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñjdsñlklkñldsñljdslj dsjksajkjsañljsañljlñk'
+        iconName='book'
       />
     </div>
   </main>
