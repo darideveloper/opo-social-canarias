@@ -1,0 +1,20 @@
+---
+import Button from "../components/ui/Button";
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/ui/Card.astro";
+---
+
+<Layout>
+  <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
+    <Button >Regular</Button>
+    <Button isSoft>Soft</Button>
+
+    <div>
+      <Card
+        title="lorem ipsum"
+        text="skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñjdsñlklkñldsñljdslj dsjksajkjsañljsañljlñk"
+        iconName="book"
+      />
+    </div>
+  </main>
+</Layout>
