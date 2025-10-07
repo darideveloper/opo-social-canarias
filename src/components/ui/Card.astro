@@ -1,58 +1,36 @@
 ---
-import type { ComponentType } from "react";
+// Icons
 import { FaBook } from "react-icons/fa";
 
+// Props
 interface Props {
   title: string;
   text: string;
-  icon?: any;
-  iconName?: string;
+  iconName: "book";
   iconWhite?: boolean;
-  iconColor?: string;
 }
-
-const ICONS: Record<string, ComponentType<any>> = {
-  book: FaBook,
-};
 
 const {
   title,
   text,
-  icon,
   iconName,
   iconWhite = false,
-  iconColor,
 } = Astro.props as Props;
 
-const IconComponent = icon ? null : iconName ? (ICONS[iconName] ?? null) : null;
-const iconStyle = iconWhite
-  ? { color: "#fff" }
-  : iconColor
-    ? { color: iconColor }
-    : undefined;
+const icons = {
+  book: FaBook,
+};
+
+const Icon = icons[iconName];
 ---
 
-<div class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-4"]}>
-  <div class:list={["flex", "flex-col", "items-start", "gap-3"]}>
-    <div class:list={["flex", "items-center"]}>
-      <div
-        class:list={[
-          "rounded-lg",
-          "bg-white",
-          "p-3",
-          "mr-3",
-          iconWhite ? "bg-primary" : "bg-primary/10",
-        ]}
-      >
-        <IconComponent size={36} />
-      </div>
-    </div>
+<div class:list={["card", "bg-base-100", "w-full", "shadow-sm"]}>
+  <div class:list={["card-body"]}>
+    <Icon size={36} className={iconWhite ? "text-white" : "text-secondary"} />
 
-    <div>
-      <h3 class:list={["text-xl", "font-semibold", "text-gray-900", "mb-2"]}>
-        {title}
-      </h3>
-      <p class:list={["text-gray-600"]}>{text}</p>
-    </div>
+    <h3 class:list={["card-title", "capitalize"]}>
+      {title}
+    </h3>
+    <p class:list={["text-black"]}>{text}</p>
   </div>
 </div>
