@@ -1,20 +1,19 @@
 ---
 interface Props {
-  subtitleIsH2: boolean;
   class?: string;
 }
 
 const { class: className = " " } = Astro.props as Props;
 ---
 
-<h2
+<h1
   class:list={[
-    "text-lg",
+    "text-sm",
     "text-center",
     "font-semibold",
-    "xl:text-4xl sm:text-xl md:text-2xl lg:text-3xl",
+    "xl:text-xl sm:text-sm md:text-base lg:text-xl",
     className,
   ]}
 >
   <slot />
-</h2>
+</h1>
