@@ -1,11 +1,14 @@
 ---
-import type { ComponentType } from "react";
 import { FaBook } from "react-icons/fa";
+import { FaShieldHalved } from "react-icons/fa6";
+import { FaBolt } from "react-icons/fa6";
+
+
 
 interface Props {
   title: string;
   text: string;
-  iconName: "book";
+  iconName: "book" | "shield" | "bolt";
   iconWhite?: boolean;
 }
 const {
@@ -16,7 +19,10 @@ const {
 } = Astro.props as Props;
 
 const icons = {
-  book: FaBook
+  book: FaBook,
+  shield: FaShieldHalved,
+  bolt: FaBolt
+
 };
 
 
@@ -28,9 +34,9 @@ const Icon = icons[iconName];
       <div class:list={["flex", "items-center"]}>
         <Icon size={36} className={iconWhite ? "text-white":"text-secondary"}/>
     </div>
-      <h3 class:list={["card-title"]}>
+      <h3 class:list={["card-title", "capitalize"]}>
         {title}
       </h3>
-      <p class:list={["text-gray-600"]}>{text}</p>
+      <p class:list={["text-black"]}>{text}</p>
   </div>
 </div>
