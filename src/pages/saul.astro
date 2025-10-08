@@ -1,14 +1,14 @@
 ---
-import Button from "../components/ui/Button";
+import ButtonBase from "../components/ui/base/ButtonBase";
+import ButtonAction from "../components/ui/ButtonAction";
+import TestButtons from "../components/sections/TestButtons";
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/ui/Card.astro";
 ---
 
 <Layout>
   <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
-    <Button >Regular</Button>
-    <Button isSoft>Soft</Button>
-
+    <TestButtons client:load />
     <div>
       <Card
         title="lorem ipsum"
@@ -18,3 +18,4 @@ import Card from "../components/ui/Card.astro";
     </div>
   </main>
 </Layout>
+
