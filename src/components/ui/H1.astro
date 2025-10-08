@@ -1,9 +1,19 @@
 ---
-interface Props{
-    class?: string;
+interface Props {
+  class?: string;
 }
 
-const { class:className = " " } = Astro.props as Props
+const { class: className = " " } = Astro.props as Props;
 ---
 
-    <h1 class:list={["text-5xl", "text-center", "font-semibold", className]}><slot/></h1>
+<h1
+  class:list={[
+    "text-xl",
+    "text-center",
+    "font-semibold",
+    "xl:text-5xl sm:text-2xl md:text-3xl lg:text-4xl",
+    className,
+  ]}
+>
+  <slot />
+</h1>
