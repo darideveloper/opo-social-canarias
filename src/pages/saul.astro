@@ -1,11 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import Card from '../components/ui/Card.astro'
-import TestButtons from '../components/sections/TestButtons.tsx'
+import TestButtons from "../components/sections/TestButtons";
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/ui/Card.astro";
 ---
 
 <Layout>
-  <main class:list={['container', 'mx-auto', 'px-4', 'py-12']}>
+  <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
     <TestButtons client:load />
     <div>
       <Card
@@ -16,3 +16,4 @@ import TestButtons from '../components/sections/TestButtons.tsx'
     </div>
   </main>
 </Layout>
+
