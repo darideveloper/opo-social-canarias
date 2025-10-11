@@ -72,6 +72,13 @@ const {
       <slot />
     </ul>
 
+  
+    {
+      footerText && (
+        <p class:list={["mt-4", "!mb-0", "text-xs", "text-base-content"]}>{footerText}</p>
+      )
+    }
+
     <div class:list={["mt-6"]}>
       {
         important ? (
@@ -85,11 +92,5 @@ const {
         )
       }
     </div>
-
-    {
-      footerText && (
-        <p class:list={["mt-4", "text-xs", "text-gray-500"]}>{footerText}</p>
-      )
-    }
   </div>
 </div>
