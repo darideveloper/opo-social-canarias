@@ -29,7 +29,7 @@ const Icon = ICONS[iconName] ?? FiCheckCircle;
     "text-sm",
     textVariant === "muted"
       ? "text-neutral"
-      : "text-[color-color-purple",
+      : "text-secondary",
   ]}
 >
   <span
@@ -44,7 +44,7 @@ const Icon = ICONS[iconName] ?? FiCheckCircle;
       "bg-white",
     ]}
   >
-    <Icon size={16} class:list={["text-color-purple"]} />
+    <Icon size={16} class:list={["text-secondary"]} />
   </span>
   <span>{text}</span>
 </li>

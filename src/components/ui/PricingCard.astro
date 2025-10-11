@@ -34,7 +34,7 @@ const {
     "shadow-sm",
     "mx-2",
     "mt-4",
-    important ? "border-2 border-color-purple" : "",
+    important ? "border-2 border-secondary" : "",
   ]}
 >
   <div class:list={["card-body", "relative"]}>
@@ -65,6 +65,7 @@ const {
 
     <div class:list={["mt-4"]}>
       <span class:list={["text-6xl", "font-bold"]}>{price}</span>
+      <span class:list={["text-xl"]}>/año + IGIC</span>
     </div>
 
     <ul class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
