@@ -43,12 +43,11 @@ const features = [
 
     <div
       class:list={[
-        'flex',
-        'flex-wrap',
-        'justify-center',
+        'mt-12',
+        'grid',
+        'grid-cols-1 md:grid-cols-3',
         'gap-6',
         'md:gap-8',
-        'px-4',
       ]}
     >
       {
@@ -56,12 +55,9 @@ const features = [
           <div
             class:list={[
               'w-full',
-              'sm:w-[calc(50%-1rem)]',
-              'lg:w-[calc(33.333%-1.5rem)]',
-              'max-w-sm',
-              'flex',
+              'max-w-lg',
               'items-center',
-              'justify-center',
+              'mx-auto',
             ]}
           >
             <Card

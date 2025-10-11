@@ -62,9 +62,9 @@ html {
 
 
 .container {
-  margin: 4rem auto;
+  margin: 0 auto;
   max-width: 1350px;
-  padding: 2rem 1rem;
+  padding: 4rem 1rem;
 }
 
 .debug {
