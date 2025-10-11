@@ -1,0 +1,73 @@
+---
+import H3 from "../../components/ui/H3.astro";
+import {
+  FaAngry,
+  FaBirthdayCake,
+  FaBitcoin,
+  FaBowlingBall,
+} from "react-icons/fa";
+
+// Diccionario de iconos
+const icons = {
+  birth: FaBirthdayCake,
+  angry: FaAngry,
+  bitcoin: FaBitcoin,
+  bowl: FaBowlingBall,
+};
+
+// Props
+interface Props {
+  CardTitle: string;
+  text: string;
+  iconName?: keyof typeof icons;
+  iconWhite?: boolean;
+  class?: string;
+}
+
+// Desestructuración de props
+const {
+  CardTitle,
+  text,
+  iconName = "angry",
+  iconWhite = false,
+  class: ClassName = "",
+} = Astro.props as Props;
+
+// Seleccionar el ícono correcto del diccionario
+const IconComponent = icons[iconName];
+
+// Definir color y estilo del icono
+---
+
+<div
+  class={`card bg-base-100 shadow-sm overflow-hidden md:card-side md:items-stretch max-w-6xl ${ClassName}`}
+>
+  <!-- Imagen: arriba en mobile, a la izquierda en md+ -->
+  <figure class="w-full md:w-1/2">
+    <img
+      src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+      alt="Estudiantes estudiando"
+      class="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover rounded-none md:rounded-xl"
+    />
+  </figure>
+
+  <!-- Contenido: CENTRADO VERTICALMENTE -->
+  <div
+  class="card-body w-full md:w-1/2 flex flex-col justify-center text-left h-full lg:mt-15 "
+>
+  {IconComponent && (
+    <IconComponent
+      className={`${iconWhite ? "text-white" : "text-primary"} text-3xl sm:text-4xl md:text-5xl mb-3`}
+    />
+  )}
+
+  <H3 class:list={["text-left mb-2 text-lg sm:text-xl md:text-2xl"]}>
+    {CardTitle}
+  </H3>
+
+  <p class="text-sm sm:text-base leading-relaxed text-gray-600 max-w-prose">
+    {text}
+  </p>
+</div>
+
+</div>
