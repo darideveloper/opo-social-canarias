@@ -1,0 +1,76 @@
+---
+import Card from "../ui/Card.astro";
+import H2 from "../ui/H2.astro";
+
+const features = [
+  {
+    iconName: "bullseye" as const,
+    title: "Contenido Específico",
+    text: "La IA analiza y adapta el temario a la legislación y el contexto 100% canario. Estudia solo lo que necesitas.",
+  },
+  {
+    iconName: "bolt" as const,
+    title: "Práctica Ilimitada",
+    text: "Genera infinitos casos prácticos y test. La IA crea escenarios realistas para que domines cada supuesto.",
+  },
+  {
+    iconName: "star" as const,
+    title: "Análisis de Progreso",
+    text: "Nuestro sistema identifica tus puntos débiles y te sugiere dónde enfocar tu energía para un estudio más eficiente.",
+  },
+];
+---
+
+<section class:list={["py-16", "md:py-24"]}>
+  <div class:list={["container", "!items-center"]}>
+    <H2 class:list={["mb-4"]}>Una Metodología Inteligente</H2>
+
+    <p
+      class:list={[
+        "text-center",
+        "text-gray-600",
+        "max-w-3xl",
+        "mx-auto",
+        "mb-12",
+        "md:mb-16",
+        "px-4",
+      ]}
+    >
+      Usamos la inteligencia artificial para darte una ventaja decisiva. Cada
+      herramienta está diseñada para optimizar tu tiempo y maximizar tus
+      resultados.
+    </p>
+
+    <div
+      class:list={[
+        "flex",
+        "flex-wrap",
+        "justify-center",
+        "gap-6",
+        "md:gap-8",
+        "px-4",
+      ]}
+    >
+      {
+        features.map((feature) => (
+          <div
+            class:list={[
+              "w-full",
+              "sm:w-[calc(50%-1rem)]",
+              "lg:w-[calc(33.333%-1.5rem)]",
+              "max-w-sm",
+              "flex",
+              "items-center",
+              "justify-center",
+            ]}
+          >
+            <Card
+              {...feature}
+              className="!items-center text-center h-full p-4"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
