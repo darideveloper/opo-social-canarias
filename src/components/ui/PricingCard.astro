@@ -1,0 +1,94 @@
+---
+import Tag from "./Tag.astro";
+import ButtonLink from "./ButtonLink.tsx";
+import H3 from "./H3.astro";
+
+interface Props {
+  name: string;
+  description?: string;
+  price: string;
+  footerText?: string;
+  btnText?: string;
+  btnLink?: string;
+  tagText?: string;
+  important?: boolean;
+}
+
+const {
+  name,
+  description = "",
+  price,
+  footerText = "",
+  btnText = "Get started",
+  btnLink = "#",
+  tagText,
+  important = false,
+} = Astro.props as Props;
+---
+
+<div
+  class:list={[
+    "card",
+    "w-w-full",
+    "bg-base-100",
+    "shadow-sm",
+    "mx-2",
+    "mt-4",
+    important ? "border-2 border-color-purple" : "",
+  ]}
+>
+  <div class:list={["card-body", "relative"]}>
+    {
+      tagText && (
+        <Tag
+          class:list={[
+            "absolute",
+            "right-1",
+            "top-1",
+            "!text-xs",
+            "!p-1",
+            "font-bold",
+          ]}
+        >
+          {tagText}
+        </Tag>
+      )
+    }
+
+    <H3 class="!text-4xl font-semibold">{name}</H3>
+
+    {
+      description && (
+        <p class:list={["text-base", "text-neutral", "mt-2"]}>{description}</p>
+      )
+    }
+
+    <div class:list={["mt-4"]}>
+      <span class:list={["text-6xl", "font-bold"]}>{price}</span>
+    </div>
+
+    <ul class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
+      <slot />
+    </ul>
+
+    <div class:list={["mt-6"]}>
+      {
+        important ? (
+          <ButtonLink href={btnLink} className="btn btn-primary btn-block">
+            {btnText}
+          </ButtonLink>
+        ) : (
+          <ButtonLink href={btnLink} isSoft className="btn btn-soft btn-block">
+            {btnText}
+          </ButtonLink>
+        )
+      }
+    </div>
+
+    {
+      footerText && (
+        <p class:list={["mt-4", "text-xs", "text-gray-500"]}>{footerText}</p>
+      )
+    }
+  </div>
+</div>
