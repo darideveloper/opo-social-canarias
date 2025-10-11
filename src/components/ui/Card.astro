@@ -32,7 +32,7 @@ const icons = {
 const Icon = icons[iconName];
 ---
 
-<div class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-4"]}>
+<article class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-4"]}>
   <div class:list={["card-body", className]}>
     <div class:list={["flex", "items-center"]}>
       <Icon size={36} className={iconWhite ? "text-white" : "text-secondary"} />
@@ -42,4 +42,4 @@ const Icon = icons[iconName];
     </h3>
     <p class:list={["text-black"]}>{text}</p>
   </div>
-</div>
+</article>

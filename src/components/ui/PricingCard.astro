@@ -26,15 +26,16 @@ const {
 } = Astro.props as Props;
 ---
 
-<div
+<article
   class:list={[
     "card",
-    "w-w-full",
+    "w-full",
     "bg-base-100",
     "shadow-sm",
     "mx-2",
     "mt-4",
-    important ? "border-2 border-secondary" : "",
+    important && "border-2",
+    important && "border-secondary",
   ]}
 >
   <div class:list={["card-body", "relative"]}>
@@ -64,14 +65,14 @@ const {
       )
     }
 
-    <div class:list={["mt-4"]}>
+    <p class:list={["mt-4", '!my-0']}>
       <span class:list={["text-6xl", "font-bold"]}>{price}</span>
       <span class:list={["text-xl"]}>/año + IGIC</span>
-    </div>
+    </p>
 
-    <ul class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
+    <div class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
       <slot />
-    </ul>
+    </div>
 
   
     {
@@ -94,4 +95,4 @@ const {
       }
     </div>
   </div>
-</div>
+</article>
