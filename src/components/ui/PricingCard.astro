@@ -1,55 +1,55 @@
 ---
-import Tag from "./Tag.astro";
-import ButtonLink from "./ButtonLink.tsx";
-import H3 from "./H3.astro";
+import Tag from './Tag.astro'
+import ButtonLink from './ButtonLink.tsx'
+import H3 from './H3.astro'
 
 interface Props {
-  name: string;
-  description?: string;
-  price: string;
-  footerText?: string;
-  btnText?: string;
-  btnLink?: string;
-  tagText?: string;
-  important?: boolean;
+  name: string
+  description?: string
+  price: string
+  footerText?: string
+  btnText?: string
+  btnLink?: string
+  tagText?: string
+  important?: boolean
 }
 
 const {
   name,
-  description = "",
+  description = '',
   price,
-  footerText = "",
-  btnText = "Get started",
-  btnLink = "#",
-  tagText = "",
+  footerText = '',
+  btnText = 'Get started',
+  btnLink = '#',
+  tagText = '',
   important = false,
-} = Astro.props as Props;
+} = Astro.props as Props
 ---
 
 <article
   class:list={[
-    "card",
-    "w-full",
-    "bg-base-100",
-    "shadow-sm",
-    "mx-2",
-    "mt-4",
-    important && "border-2",
-    important && "border-secondary",
+    'card',
+    'w-full',
+    'bg-base-100',
+    'shadow-sm',
+    'mx-2',
+    'mt-4',
+    important && 'border-2',
+    important && 'border-secondary',
   ]}
 >
-  <div class:list={["card-body", "relative"]}>
+  <div class:list={['card-body', 'relative']}>
     {
       tagText && (
         <Tag
           class:list={[
-            "absolute",
-            "right-1/2 md:right-1",
-            "-top-3 md:top-1",
-            "translate-x-1/2 md:translate-x-0",
-            "font-bold",
-            "md:mr-2",
-            "md:mt-2",
+            'absolute',
+            'right-1/2 md:right-1',
+            '-top-3 md:top-1',
+            'translate-x-1/2 md:translate-x-0',
+            'font-bold',
+            'md:mr-2',
+            'md:mt-2',
           ]}
         >
           {tagText}
@@ -57,42 +57,39 @@ const {
       )
     }
 
-    <H3 class="!text-4xl font-semibold">{name}</H3>
+    <H3 class='!text-4xl font-semibold'>{name}</H3>
 
     {
       description && (
-        <p class:list={["text-base", "text-neutral", "mt-2"]}>{description}</p>
+        <p class:list={['text-base', 'text-neutral', 'mt-2']}>{description}</p>
       )
     }
 
-    <p class:list={["mt-4", '!my-0']}>
-      <span class:list={["text-6xl", "font-bold"]}>{price}</span>
-      <span class:list={["text-xl"]}>/año + IGIC</span>
+    <p class:list={['mt-4', '!my-0']}>
+      <span class:list={['text-6xl', 'font-bold']}>{price}</span>
+      <span class:list={['text-xl']}>/año + IGIC</span>
     </p>
 
-    <div class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
+    <div class:list={['mt-6', 'flex', 'flex-col', 'gap-2', 'text-sm']}>
       <slot />
     </div>
 
-  
     {
       footerText && (
-        <p class:list={["mt-4", "!mb-0", "text-xs", "text-base-content"]}>{footerText}</p>
+        <p class:list={['mt-4', '!mb-0', 'text-xs', 'text-base-content']}>
+          {footerText}
+        </p>
       )
     }
 
-    <div class:list={["mt-6"]}>
-      {
-        important ? (
-          <ButtonLink href={btnLink} className="btn btn-primary btn-block">
-            {btnText}
-          </ButtonLink>
-        ) : (
-          <ButtonLink href={btnLink} isSoft className="btn btn-soft btn-block">
-            {btnText}
-          </ButtonLink>
-        )
-      }
+    <div class:list={['mt-6']}>
+      <ButtonLink
+        href={btnLink}
+        isSoft={!important}
+        className='btn-block'
+      >
+        {btnText}
+      </ButtonLink>
     </div>
   </div>
 </article>
