@@ -1,50 +1,70 @@
 ---
-import { FaBook } from 'react-icons/fa'
-import { FaShieldHalved } from 'react-icons/fa6'
-import { FaBolt } from 'react-icons/fa6'
-import { FaBullseye } from 'react-icons/fa6'
-import { FaStar } from 'react-icons/fa6'
+import { FaBook } from "react-icons/fa";
+import { FaShieldHalved } from "react-icons/fa6";
+import { FaBolt } from "react-icons/fa6";
+import { FaBullseye } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa6";
 
 // Props
 interface Props {
-  title: string
-  text: string
-  iconName: 'book' | 'shield' | 'bolt' | 'bullseye' | 'star'
-  iconWhite?: boolean
-  textWhite?: boolean
-  className?: string
+  title: string;
+  iconName?: "book" | "shield" | "bolt" | "bullseye" | "star";
+  iconWhite?: boolean;
+  textWhite?: boolean;
+  className?: string;
 }
 const {
   title,
-  text,
   iconName,
   iconWhite = false,
   textWhite = false,
-  className = '', // FIX THIS
-} = Astro.props as Props
-
-const icons = {
-  book: FaBook,
-  shield: FaShieldHalved,
-  bolt: FaBolt,
-  bullseye: FaBullseye,
-  star: FaStar,
-}
-
-const Icon = icons[iconName]
+  className = "",
+} = Astro.props as Props;
 ---
 
-<article class:list={['card', 'bg-base-100', 'w-full', 'shadow-sm', 'p-4']}>
-  <div class:list={['card-body', className]}>
-    <div class:list={['flex', 'items-center']}>
-      <Icon
-        size={36}
-        className={iconWhite ? 'text-white' : 'text-secondary'}
-      />
-    </div>
-    <h3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
+<article class:list={["card", "bg-base-100", "w-full", "p-4"]}>
+  <div class:list={["card-body", className]}>
+    {
+      iconName && (
+        <div class:list={["flex", "items-center"]}>
+          {iconName === "book" && (
+            <FaBook
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "shield" && (
+            <FaShieldHalved
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "bolt" && (
+            <FaBolt
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "bullseye" && (
+            <FaBullseye
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "star" && (
+            <FaStar
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+        </div>
+      )
+    }
+    <h3 class:list={["card-title", "capitalize", textWhite && "text-white"]}>
       {title}
     </h3>
-    <p class:list={[textWhite && '!text-white']}>{text}</p>
+    <p class:list={[textWhite && "!text-white"]}>
+      <slot />
+    </p>
   </div>
 </article>
