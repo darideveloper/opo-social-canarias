@@ -25,6 +25,10 @@ const {
   class: className = '',
 } = Astro.props as CardProps
 
+
+// Components
+import H3 from './H3.astro'
+
 const icons = {
   book: FaBook,
   shield: FaShieldHalved,
@@ -56,9 +60,9 @@ if (iconName != null) {
         )
       }
     </div>
-    <h3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
+    <H3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
       {title}
-    </h3>
+    </H3>
     <p class:list={[textWhite && '!text-white']}><slot /></p>
   </div>
 </article>
