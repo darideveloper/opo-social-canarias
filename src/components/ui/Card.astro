@@ -1,23 +1,29 @@
 ---
+// Types
+import type { CardProps } from "../../types/card";
+
 //Icons
-import { FaBook } from "react-icons/fa";
-import { FaShieldHalved, FaBolt, FaBullseye, FaStar } from "react-icons/fa6";
+import { FaBook } from 'react-icons/fa'
+import {
+  FaShieldHalved,
+  FaBolt,
+  FaBullseye,
+  FaStar,
+  FaRocket,
+  FaChartLine,
+  FaLightbulb,
+  FaTrophy,
+  FaGraduationCap,
+} from 'react-icons/fa6'
 
 // Props
-interface Props {
-  title: string;
-  iconName?: "book" | "shield" | "bolt" | "bullseye" | "star";
-  iconWhite?: boolean;
-  textWhite?: boolean;
-  className?: string;
-}
 const {
   title,
   iconName,
   iconWhite = false,
   textWhite = false,
-  className = "",
-} = Astro.props as Props;
+  class: className = '',
+} = Astro.props as CardProps
 
 const icons = {
   book: FaBook,
@@ -25,29 +31,34 @@ const icons = {
   bolt: FaBolt,
   bullseye: FaBullseye,
   star: FaStar,
-};
+  rocket: FaRocket,
+  chart: FaChartLine,
+  lightbulb: FaLightbulb,
+  trophy: FaTrophy,
+  graduation: FaGraduationCap,
+}
 
-let Icon = null;
+let Icon = null
 if (iconName != null) {
-  Icon = icons[iconName];
+  Icon = icons[iconName]
 }
 ---
 
-<article class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-4"]}>
-  <div class:list={["card-body", className]}>
-    <div class:list={["flex", "items-center"]}>
+<article class:list={['card', 'bg-base-100', 'w-full', 'shadow-sm', 'p-4']}>
+  <div class:list={['card-body', className]}>
+    <div class:list={['flex', 'items-center']}>
       {
         Icon != null && (
           <Icon
             size={36}
-            className={iconWhite ? "text-white" : "text-secondary"}
+            className={iconWhite ? 'text-white' : 'text-secondary'}
           />
         )
       }
     </div>
-    <h3 class:list={["card-title", "capitalize", textWhite && "text-white"]}>
+    <h3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
       {title}
     </h3>
-    <p class:list={[textWhite && "!text-white"]}><slot/></p>
+    <p class:list={[textWhite && '!text-white']}><slot /></p>
   </div>
 </article>
