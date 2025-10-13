@@ -2,6 +2,12 @@
 import CardCentered from "../ui/CardCentered.astro";
 import H2 from "../ui/H2.astro";
 
+type Feature = {
+  iconName: "bullseye" | "bolt" | "star";
+  title: string;
+  text: string;
+};
+
 const features = [
   {
     iconName: "bullseye",
@@ -18,7 +24,7 @@ const features = [
     title: "Análisis de Progreso",
     text: "Nuestro sistema identifica tus puntos débiles y te sugiere dónde enfocar tu energía para un estudio más eficiente.",
   },
-] as const;
+] as Feature[];
 ---
 
 <section class:list={["container"]}>

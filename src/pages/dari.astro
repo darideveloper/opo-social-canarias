@@ -1,0 +1,18 @@
+---
+// Libs
+import clsx from 'clsx'
+
+// Components
+import Layout from '../layouts/Layout.astro'
+import ButtonAction from '../components/ui/ButtonAction.tsx'
+---
+
+<Layout>
+  <ButtonAction
+    type='button'
+    className={clsx('debug !bg-primary')}
+    onClick={() => console.log('clicked')}
+  >
+    Dari
+  </ButtonAction>
+</Layout>
