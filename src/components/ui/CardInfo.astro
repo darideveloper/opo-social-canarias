@@ -20,6 +20,7 @@ const icons = {
 interface Props {
   CardTitle: string;
   text: string;
+  rowReverse: boolean;
   iconName?: keyof typeof icons;
   iconWhite?: boolean;
   class?: string;
@@ -31,7 +32,8 @@ const {
   text,
   iconName = "angry",
   iconWhite = false,
-  class: ClassName = "",
+  rowReverse = false,
+  class: className = "",
 } = Astro.props as Props;
 
 // Seleccionar el ícono correcto del diccionario
@@ -45,7 +47,8 @@ const IconComponent = icons[iconName];
     "md:card-side",
     "lg:max-w-7xl",
     "mx-4",
-    ClassName,
+    rowReverse ? "!flex-row-reverse" : "",
+    className
   ]}
 >
   <!-- Imagen: arriba en mobile, a la izquierda en md+ -->
@@ -60,7 +63,6 @@ const IconComponent = icons[iconName];
     <Image
       src="/public/Estudiantes.webp"
       alt="Estudiantes estudiando"
-      className="block w-full max-w-[600px] aspect-[6/4] md:aspect-[6/4] object-cover rounded-2xl"
     />
   </figure>
 
