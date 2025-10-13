@@ -6,6 +6,9 @@ import H3 from "../components/ui/H3.astro";
 import Tag from "../components/ui/Tag.astro";
 import CardInfo from "../components/ui/CardInfo.astro";
 import Image from "../components/ui/Image.tsx";
+import Card from "../components/ui/Card.astro";
+
+import BannerFeatures from "../components/sections/BannerFeatures.astro";
 ---
 
 <Layout>
@@ -13,12 +16,24 @@ import Image from "../components/ui/Image.tsx";
   <H2>Prepárate para la Oposición como nunca antes</H2>
   <H3>Prepárate para la Oposición como nunca antes</H3>
   <Tag>Penitenciario</Tag>
-  <CardInfo
+  <section class="container">  <CardInfo
     CardTitle="Temario 100% Canario"
     text="Accede a un temario general y especifico siempre actualizado a la normativa y contexto de las islas Canarias. !No estudies de más, ni de menos! Olvidate de los temarios genericos y céntrate en lo que de verdad importa para tu oposicion"
     iconName="bitcoin"
     iconWhite={false}
+    rowReverse={true}
   />
+  </section>
+
 </Layout>
 
+<Image 
+src="https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/v2/6TBP4DYEI3LWPNOK5UWYPRFYUE.jpg?auth=09a40e91e0a70291deb6152ca884c1e0449d19616423ebae654042a863dbb45d&quality=80&width=1200&height=630&smart=true"
+alt="hola"
+/>
 
+<main class="px-4 py-10">
+    
+    <BannerFeatures />
+    
+  </main>
