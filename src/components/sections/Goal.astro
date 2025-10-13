@@ -1,0 +1,35 @@
+---
+import Card from "../ui/Card.astro";
+---
+
+<section class:list={["container", "py-16", "md:py-24"]}>
+  <div
+    class:list={[
+      "grid",
+      "grid-cols-1 md:grid-cols-2",
+      "gap-8 md:gap-12",
+      "items-center",
+      "px-0 md:px-4",
+    ]}
+  >
+    <div class:list={["flex", "justify-center", "md:justify-end"]}>
+      <img src="/doctor.png" class:list={["rounded-2xl"]} />
+    </div>
+
+    <div class:list={["shadow-none"]}>
+      <Card title="Tu Objetivo es Nuestro Objetivo">
+        <p class:list={["mb-4", "text-neutral"]}>
+          Más allá de los puntos y los niveles, nuestro único fin es que
+          consigas tu plaza. Cada herramienta, cada tema y cada test está
+          diseñado para acercarte un paso más a ese día en que veas tu nombre en
+          la lista de admitidos.
+        </p>
+        <p class:list={["text-neutral"]}>
+          Únete a una comunidad de opositores que, como tú, lo están dando todo
+          para alcanzar su sueño. Nosotros te damos las herramientas, tú pones
+          la dedicación.
+        </p>
+      </Card>
+    </div>
+  </div>
+</section>
