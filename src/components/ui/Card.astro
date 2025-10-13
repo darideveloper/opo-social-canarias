@@ -1,9 +1,7 @@
 ---
+//Icons
 import { FaBook } from "react-icons/fa";
-import { FaShieldHalved } from "react-icons/fa6";
-import { FaBolt } from "react-icons/fa6";
-import { FaBullseye } from "react-icons/fa6";
-import { FaStar } from "react-icons/fa6";
+import { FaShieldHalved, FaBolt, FaBullseye, FaStar } from "react-icons/fa6";
 
 // Props
 interface Props {
@@ -20,51 +18,36 @@ const {
   textWhite = false,
   className = "",
 } = Astro.props as Props;
+
+const icons = {
+  book: FaBook,
+  shield: FaShieldHalved,
+  bolt: FaBolt,
+  bullseye: FaBullseye,
+  star: FaStar,
+};
+
+let Icon = null;
+if (iconName != null) {
+  Icon = icons[iconName];
+}
 ---
 
-<article class:list={["card", "bg-base-100", "w-full", "p-4"]}>
+<article class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-4"]}>
   <div class:list={["card-body", className]}>
-    {
-      iconName && (
-        <div class:list={["flex", "items-center"]}>
-          {iconName === "book" && (
-            <FaBook
-              size={36}
-              className={iconWhite ? "text-white" : "text-secondary"}
-            />
-          )}
-          {iconName === "shield" && (
-            <FaShieldHalved
-              size={36}
-              className={iconWhite ? "text-white" : "text-secondary"}
-            />
-          )}
-          {iconName === "bolt" && (
-            <FaBolt
-              size={36}
-              className={iconWhite ? "text-white" : "text-secondary"}
-            />
-          )}
-          {iconName === "bullseye" && (
-            <FaBullseye
-              size={36}
-              className={iconWhite ? "text-white" : "text-secondary"}
-            />
-          )}
-          {iconName === "star" && (
-            <FaStar
-              size={36}
-              className={iconWhite ? "text-white" : "text-secondary"}
-            />
-          )}
-        </div>
-      )
-    }
+    <div class:list={["flex", "items-center"]}>
+      {
+        Icon != null && (
+          <Icon
+            size={36}
+            className={iconWhite ? "text-white" : "text-secondary"}
+          />
+        )
+      }
+    </div>
     <h3 class:list={["card-title", "capitalize", textWhite && "text-white"]}>
       {title}
     </h3>
-    <p class:list={[textWhite && "!text-white"]}>
-      <slot />
-    </p>
+    <p class:list={[textWhite && "!text-white"]}><slot/></p>
   </div>
 </article>
