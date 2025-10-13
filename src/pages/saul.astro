@@ -5,19 +5,20 @@ import TestButtons from "../components/sections/TestButtons";
 import PricingCard from "../components/ui/PricingCard.astro";
 import TextIcon from "../components/ui/TextIcon.astro";
 import Features from "../components/sections/Features.astro";
+import Goal from "../components/sections/Goal.astro";
+import AboutGofitos from "../components/sections/AboutGofitos.astro";
 ---
 
 <Layout>
   <Features />
-  
+
   <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
     <TestButtons client:load />
     <div>
-      <Card
-        title="lorem ipsum"
-        text="skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñj dsñlklkñldsñljdslj dsjksajkjsañljsañljlñk"
-        iconName="book"
-      />
+      <Card title="lorem ipsum" iconName="book">
+        skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñj dsñlklkñldsñljdslj
+        dsjksajkjsañljsañljlñk
+      </Card>
     </div>
 
     <PricingCard
@@ -55,5 +56,8 @@ import Features from "../components/sections/Features.astro";
         textVariant="secondary"
       />
     </PricingCard>
+
+    <Goal />
+    <AboutGofitos />
   </main>
 </Layout>
