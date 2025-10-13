@@ -1,0 +1,116 @@
+---
+import { FaBook } from "react-icons/fa";
+import {
+  FaShieldHalved,
+  FaBolt,
+  FaBullseye,
+  FaStar,
+  FaRocket,
+  FaChartLine,
+  FaLightbulb,
+  FaTrophy,
+  FaGraduationCap,
+} from "react-icons/fa6";
+
+interface Props {
+  title: string;
+  iconName?:
+    | "book"
+    | "shield"
+    | "bolt"
+    | "bullseye"
+    | "star"
+    | "rocket"
+    | "chart"
+    | "lightbulb"
+    | "trophy"
+    | "graduation";
+  iconWhite?: boolean;
+  textWhite?: boolean;
+  className?: string;
+}
+const {
+  title,
+  iconName,
+  iconWhite = false,
+  textWhite = false,
+  className = "",
+} = Astro.props as Props;
+---
+
+<article class:list={["card", "bg-base-100", "w-full", "shadow-sm", "p-1"]}>
+  <div class:list={["card-body", "text-center", "items-center", className]}>
+    {
+      iconName && (
+        <div class:list={["flex", "items-center", "justify-center", "mb-2"]}>
+          {iconName === "book" && (
+            <FaBook
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "shield" && (
+            <FaShieldHalved
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "bolt" && (
+            <FaBolt
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "bullseye" && (
+            <FaBullseye
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "star" && (
+            <FaStar
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "rocket" && (
+            <FaRocket
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "chart" && (
+            <FaChartLine
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "lightbulb" && (
+            <FaLightbulb
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "trophy" && (
+            <FaTrophy
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+          {iconName === "graduation" && (
+            <FaGraduationCap
+              size={36}
+              className={iconWhite ? "text-white" : "text-secondary"}
+            />
+          )}
+        </div>
+      )
+    }
+    <h3 class:list={["card-title", "capitalize", textWhite && "text-white"]}>
+      {title}
+    </h3>
+    <p class:list={[textWhite && "!text-white"]}>
+      <slot />
+    </p>
+  </div>
+</article>
