@@ -1,0 +1,47 @@
+---
+import Card from "../ui/Card.astro";
+type IconName = "book" | "shield" | "bolt";
+
+interface Feature {
+  title: string;
+  text: string;
+  iconName: "book" | "shield" | "bolt";
+  iconWhite?: boolean;
+}
+
+const Features: Feature[] = [
+  {
+    title: "1. Estudia",
+    text: "Accede a un temario 100% canario, siempre actualizado y al grano",
+    iconName: "book",
+    iconWhite: false,
+  },
+  {
+    title: "Practica",
+    text: "Genera tests y casos prácticos con IA para dominar cada tema.",
+    iconName: "shield",
+    iconWhite: false,
+  },
+  {
+    title: "Compite",
+    text: "Gana puntos, sube de nivel y mídete con otras opositoras en el ranking",
+    iconName: "bolt",
+    iconWhite: false,
+  },
+];
+---
+
+<section class="container grid md:grid-cols-3 gap-4">
+  {
+    Features.map((feature) => (
+      <Card
+        title={feature.title}
+        text={feature.text}
+        iconName={feature.iconName}
+        iconWhite={feature.iconWhite}
+        class:list={["bg-amber-600"]}
+        
+      />
+    ))
+  }
+</section>
