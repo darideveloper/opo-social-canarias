@@ -1,19 +1,59 @@
 ---
-import TestButtons from "../components/sections/TestButtons";
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/ui/Card.astro";
+import TestButtons from "../components/sections/TestButtons";
+import PricingCard from "../components/ui/PricingCard.astro";
+import TextIcon from "../components/ui/TextIcon.astro";
+import Features from "../components/sections/Features.astro";
 ---
 
 <Layout>
+  <Features />
+  
   <main class:list={["container", "mx-auto", "px-4", "py-12"]}>
     <TestButtons client:load />
     <div>
       <Card
-        title='lorem ipsum'
-        text='skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñjdsñlklkñldsñljdslj dsjksajkjsañljsañljlñk'
-        iconName='book'
+        title="lorem ipsum"
+        text="skjdsfjdsjlkjdsllkds jsdsjkdjdslkjdsñlkdsñjñj dsñlklkñldsñljdslj dsjksajkjsañljsañljlñk"
+        iconName="book"
       />
     </div>
+
+    <PricingCard
+      name="Plan Mensual"
+      description="Para empezar a prepararte sin ataduras"
+      price="$35"
+      btnText="Empezar ahora"
+      btnLink="#"
+      important={false}
+    >
+      <TextIcon iconName="check" text="Temario completo y actualizado" />
+      <TextIcon iconName="download" text="Descarga de todo el temario en PDF" />
+      <TextIcon iconName="zap" text="Generador de casos y tests (limitado)" />
+    </PricingCard>
+
+    <PricingCard
+      name="Plan Mensual Pro"
+      description="Desbloquea todo el poder de la IA sin permanencia"
+      price="$57"
+      btnText="Elegir Plan Pro"
+      btnLink="#"
+      tagText="MÁS POPULAR"
+      important={true}
+      footerText="Elige el plan Pro y aprovecha todas las funciones"
+    >
+      <TextIcon iconName="check" text="Todo lo del plan mensual" />
+      <TextIcon
+        iconName="zap"
+        text="Generación con IA ilimitada"
+        textVariant="secondary"
+      />
+      <TextIcon
+        iconName="download"
+        text="Acceso a exámenes anteriores"
+        textVariant="secondary"
+      />
+    </PricingCard>
   </main>
 </Layout>
-

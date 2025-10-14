@@ -17,7 +17,7 @@ export default function ButtonBase({
         isSoft && "btn-soft",
         "transition-all",
         "duration-200",
-        "hover:scale-105",
+        "hover:scale-[1.02]",
         className
       )}
     >

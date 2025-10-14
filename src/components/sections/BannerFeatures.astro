@@ -14,24 +14,24 @@ const Features: Feature[] = [
     title: "1. Estudia",
     text: "Accede a un temario 100% canario, siempre actualizado y al grano",
     iconName: "book",
-    iconWhite: false,
+    iconWhite: true,
   },
   {
     title: "Practica",
     text: "Genera tests y casos prácticos con IA para dominar cada tema.",
     iconName: "shield",
-    iconWhite: false,
+    iconWhite: true,
   },
   {
     title: "Compite",
     text: "Gana puntos, sube de nivel y mídete con otras opositoras en el ranking",
     iconName: "bolt",
-    iconWhite: false,
+    iconWhite: true,
   },
 ];
 ---
 
-<section class="container grid md:grid-cols-3 gap-4">
+<section class:list={["grid", "md:grid-cols-3", "bg-secondary", "w-full"]}>
   {
     Features.map((feature) => (
       <Card
@@ -40,6 +40,7 @@ const Features: Feature[] = [
         iconName={feature.iconName}
         iconWhite={feature.iconWhite}
         class:list={["bg-amber-600"]}
+        className="bg-secondary text-white flex  p-0, !items-center text-center min-w-2xl max-w-24"
         
       />
     ))
