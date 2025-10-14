@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import ButtonBase from './base/ButtonBase'
 
 export default function ButtonAction({
@@ -17,10 +18,11 @@ export default function ButtonAction({
     <button
       type={type}
       onClick={() => onClick()}
+      className={clsx(className)}
     >
       <ButtonBase
         isSoft={isSoft}
-        className={className}
+        className={clsx('w-full')}
       >
         {children}
       </ButtonBase>
