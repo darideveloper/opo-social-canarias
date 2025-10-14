@@ -11,7 +11,7 @@ export default function Image({ src, alt, className }: ImageProps) {
     <img
       src={src}
       alt={alt}
-      className={clsx('object-cover', 'rounded-2xl', 'shadow-xl', className)}
+      className={clsx("object-cover", "rounded-2xl", "md:max-w-2xl", className)}
     />
   )
 }

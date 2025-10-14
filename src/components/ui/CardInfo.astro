@@ -1,51 +1,38 @@
 ---
+// Components
 import H3 from "../../components/ui/H3.astro";
 import Image from "../../components/ui/Image.tsx";
-import {
-  FaAngry,
-  FaBirthdayCake,
-  FaBitcoin,
-  FaBowlingBall,
-} from "react-icons/fa";
 
-// Diccionario de iconos
-const icons = {
-  birth: FaBirthdayCake,
-  angry: FaAngry,
-  bitcoin: FaBitcoin,
-  bowl: FaBowlingBall,
-};
+// Types
+import type { CardProps } from "../../types/card";
 
-// Props
-interface Props {
-  CardTitle: string;
-  text: string;
+// Extend CardProps
+interface CardInfoProps extends CardProps {
   rowReverse?: boolean;
-  iconName?: keyof typeof icons;
-  iconWhite?: boolean;
-  class?: string;
 }
 
 // Desestructuración de props
 const {
-  CardTitle,
-  text,
-  iconName = "angry",
+  title,
+  iconName,
   iconWhite = false,
+  textWhite = false,
   rowReverse = false,
   class: className = "",
-} = Astro.props as Props;
-
-// Seleccionar el ícono correcto del diccionario
-const IconComponent = icons[iconName];
+} = Astro.props as CardInfoProps;
 ---
 
 <div
   class:list={[
+    "w-full",
     "card",
     "md:card-side",
+    "min-w-74",
     "lg:max-w-7xl",
     "mx-4",
+    "grid",
+    "grid-rows-2",
+    "md:flex",
     rowReverse ? "!flex-row-reverse" : "",
     className
   ]}
@@ -57,6 +44,7 @@ const IconComponent = icons[iconName];
       "md:pr-6 flex",
       "justify-center",
       "items-center",
+      "pr-3"
     ]}
   >
     <Image
@@ -76,23 +64,22 @@ const IconComponent = icons[iconName];
       "text-left",
       "h-full",
       "pt-8 xl:pt-24 lg:pt-16",
-      "-mx-4",
     ]}
   >
-    {
+    <!-- {
       IconComponent && (
         <IconComponent
           className={`${iconWhite ? "text-white" : "text-primary"} text-3xl sm:text-4xl md:text-5xl mb-3`}
         />
       )
-    }
+    } -->
 
-    <H3
+    <!-- <H3
       class:list={["text-left", "mb-2", "text-lg", "sm:text-xl", "md:text-2xl"]}
     >
       {CardTitle}
-    </H3>
-
+    </H3> -->
+<!-- 
     <p
       class:list={[
         "text-sm",
@@ -100,9 +87,10 @@ const IconComponent = icons[iconName];
         "leading-relaxed",
         "text-gray-600",
         "sm-w-2/3",
+        "mr-10"
       ]}
     >
       {text}
-    </p>
+    </p> -->
   </div>
 </div>

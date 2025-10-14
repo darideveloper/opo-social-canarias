@@ -1,20 +1,12 @@
 ---
 // Types
-import type { CardProps } from "../../types/card";
+import type { CardProps } from '../../types/card'
 
-//Icons
-import { FaBook } from 'react-icons/fa'
-import {
-  FaShieldHalved,
-  FaBolt,
-  FaBullseye,
-  FaStar,
-  FaRocket,
-  FaChartLine,
-  FaLightbulb,
-  FaTrophy,
-  FaGraduationCap,
-} from 'react-icons/fa6'
+// Icons
+import { icons } from '../../data/card'
+
+// Components
+import H3 from './H3.astro'
 
 // Props
 const {
@@ -25,30 +17,16 @@ const {
   class: className = '',
 } = Astro.props as CardProps
 
-
-// Components
-import H3 from './H3.astro'
-
-const icons = {
-  book: FaBook,
-  shield: FaShieldHalved,
-  bolt: FaBolt,
-  bullseye: FaBullseye,
-  star: FaStar,
-  rocket: FaRocket,
-  chart: FaChartLine,
-  lightbulb: FaLightbulb,
-  trophy: FaTrophy,
-  graduation: FaGraduationCap,
-}
-
+// Get current icon
 let Icon = null
 if (iconName != null) {
   Icon = icons[iconName]
 }
 ---
 
-<article class:list={['card', 'bg-base-100', 'w-full', 'shadow-sm', 'p-4']}>
+<article
+  class:list={['card', 'bg-base-100', 'w-full', 'shadow-sm', 'p-4', className]}
+>
   <div class:list={['card-body', className]}>
     <div class:list={['flex', 'items-center']}>
       {

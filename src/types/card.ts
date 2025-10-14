@@ -1,17 +1,9 @@
+import { icons } from "../data/card"
+
 export type CardProps = {
   title: string
-  iconName?:
-    | 'book'
-    | 'shield'
-    | 'bolt'
-    | 'bullseye'
-    | 'star'
-    | 'rocket'
-    | 'chart'
-    | 'lightbulb'
-    | 'trophy'
-    | 'graduation'
   iconWhite?: boolean
   textWhite?: boolean
+  iconName?: keyof typeof icons
   class?: string
 }
