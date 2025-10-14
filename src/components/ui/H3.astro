@@ -6,7 +6,7 @@ interface Props {
 const { class: className = " " } = Astro.props as Props;
 ---
 
-<h1
+<h3
   class:list={[
     "text-sm",
     "text-center",
@@ -16,4 +16,4 @@ const { class: className = " " } = Astro.props as Props;
   ]}
 >
   <slot />
-</h1>
+</h3>

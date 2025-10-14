@@ -6,7 +6,7 @@ type H1Props = {
   children: React.ReactNode;
 };
 
-export default function H1React({ className = "", children }: H1Props) {
+export default function H1({ className = "", children }: H1Props) {
   return (
     <h1
       className={clsx(

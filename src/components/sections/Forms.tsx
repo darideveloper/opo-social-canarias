@@ -2,7 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Input from "../ui/Input";
 import ButtonAction from "../ui/ButtonAction";
-import H1React from "../ui/H1React";
+import H1 from "../ui/H1";
 
 type FormsProps = {
   onSubmit?: (payload: { email: string; password: string }) => void;
@@ -10,6 +10,8 @@ type FormsProps = {
 };
 
 export default function Forms({ onSubmit, className }: FormsProps) {
+
+  // States
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +19,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
     {}
   );
 
+  // Functions
   function validate() {
     const next: { email?: string; password?: string } = {};
     if (!email) next.email = "El email es obligatorio";
@@ -50,11 +53,14 @@ export default function Forms({ onSubmit, className }: FormsProps) {
     }>
       <div className={clsx("card", "bg-base-100", "shadow-md")}>
         <div className={clsx("card-body", "gap-3")}>
+
+          {/* Header */}
           <div className={clsx("text-center", "mb-1")}>
-            <H1React className="!text-xl">Iniciar Sesión</H1React>
+            <H1 className="!text-xl">Iniciar Sesión</H1>
             <p className={clsx("text-sm", "opacity-70")}>Accede a tu panel de control.</p>
           </div>
 
+          {/* Email input */}
           <Input
             name="email"
             type="email"
@@ -67,10 +73,13 @@ export default function Forms({ onSubmit, className }: FormsProps) {
             required
           />
 
+          {/* Passoword extra lavel */}
           <label className={clsx("label", "justify-between", "pt-0")}>
             <span className="label-text">Contraseña</span>
             <a href="#" className={clsx("label-text-alt", "link", "link-hover")}>¿Olvidaste tu contraseña?</a>
           </label>
+
+          {/* Password input */}
           <Input
             name="password"
             type="password"
@@ -82,6 +91,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
             required
           />
 
+          {/* Button */}
           <div className={clsx("card-actions", "mt-2", "w-full")}>
             <ButtonAction type="submit" onClick={handleSubmit} isSoft className={clsx("w-full")}>
               {isLoading ? "Entrando..." : "Entrar"}
