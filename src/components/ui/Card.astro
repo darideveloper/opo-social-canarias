@@ -1,15 +1,20 @@
 ---
-import { FaBook } from 'react-icons/fa'
+import { FaBook, FaBrain } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { FaBolt } from 'react-icons/fa6'
 import { FaBullseye } from 'react-icons/fa6'
 import { FaStar } from 'react-icons/fa6'
 
+//icons for footer
+import { FaBookOpen } from "react-icons/fa";
+import { LuBrainCircuit } from "react-icons/lu";
+import { FaTrophy } from "react-icons/fa";
+
 // Props
 interface Props {
   title: string
   text: string
-  iconName: 'book' | 'shield' | 'bolt' | 'bullseye' | 'star'
+  iconName: 'book' | 'shield' | 'bolt' | 'bullseye' | 'star' | 'bookOpen' | 'trophy' | 'brain'
   iconWhite?: boolean
   textWhite?: boolean
   className?: string
@@ -29,6 +34,10 @@ const icons = {
   bolt: FaBolt,
   bullseye: FaBullseye,
   star: FaStar,
+  //icons for footer
+  trophy: FaTrophy,
+  bookOpen: FaBookOpen,
+  brain: LuBrainCircuit
 }
 
 const Icon = icons[iconName]
