@@ -1,11 +1,11 @@
 ---
 import Card from "../ui/Card.astro";
-type IconName = "book" | "shield" | "bolt";
+type IconName = "trophy" | "brain" | "bookOpen";
 
 interface Feature {
   title: string;
   text: string;
-  iconName: "book" | "shield" | "bolt";
+  iconName: "trophy" | "brain" | "bookOpen";
   iconWhite?: boolean;
 }
 
@@ -13,19 +13,19 @@ const Features: Feature[] = [
   {
     title: "1. Estudia",
     text: "Accede a un temario 100% canario, siempre actualizado y al grano",
-    iconName: "book",
+    iconName: "bookOpen",
     iconWhite: true,
   },
   {
     title: "Practica",
     text: "Genera tests y casos prácticos con IA para dominar cada tema.",
-    iconName: "shield",
+    iconName: "brain",
     iconWhite: true,
   },
   {
     title: "Compite",
     text: "Gana puntos, sube de nivel y mídete con otras opositoras en el ranking",
-    iconName: "bolt",
+    iconName: "trophy",
     iconWhite: true,
   },
 ];
@@ -40,8 +40,7 @@ const Features: Feature[] = [
         iconName={feature.iconName}
         iconWhite={feature.iconWhite}
         class:list={["bg-amber-600"]}
-        className="bg-secondary flex items-center text-white text-center p-0 pt-5 max-w-xs mx-auto"
-        
+        className="bg-secondary flex items-center text-white text-center p-0 pt-5 max-w-xs mx-auto shadow-none"
       />
     ))
   }
