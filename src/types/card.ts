@@ -1,4 +1,4 @@
-import { icons } from "../data/card"
+import { icons } from "../data/icons"
 
 export type CardProps = {
   title: string
