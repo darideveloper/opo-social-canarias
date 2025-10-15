@@ -1,6 +1,6 @@
 ---
 // Types
-import type { CardProps } from '../../types/card'
+import type { CardProps } from "../../types/card";
 
 // Props
 const {
@@ -8,11 +8,11 @@ const {
   iconName,
   iconWhite = false,
   textWhite = false,
-  class: className = '',
-} = Astro.props as CardProps
+  class: className = "",
+} = Astro.props as CardProps;
 
 // components
-import Card from './Card.astro'
+import Card from "./Card.astro";
 ---
 
 <Card
@@ -20,7 +20,7 @@ import Card from './Card.astro'
   iconName={iconName}
   iconWhite={iconWhite}
   textWhite={textWhite}
-  class:list={['text-center', 'items-center', className]}
+  class:list={["text-center", "items-center", className]}
 >
   <slot />
 </Card>
