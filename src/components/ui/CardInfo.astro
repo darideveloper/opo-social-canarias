@@ -22,7 +22,7 @@ const { rowReverse = false, class: className = "" } = Astro.props as CardInfoPro
   ]}
 >
   <!-- Imagen -->
-  <div class="w-full md:w-1/2">
+  <div class:list={["w-full", "md:w-1/2"]}>
     <Image
       src="/Estudiantes.webp"
       alt="Estudiantes estudiando"
@@ -31,7 +31,7 @@ const { rowReverse = false, class: className = "" } = Astro.props as CardInfoPro
   </div>
 
   <!-- Card centrada -->
-  <div class="w-full md:w-1/2 flex items-center justify-center py-8 md:h-full">
+  <div class:list={["w-full", "md:w-1/2", "flex items-center", "justify-center", "py-8", "md:h-full"]}>
     <Card
       title="Temario 100% Canario"
       iconName="bolt"
