@@ -27,8 +27,8 @@ const features: Feature[] = [
 ]
 ---
 
-<section class:list={['bg-secondary', 'w-full']}>
-  <div class:list={['container', 'bg-secondary', 'grid', 'md:grid-cols-3']}>
+<section class:list={["container", 'bg-secondary']}>
+  <div class:list={['bg-secondary', 'grid', 'md:grid-cols-3']}>
     {
       features.map((feature) => (
         <Card
@@ -36,7 +36,7 @@ const features: Feature[] = [
           iconName={feature.iconName}
           iconWhite={true}
           textWhite={true}
-          class:list={['bg-secondary', "!shadow-none"]}
+          class:list={['bg-secondary', "!shadow-none", "text-white", "flex", "items-center", "text-center"]}
         >
           {feature.text}
         </Card>
