@@ -1,46 +1,65 @@
 ---
-import Card from "../../components/ui/Card.astro";
-import Image from "../../components/ui/Image.tsx";
+// COmponents
+import Card from '../../components/ui/Card.astro'
+import Image from '../../components/ui/Image.tsx'
 
 interface CardInfoProps {
-  rowReverse?: boolean;
-  class?: string;
+  title: string
+  iconName: string
+  rowReverse?: boolean
+  class?: string
+  imageSrc: string
+  imageAlt: string
 }
-const { rowReverse = false, class: className = "" } = Astro.props as CardInfoProps;
+
+const {
+  title,
+  iconName,
+  rowReverse = false,
+  class: className = '',
+  imageSrc,
+  imageAlt,
+} = Astro.props as CardInfoProps
 ---
 
 <div
   class:list={[
-    "flex flex-col",
-    "md:flex-row",
-    rowReverse && "md:flex-row-reverse",
-    "w-full",
-    "md:min-h-screen",  
-    "items-center",
-    "overflow-hidden",   
+    'flex flex-col',
+    'md:flex-row',
+    rowReverse && 'md:flex-row-reverse',
+    'w-full',
+    'items-center',
+    'overflow-hidden',
     className,
   ]}
 >
   <!-- Imagen -->
-  <div class:list={["w-full", "md:w-1/2"]}>
+  <div class:list={['w-full', 'md:w-1/2']}>
     <Image
-      src="/Estudiantes.webp"
-      alt="Estudiantes estudiando"
-      className="w-full md:h-full object-cover"  
+      src={imageSrc}
+      alt={imageAlt}
+      className='w-full object-cover'
     />
   </div>
 
   <!-- Card centrada -->
-  <div class:list={["w-full", "md:w-1/2", "flex items-center", "justify-center", "py-8", "md:h-full"]}>
+  <div
+    class:list={[
+      'w-full',
+      'md:w-1/2',
+      'flex items-center',
+      'justify-center',
+      'py-8',
+      'md:h-full',
+    ]}
+  >
     <Card
-      title="Temario 100% Canario"
-      iconName="bolt"
+      title={title}
+      iconName={iconName}
       iconWhite={false}
       textWhite={false}
     >
-      Accede a un temario general y específico siempre actualizado a la normativa
-      y contexto de las Islas Canarias. ¡No estudies de más, ni de menos! Olvídate
-      de los temarios genéricos y céntrate en lo que de verdad importa para tu oposición.
+      <slot />
     </Card>
   </div>
 </div>
