@@ -1,12 +1,12 @@
 ---
 // Types
-import type { CardProps } from '../../types/card'
+import type { CardProps } from "../../types/card";
 
 // Icons
-import { icons } from '../../data/icons'
+import { icons } from "../../data/icons";
 
 // Components
-import H3 from './H3'
+import H3 from "./H3";
 
 // Props
 const {
@@ -14,33 +14,41 @@ const {
   iconName,
   iconWhite = false,
   textWhite = false,
-  class: className = '',
-} = Astro.props as CardProps
+  class: className = "",
+} = Astro.props as CardProps;
 
 // Get current icon
-let Icon = null
+let Icon = null;
 if (iconName != null) {
-  Icon = icons[iconName]
+  Icon = icons[iconName];
 }
 ---
 
-<article
-  class:list={['card', 'bg-base-100', 'w-full', 'p-4', className]}
->
-  <div class:list={['card-body', 'shadow-sm', className]}>
-    <div class:list={['flex', 'items-center']}>
-      {
-        Icon != null && (
-          <Icon
-            size={36}
-            className={iconWhite ? 'text-white' : 'text-secondary'}
-          />
-        )
-      }
-    </div>
-    <H3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
+<article class:list={["card", "bg-base-100", "w-full", "flex", className]}>
+  <div
+    class:list={[
+      "card-body",
+      "shadow-sm",
+      "w-full",
+      "flex",
+      "flex-col",
+      "items-center",
+      "justify-center",
+    ]}
+  >
+    {
+      Icon != null && (
+        <Icon
+          size={36}
+          className={iconWhite ? "text-white" : "text-secondary"}
+        />
+      )
+    }
+    <H3 class:list={["card-title", "capitalize", textWhite && "text-white"]}>
       {title}
     </H3>
-    <p class:list={[textWhite && '!text-white']}><slot /></p>
+    <p class:list={[textWhite && "text-white"]}>
+      <slot />
+    </p>
   </div>
 </article>
