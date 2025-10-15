@@ -24,11 +24,9 @@ if (iconName != null) {
 }
 ---
 
-<article
-  class:list={['card', 'bg-base-100', 'w-full', 'p-4', 'shadow-sm', className]}
->
-  <div class:list={['card-body', className]}>
-    <div class:list={['flex', 'items-center']}>
+<article class:list={['card', 'w-full', 'p-4', className]}>
+  <div class:list={['card-body']}>
+    <div class:list={['flex', 'items-center', 'justify-center']}>
       {
         Icon != null && (
           <Icon
