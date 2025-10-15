@@ -1,49 +1,52 @@
 ---
-import CardCentered from "../ui/CardCentered.astro";
-import { FaCheck } from "react-icons/fa6";
-import H2 from "../ui/H2";
-import H3 from "../ui/H3";
+import CardCentered from '../ui/CardCentered.astro'
+import { FaCheck } from 'react-icons/fa6'
+import H2 from '../ui/H2'
+import H3 from '../ui/H3'
 
 const gofitosActions = [
-  { text: "Completar un tema:", points: "+50 Gofitos" },
-  { text: "Completar un Pomodoro de estudio:", points: "+25 Gofitos" },
-  { text: "Generar un caso práctico:", points: "+2 Gofitos" },
-  { text: "Hacer un test rápido:", points: "+5 Gofitos (y más si apruebas)" },
-];
+  { text: 'Completar un tema:', points: '+50 Gofitos' },
+  { text: 'Completar un Pomodoro de estudio:', points: '+25 Gofitos' },
+  { text: 'Generar un caso práctico:', points: '+2 Gofitos' },
+  { text: 'Hacer un test rápido:', points: '+5 Gofitos (y más si apruebas)' },
+]
 
 const gofitoLevels = [
-  { title: "Guanche", iconName: "book", points: "0+ Gofitos" },
-  { title: "Guayre", iconName: "shield", points: "100+ Gofitos" },
-  { title: "Faycán", iconName: "star", points: "250+ Gofitos" },
-  { title: "Guanarteme", iconName: "trophy", points: "500+ Gofitos" },
-  { title: "Mencey", iconName: "graduation", points: "1000+ Gofitos" },
-];
+  { title: 'Guanche', iconName: 'book', points: '0+ Gofitos' },
+  { title: 'Guayre', iconName: 'shield', points: '100+ Gofitos' },
+  { title: 'Faycán', iconName: 'star', points: '250+ Gofitos' },
+  { title: 'Guanarteme', iconName: 'trophy', points: '500+ Gofitos' },
+  { title: 'Mencey', iconName: 'graduation', points: '1000+ Gofitos' },
+]
 ---
 
-<section class:list={["container", "py-16", "md:py-24"]}>
+<section class:list={['container', 'py-16', 'md:py-24']}>
   <div
     class:list={[
-      "grid",
-      "grid-cols-1 lg:grid-cols-2",
-      "gap-8 md:gap-12",
-      "items-start",
-      "px-4",
+      'grid',
+      'grid-cols-1 lg:grid-cols-2',
+      'gap-8 md:gap-12',
+      'items-start',
+      'px-4',
     ]}
   >
     <div>
-      <H2 className="text-3xl font-bold mb-4 text-left">
+      <H2 className='text-3xl font-bold mb-4 text-left'>
         ¿Qué son los Gofitos?
       </H2>
-      <p class:list={["text-neutral", "mb-6"]}>
+      <p class:list={['text-neutral', 'mb-6']}>
         Los "Gofitos" son los puntos que ganas por cada acción que realizas en
         la plataforma. Son el reflejo directo de tu esfuerzo y constancia.
       </p>
 
-      <ul class:list={["space-y-1", "mb-0"]}>
+      <ul class:list={['space-y-1', 'mb-0']}>
         {
           gofitosActions.map((action) => (
-            <li class:list={["flex", "items-start", "gap-2"]}>
-              <FaCheck className="text-success flex-shrink-0 mt-1" size={16} />
+            <li class:list={['flex', 'items-start', 'gap-2']}>
+              <FaCheck
+                className='text-success flex-shrink-0 mt-1'
+                size={16}
+              />
               <span>
                 <strong>{action.text}</strong> {action.points}
               </span>
@@ -52,21 +55,21 @@ const gofitoLevels = [
         }
       </ul>
 
-      <H3 className="text-xl font-bold mb-4 mt-6 text-left">
+      <H3 className='text-xl font-bold mb-4 mt-6 text-left'>
         Sube de Nivel y Demuestra tu Progreso
       </H3>
     </div>
 
     <div>
-      <div class:list={["grid", "grid-cols-1 md:grid-cols-3", "gap-4", "pb-0"]}>
+      <div class:list={['grid', 'grid-cols-1 md:grid-cols-3', 'gap-4', 'pb-0']}>
         {
           gofitoLevels.map((level) => (
             <CardCentered
               title={level.title}
               iconName={level.iconName}
-              className="py-1 w-full h-full"
+              className='py-1 w-full h-full'
             >
-              <p class:list={["text-xs", "text-neutral", '!m-0', '!p-0']}>{level.points}</p>
+              {level.points}
             </CardCentered>
           ))
         }

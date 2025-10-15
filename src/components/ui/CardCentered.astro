@@ -28,5 +28,7 @@ import Card from './Card.astro'
     className,
   ]}
 >
-  <slot />
+  <p class:list={['text-center', '!m-0', '!p-0', 'text-center']}>
+    <slot />
+  </p>
 </Card>
