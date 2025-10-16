@@ -8,7 +8,7 @@ type NavbarProps = {
     avatarUrl?: string;
 };
 
-export default function Navbar({ isLogged = false, avatarUrl }: NavbarProps) {
+export default function Navbar({ isLogged = true, avatarUrl }: NavbarProps) {
     return (
         <div className={clsx(
             "navbar",
@@ -17,12 +17,14 @@ export default function Navbar({ isLogged = false, avatarUrl }: NavbarProps) {
         )}>
             <div className={clsx("navbar-start")}>
                 <div className={clsx("dropdown")}>
-                    <div tabIndex={0} role="button" className={clsx(
-                        "btn btn-ghost",
-                        "lg:hidden",
-                    )}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
-                    </div>
+                    {!isLogged && (
+                        <div tabIndex={0} role="button" className={clsx(
+                            "btn btn-ghost",
+                            "lg:hidden",
+                        )}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+                        </div>
+                    )}
                     <ul
                         tabIndex={0}
                         className={clsx(
@@ -39,16 +41,11 @@ export default function Navbar({ isLogged = false, avatarUrl }: NavbarProps) {
                         <li><a href="/">Inicio</a></li>
                         <li><a href="/about">Qué Ofrecemos</a></li>
                         <li><a href="/pricing">Precios</a></li>
-                        {isLogged ? (
+                        {isLogged && (
                             <>
                                 <li><a href="/perfil">Perfil</a></li>
                                 <li><a href="/settings">Configuración</a></li>
                                 <li><a href="/logout">Cerrar sesión</a></li>
-                            </>
-                        ) : (
-                            <>
-                                <li><a href="/login">Inicia Sesión</a></li>
-                                <li><a href="/sign-up">Prueba Gratis</a></li>
                             </>
                         )}
                     </ul>
