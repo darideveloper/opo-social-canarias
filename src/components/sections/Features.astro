@@ -1,45 +1,45 @@
 ---
-import CardCentered from "../ui/CardCentered.astro";
-import H2 from "../ui/H2";
+import CardCentered from '../ui/CardCentered.astro'
+import H2 from '../ui/H2'
 
 type Feature = {
-  iconName: "bullseye" | "bolt" | "star";
-  title: string;
-  text: string;
-};
+  iconName: 'bullseye' | 'bolt' | 'star'
+  title: string
+  text: string
+}
 
 const features = [
   {
-    iconName: "bullseye",
-    title: "Contenido Específico",
-    text: "Nuestra IA analiza y adapta el temario a la legislación y el contexto 100% canario. Estudia solo lo que necesitas.",
+    iconName: 'bullseye',
+    title: 'Contenido Específico',
+    text: 'Nuestra IA analiza y adapta el temario a la legislación y el contexto 100% canario. Estudia solo lo que necesitas.',
   },
   {
-    iconName: "bolt",
-    title: "Práctica Ilimitada",
-    text: "Genera infinitos casos prácticos y test. Nuestra IA crea escenarios realistas para que domines cada supuesto.",
+    iconName: 'bolt',
+    title: 'Práctica Ilimitada',
+    text: 'Genera infinitos casos prácticos y test. Nuestra IA crea escenarios realistas para que domines cada supuesto.',
   },
   {
-    iconName: "star",
-    title: "Análisis de Progreso",
-    text: "Nuestro sistema identifica tus puntos débiles y te sugiere dónde enfocar tu energía para un estudio más eficiente.",
+    iconName: 'star',
+    title: 'Análisis de Progreso',
+    text: 'Nuestro sistema identifica tus puntos débiles y te sugiere dónde enfocar tu energía para un estudio más eficiente.',
   },
-] as Feature[];
+] as Feature[]
 ---
 
-<section class:list={["container"]}>
-  <div class:list={["!items-center"]}>
-    <H2 class:list={["mb-4"]}>Una Metodología Inteligente</H2>
+<section class:list={['container']}>
+  <div class:list={['!items-center']}>
+    <H2 class:list={['mb-4']}>Una Metodología Inteligente</H2>
 
     <p
       class:list={[
-        "text-center",
-        "text-gray-600",
-        "max-w-3xl",
-        "mx-auto",
-        "mb-12",
-        "md:mb-16",
-        "px-4",
+        'text-center',
+        'text-gray-600',
+        'max-w-3xl',
+        'mx-auto',
+        'mb-12',
+        'md:mb-16',
+        'px-4',
       ]}
     >
       Usamos la inteligencia artificial para darte una ventaja decisiva. Cada
@@ -49,20 +49,20 @@ const features = [
 
     <div
       class:list={[
-        "mt-12",
-        "grid",
-        "grid-cols-1 md:grid-cols-3",
-        "gap-6",
-        "md:gap-8",
+        'mt-12',
+        'grid',
+        'grid-cols-1 md:grid-cols-3',
+        'gap-6',
+        'md:gap-8',
       ]}
     >
       {
         features.map((feature) => (
-          <div class:list={["w-full", "max-w-lg", "items-center", "mx-auto"]}>
+          <div class:list={['w-full', 'max-w-lg', 'items-center', 'mx-auto']}>
             <CardCentered
               title={feature.title}
               iconName={feature.iconName}
-              className="h-full p-4"
+              className='h-full p-4'
             >
               {feature.text}
             </CardCentered>
