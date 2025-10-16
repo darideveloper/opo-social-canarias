@@ -32,11 +32,6 @@ if (className.includes('text-center')) {
   textAlignment = 'center'
 }
 
-// Detect alignment from parent className
-let textAlignment = 'left'
-if (className.includes('text-center')) {
-  textAlignment = 'center'
-}
 ---
 
 <article class:list={['card', 'w-full', 'p-4', 'text-left', className]}>
