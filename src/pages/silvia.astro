@@ -1,8 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/sections/Navbar.tsx";
+import Testimonials from "../components/sections/Testimonials";
+
 ---
 
 <Layout>
     <Navbar />
+    <Testimonials client:load />
 </Layout>
