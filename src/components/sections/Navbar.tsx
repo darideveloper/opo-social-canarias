@@ -51,7 +51,7 @@ export default function Navbar({ isLogged = true, avatarUrl }: NavbarProps) {
                     </ul>
                 </div>
                 <a className={clsx("text-xl")} href="/">
-                    <img src="/logo.webp" alt="Logo" className={clsx("sm:h-5 md:h-10")} />
+					<img src="/logo.webp" alt="Logo" className={clsx("h-6", "md:h-10")} />
                 </a>
             </div>
             <div className={clsx(
