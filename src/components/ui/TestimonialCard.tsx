@@ -32,7 +32,7 @@ const TestimonialCard = ({ name, title, stars, testimonial, avatar }: Testimonia
               "w-20",
               "rounded-full",
               "ring",
-              "ring-primary",
+              "ring-secondary",
               "ring-offset-base-100",
               "ring-offset-2",
             )}>
