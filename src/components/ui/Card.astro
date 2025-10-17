@@ -8,6 +8,9 @@ import { icons } from '../../data/icons'
 // Components
 import H3 from './H3'
 
+// Libs
+import clsx from 'clsx'
+
 // Props
 const {
   title,
@@ -22,13 +25,23 @@ let Icon = null
 if (iconName != null) {
   Icon = icons[iconName]
 }
+
+// Detect alignment from parent className
+let textAlignment = 'left'
+if (className.includes('text-center')) {
+  textAlignment = 'center'
+}
 ---
 
-<article
-  class:list={['card', 'bg-base-100', 'w-full', 'p-4', 'shadow-sm', className]}
->
-  <div class:list={['card-body', className]}>
-    <div class:list={['flex', 'items-center']}>
+<article class:list={['card', 'w-full', 'p-4', 'text-left', className]}>
+  <div class:list={['card-body']}>
+    <div
+      class:list={[
+        'flex',
+        'items-center',
+        textAlignment === 'center' ? 'justify-center' : 'justify-start',
+      ]}
+    >
       {
         Icon != null && (
           <Icon
@@ -38,7 +51,16 @@ if (iconName != null) {
         )
       }
     </div>
-    <H3 class:list={['card-title', 'capitalize', textWhite && 'text-white']}>
+    <H3
+      className={clsx(
+        'card-title',
+        'capitalize',
+        textWhite && 'text-white',
+        textAlignment === 'center' ? '!text-center' : '!text-left',
+        'w-full',
+        'block'
+      )}
+    >
       {title}
     </H3>
     <slot />

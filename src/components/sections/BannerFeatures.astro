@@ -1,6 +1,8 @@
 ---
-import Card from '../ui/Card.astro'
+// Components
+import CardCentered from '../ui/CardCentered.astro'
 
+// Props
 interface Feature {
   title: string
   text: string
@@ -27,19 +29,23 @@ const features: Feature[] = [
 ]
 ---
 
-<section class:list={['bg-secondary', 'w-full']}>
-  <div class:list={['container', 'bg-secondary', 'grid', 'md:grid-cols-3']}>
+<section class:list={['container', 'bg-secondary']}>
+  <div class:list={['bg-secondary', 'grid', 'md:grid-cols-3']}>
     {
       features.map((feature) => (
-        <Card
+        <CardCentered
           title={feature.title}
           iconName={feature.iconName}
           iconWhite={true}
           textWhite={true}
-          class:list={['bg-secondary', "!shadow-none"]}
+          class:list={[
+            'bg-secondary',
+            '!shadow-none',
+            'text-white',
+          ]}
         >
           {feature.text}
-        </Card>
+        </CardCentered>
       ))
     }
   </div>
