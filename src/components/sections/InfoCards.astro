@@ -1,0 +1,48 @@
+---
+import Tag from "../ui/Tag.astro";
+import H2 from "../ui/H2.tsx";
+import CardInfo from "../ui/CardInfo.astro";
+
+const tags = ["Ayuntamiento", "Cabildo", "Gobierno", "SCS", "Penitenciario"];
+const cardsInfo = [
+  {
+    cardTitle: "Temario 100% Canario",
+    text: "Accede a un temario general y especifico siempre actualizado a la normativa y contexto de las islas Canarias. !No estudies de más, ni de menos! Olvidate de los temarios genericos y céntrate en lo que de verdad importa para tu oposicion",
+    iconName: "bitcoin",
+    iconWhite: false,
+    rowReverse: true,
+  },
+  {
+    cardTitle: "Casos Prácticos con IA",
+    text: "Nuestro generador de IA crea infinitos casos prácticos basados en situaciones reales de los servicios sociales de Canarias. La práctica que necesitas, sin límites. Domina la parte práctica y ve con total seguridad al examen.",
+    iconName: "bitcoin",
+    iconWhite: false,
+    rowReverse: false,
+  },
+  {
+    cardTitle: "Seguimiento y Convocatorias",
+    text: "Analiza tu progreso en cada área con estadísticas claras y no te pierdas ninguna convocatoria con nuestro widget de seguimiento en tiempo real. Controla tu evolución y no dejes pasar ni una oportunidad.",
+    iconName: "bitcoin",
+    iconWhite: false,
+    rowReverse: true,
+  },
+];
+---
+
+<section class:list={["container"]}>
+  <div class:list={["flex", "justify-center", "gap-2"]}>
+    {tags.map((tag) => <Tag>{tag}</Tag>)}
+  </div>
+  <H2 className="mt-8">Preparate para la Oposición como nunca antes</H2>
+  <div>
+    {cardsInfo.map((card) => (
+  <CardInfo
+    CardTitle={card.cardTitle}
+    text={card.text}
+    iconName={card.iconName}
+    iconWhite={card.iconWhite}
+    rowReverse={card.rowReverse}
+  />
+))}
+  </div>
+</section>
