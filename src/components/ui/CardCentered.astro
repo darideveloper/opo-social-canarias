@@ -20,7 +20,15 @@ import Card from './Card.astro'
   iconName={iconName}
   iconWhite={iconWhite}
   textWhite={textWhite}
-  class:list={['text-center', 'items-center', className]}
+  class:list={[
+    'text-center',
+    'items-center',
+    'bg-base-100',
+    'shadow-sm',
+    className,
+  ]}
 >
-  <slot />
+  <p class:list={['text-center', '!m-0', '!p-0', 'text-center']}>
+    <slot />
+  </p>
 </Card>

@@ -6,6 +6,7 @@ import H3 from '../components/ui/H3.tsx'
 import Tag from '../components/ui/Tag.astro'
 import CardInfo from '../components/ui/CardInfo.astro'
 import Image from '../components/ui/Image.tsx'
+import Card from '../components/ui/Card.astro'
 import BannerFeatures from '../components/sections/BannerFeatures.astro'
 import InfoCards from '../components/sections/InfoCards.astro'
 ---
@@ -15,8 +16,31 @@ import InfoCards from '../components/sections/InfoCards.astro'
     <H1>Tu plaza de Trabajo Social en Canarias, mas cerca que nunca.</H1>
     <H2>Prepárate para la Oposición como nunca antes</H2>
     <H3>Prepárate para la Oposición como nunca antes</H3>
+    <Tag>Penitenciario</Tag>
+
     <InfoCards/>
-    
+    <CardInfo
+      title='Temario 100% Canario'
+      iconName='bolt'
+      rowReverse={true}
+      imageSrc='/Estudiantes.webp'
+      imageAlt='Estudiantes estudiando'
+    >
+      <p>
+        Accede a un temario general y especifico siempre actualizado a la normativa y contexto de las islas Canarias. !No estudies de más, ni de menos! Olvidate de los temarios genericos y céntrate en lo que de verdad importa para tu oposicion
+      </p>
+    </CardInfo>
+    <CardInfo
+      title='Temario 100% Canario'
+      iconName='bolt'
+      rowReverse={false}
+      imageSrc='/Estudiantes.webp'
+      imageAlt='Estudiantes estudiando'
+    >
+      <p>
+        Accede a un temario general y especifico siempre actualizado a la normativa y contexto de las islas Canarias. !No estudies de más, ni de menos! Olvidate de los temarios genericos y céntrate en lo que de verdad importa para tu oposicion
+      </p>
+    </CardInfo>
     <Image
       src='https://cdn.pixabay.com/photo/2021/10/03/17/37/maple-6678635_1280.jpg'
       alt='Estudiantes estudiando'
