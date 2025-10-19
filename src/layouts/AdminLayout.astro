@@ -1,0 +1,42 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/belleza';
+import '../styles/global.css';
+import AdminNavbar from '../components/sections/admin/Navbar';
+import AdminDrawer from '../components/sections/admin/Drawer';
+
+interface Props {
+  avatarUrl?: string;
+  userName?: string;
+  userEmail?: string;
+}
+
+const {
+  avatarUrl,
+  userName = "Administrador",
+  userEmail = "administrador@gmail.com",
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="es" data-theme="winter">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Panel de Control</title>
+  </head>
+  <body class:list={["bg-base-200", "min-h-screen"]}>
+    <AdminDrawer client:load>
+      <AdminNavbar 
+        client:load 
+        avatarUrl={avatarUrl}
+        userName={userName}
+        userEmail={userEmail}
+      />
+      <slot />
+    </AdminDrawer>
+  </body>
+</html>
+

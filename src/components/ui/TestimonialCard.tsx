@@ -1,0 +1,59 @@
+import { FaStar } from "react-icons/fa";
+import clsx from "clsx";
+
+
+interface TestimonialCardProps {
+  name: string;
+  title: string;
+  stars: number;
+  testimonial: string;
+  avatar: string;
+}
+
+
+const TestimonialCard = ({ name, title, stars, testimonial, avatar }: TestimonialCardProps) => {
+  return (
+    <div className={clsx(
+      "flex",
+      "justify-center",
+      "py-10",
+      "bg-base-200",
+    )}>
+      <div className={clsx(
+        "card",
+        "w-full", "bg-base-100", "shadow-sm")}>
+        <div className={clsx(
+          "card-body",
+          "items-center",
+          "text-center"
+          )}>
+          <div className={clsx("avatar")}>
+            <div className={clsx(
+              "w-20",
+              "rounded-full",
+              "ring",
+              "ring-secondary",
+              "ring-offset-base-100",
+              "ring-offset-2",
+            )}>
+              <img src={avatar || "/user.svg"} alt={name || "User"} />
+            </div>
+          </div>
+
+          <h2 className={clsx("card-title", "mt-2")}>{name}</h2>
+
+          <div className={clsx("flex", "gap-1", "text-warning", "mt-1")}>
+            {[...Array(stars)].map((_, i) => (
+              <FaStar key={i} />
+            ))}
+          </div>
+
+          <p className={clsx("font-semibold", "mt-2")}>{title}</p>
+          <p className={clsx("text-sm", "opacity-70", "mt-2", "leading-relaxed")}>{testimonial}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TestimonialCard;
