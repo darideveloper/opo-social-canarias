@@ -1,9 +1,9 @@
 ---
 // Types
-import type { CardProps } from '../../types/card'
+import type { CardProps } from "../../types/card";
 
 // Icons
-import { icons } from '../../data/icons'
+import { icons } from "../../data/icons";
 
 // Components
 import H3 from './H3'
@@ -17,13 +17,13 @@ const {
   iconName,
   iconWhite = false,
   textWhite = false,
-  class: className = '',
-} = Astro.props as CardProps
+  class: className = "",
+} = Astro.props as CardProps;
 
 // Get current icon
-let Icon = null
+let Icon = null;
 if (iconName != null) {
-  Icon = icons[iconName]
+  Icon = icons[iconName];
 }
 
 // Detect alignment from parent className
@@ -31,6 +31,7 @@ let textAlignment = 'left'
 if (className.includes('text-center')) {
   textAlignment = 'center'
 }
+
 ---
 
 <article class:list={['card', 'w-full', 'p-4', 'text-left', className]}>
