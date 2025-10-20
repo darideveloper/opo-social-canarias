@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import RegistrationForm from "../../components/sections/forms/Registration.tsx";
+---
+
+<Layout>
+    <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
+        <RegistrationForm client:load />
+    </div>
+</Layout>

@@ -10,7 +10,7 @@ type NavbarProps = {
 };
 
 export default function Navbar({ 
-  isLogged = true, 
+  isLogged = false, 
   avatarUrl,
   userName = "Usuario",
   userEmail = "usuario@email.com" 
