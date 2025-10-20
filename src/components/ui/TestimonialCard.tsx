@@ -48,8 +48,8 @@ const TestimonialCard = ({ name, title, stars, testimonial, avatar }: Testimonia
             ))}
           </div>
 
-          <p className={clsx("font-semibold", "mt-2")}>{title}</p>
-          <p className={clsx("text-sm", "opacity-70", "mt-2", "leading-relaxed")}>{testimonial}</p>
+          <h3 className={clsx("font-semibold", "mt-2")}>{title}</h3>
+          <article className={clsx("text-sm", "opacity-70", "mt-2", "leading-relaxed")}>{testimonial}</article>
         </div>
       </div>
     </div>
