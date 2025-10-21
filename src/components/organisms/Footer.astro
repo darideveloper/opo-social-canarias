@@ -1,0 +1,66 @@
+---
+// Libs
+import clsx from 'clsx'
+
+// Data
+type LegalLink = {
+  label: string
+  href: string
+}
+
+const legalInks: LegalLink[] = [
+  {
+    label: 'aviso de privacidad',
+    href: '/legal/privacy-policy',
+  },
+  {
+    label: 'política de privacidad',
+    href: '/legal/privacy-policy',
+  },
+  {
+    label: 'política de cookies',
+    href: '/legal/cookies-policy',
+  },
+]
+---
+
+<footer
+  class={clsx(
+    'container',
+    'mx-auto',
+    '!py-6',
+    'border-t',
+    'border-secondary-content'
+  )}
+>
+  <small
+    class={clsx(
+      'flex',
+      'flex-col md:flex-row',
+      'gap-2',
+      'justify-between',
+      'items-center'
+    )}
+  >
+    <p class={clsx('!mb-0')}>
+      &copy; 2025 Socialia. Todos los derechos reservados. Creado por Sociales
+      Creativos. Powered by <a href="https://software3s.com/es/about/" class={clsx('link', 'link-hover', 'text-secondary')}>Smooth Software Solutions</a>
+    </p>
+    <ul
+      class={clsx(
+        'flex',
+        'flex-col md:flex-row',
+        'gap-1 md:gap-6',
+        'capitalize'
+      )}
+    >
+      {
+        legalInks.map((link) => (
+          <li class={clsx('text-center')}>
+            <a href={link.href} class={clsx('link', 'link-hover', 'text-secondary')}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </small>
+</footer>

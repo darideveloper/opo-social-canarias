@@ -8,6 +8,7 @@ import '../styles/global.css';
 
 // Components
 import Navbar from "../components/sections/Navbar.tsx";
+import Footer from "../components/organisms/Footer.astro";
 ---
 
 <!doctype html>
@@ -22,5 +23,6 @@ import Navbar from "../components/sections/Navbar.tsx";
 	<body class:list={["!bg-base-200"]}>
 		<Navbar />
 		<slot />
+		<Footer />
 	</body>
 </html>
