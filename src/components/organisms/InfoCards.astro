@@ -1,0 +1,84 @@
+---
+// Components
+import Tag from "../ui/Tag.astro";
+import H2 from "../ui/H2.tsx";
+import CardInfo from "../ui/CardInfo.astro";
+
+// Libs
+import clsx from 'clsx';
+
+type CardInfo = {
+  cardTitle: string;
+  text: string;
+  iconName: string;
+  iconWhite: boolean;
+  rowReverse: boolean;
+  imageSrc: string;
+}
+
+// Data
+const tags = ["Ayuntamiento", "Cabildo", "Gobierno", "SCS", "Penitenciario"];
+const cardsInfo = [
+  {
+    cardTitle: "Temario 100% Canario",
+    text: "Accede a un temario general y especifico siempre actualizado a la normativa y contexto de las islas Canarias. !No estudies de más, ni de menos! Olvidate de los temarios genericos y céntrate en lo que de verdad importa para tu oposicion",
+    iconName: "check",
+    iconWhite: true,
+    rowReverse: false,
+    imageSrc: "/Estudiantes.webp",
+  },
+  {
+    cardTitle: "Casos Prácticos con IA",
+    text: "Nuestro generador de IA crea infinitos casos prácticos basados en situaciones reales de los servicios sociales de Canarias. La práctica que necesitas, sin límites. Domina la parte práctica y ve con total seguridad al examen.",
+    iconName: "bitcoin",
+    iconWhite: false,
+    rowReverse: true,
+    imageSrc: "/Robots.webp",
+  },
+  {
+    cardTitle: "Seguimiento y Convocatorias",
+    text: "Analiza tu progreso en cada área con estadísticas claras y no te pierdas ninguna convocatoria con nuestro widget de seguimiento en tiempo real. Controla tu evolución y no dejes pasar ni una oportunidad.",
+    iconName: "bitcoin",
+    iconWhite: false,
+    rowReverse: false,
+    imageSrc: "/Graficas.webp",
+  },
+] as CardInfo[];
+---
+
+<section class={clsx('container')}>
+  <div class={clsx('flex', 'justify-center', 'gap-2')}>
+    {tags.map((tag) => <Tag>{tag}</Tag>)}
+  </div>
+
+  <H2 className="mt-8">Prepárate para la Oposición como nunca antes</H2>
+  <p
+    class={clsx(
+      'text-center',
+      'text-xl',
+      'mt-2',
+      'max-w-4xl',
+      'mx-auto'
+    )}
+  >
+    Al registrarte, accederás a un ecosistema de herramientas enfocado en un
+    solo objetivo: que consigas tu plaza.
+  </p>
+  <div>
+    {
+      cardsInfo.map((card, index) => (
+        <CardInfo
+          class={clsx('mt-12')}
+          key={index}
+          title={card.cardTitle}
+          iconName={card.iconName}
+          rowReverse={card.rowReverse}
+          imageSrc={card.imageSrc}
+          imageAlt={card.cardTitle}
+        >
+          {card.text}
+        </CardInfo>
+      ))
+    }
+  </div>
+</section>

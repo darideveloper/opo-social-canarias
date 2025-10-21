@@ -1,14 +1,19 @@
 ---
+// Components
 import CardCentered from "../ui/CardCentered.astro";
 import H2 from "../ui/H2";
+
+// Libs
 import clsx from "clsx";
 
+// Types
 type Feature = {
   iconName: "bullseye" | "bolt" | "star";
   title: string;
   text: string;
 };
 
+// Data
 const features = [
   {
     iconName: "bullseye",
