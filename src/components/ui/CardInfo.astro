@@ -1,64 +1,58 @@
 ---
-// COmponents
-import Card from '../../components/ui/Card.astro'
-import Image from '../../components/ui/Image.tsx'
+// Components
+import Card from "../../components/ui/Card.astro";
+import Image from "../../components/ui/Image.tsx";
+
+// Libs
+import clsx from "clsx";
 
 interface CardInfoProps {
-  title: string
-  iconName: string
-  rowReverse?: boolean
-  class?: string
-  imageSrc: string
-  imageAlt: string
+  title: string;
+  iconName: string;
+  rowReverse?: boolean;
+  class?: string;
+  imageSrc: string;
+  imageAlt: string;
 }
 
 const {
   title,
   iconName,
   rowReverse = false,
-  class: className = '',
+  class: className = "",
   imageSrc,
   imageAlt,
-} = Astro.props as CardInfoProps
+} = Astro.props as CardInfoProps;
 ---
 
 <div
-  class:list={[
-    'flex flex-col',
-    'md:flex-row',
-    rowReverse && 'md:flex-row-reverse',
-    'w-full',
-    'items-center',
-    'overflow-hidden',
-    className,
-  ]}
+  class={clsx(
+    "flex flex-col",
+    "md:flex-row",
+    rowReverse && "md:flex-row-reverse",
+    "w-full",
+    "items-center",
+    "overflow-hidden",
+    className
+  )}
 >
   <!-- Imagen -->
-  <div class:list={['w-full', 'md:w-1/2']}>
-    <Image
-      src={imageSrc}
-      alt={imageAlt}
-      className='w-full object-cover'
-    />
+  <div class={clsx("w-full", "md:w-1/2")}>
+    <Image src={imageSrc} alt={imageAlt} className="w-full object-cover" />
   </div>
 
   <!-- Card centrada -->
   <div
-    class:list={[
-      'w-full',
-      'md:w-1/2',
-      'flex items-center',
-      'justify-center',
-      'py-8',
-      'md:h-full',
-    ]}
+    class={clsx(
+      "w-full",
+      "md:w-1/2",
+      "flex items-center",
+      "justify-center",
+      "py-8",
+      "md:h-full"
+    )}
   >
-    <Card
-      title={title}
-      iconName={iconName}
-      iconWhite={false}
-      textWhite={false}
-    >
+    <Card title={title} iconName={iconName} iconWhite={false} textWhite={false}>
       <slot />
     </Card>
   </div>

@@ -2,6 +2,7 @@
 import Tag from "./Tag.astro";
 import ButtonLink from "./ButtonLink.tsx";
 import H3 from "./H3.tsx";
+import clsx from "clsx";
 
 interface Props {
   name: string;
@@ -12,6 +13,8 @@ interface Props {
   btnLink?: string;
   tagText?: string;
   important?: boolean;
+  class?: string;
+  className?: string;
 }
 
 const {
@@ -27,7 +30,7 @@ const {
 ---
 
 <article
-  class:list={[
+  class={clsx(
     "card",
     "w-full",
     "bg-base-100",
@@ -36,22 +39,22 @@ const {
     "mt-4",
     "my-6",
     important && "border-2",
-    important && "border-secondary",
-  ]}
+    important && "border-secondary"
+  )}
 >
-  <div class:list={["card-body", "relative"]}>
+  <div class={clsx("card-body", "relative")}>
     {
       tagText && (
         <Tag
-          class:list={[
+          class={clsx(
             "absolute",
             "right-1/2 md:right-1",
             "-top-3 md:top-1",
             "translate-x-1/2 md:translate-x-0",
             "font-bold",
             "md:mr-2",
-            "md:mt-2",
-          ]}
+            "md:mt-2"
+          )}
         >
           {tagText}
         </Tag>
@@ -62,28 +65,28 @@ const {
 
     {
       description && (
-        <p class:list={["text-base", "text-neutral", "mt-2"]}>{description}</p>
+        <p class={clsx("text-base", "text-neutral", "mt-2")}>{description}</p>
       )
     }
 
-    <p class:list={["mt-4", "!my-0"]}>
-      <span class:list={["text-6xl", "font-bold"]}>{price}</span>
-      <span class:list={["text-xl"]}>/año + IGIC</span>
+    <p class={clsx("mt-4", "!my-0")}>
+      <span class={clsx("text-6xl", "font-bold")}>{price}</span>
+      <span class={clsx("text-xl")}>/año + IGIC</span>
     </p>
 
-    <div class:list={["mt-6", "flex", "flex-col", "gap-2", "text-sm"]}>
+    <div class={clsx("mt-6", "flex", "flex-col", "gap-2", "text-sm")}>
       <slot />
     </div>
 
     {
       footerText && (
-        <p class:list={["mt-4", "!mb-0", "text-xs", "text-base-content"]}>
+        <p class={clsx("mt-4", "!mb-0", "text-xs", "text-base-content")}>
           {footerText}
         </p>
       )
     }
 
-    <div class:list={["mt-6"]}>
+    <div class={clsx("mt-6")}>
       <ButtonLink href={btnLink} isSoft={!important} className="btn-block">
         {btnText}
       </ButtonLink>

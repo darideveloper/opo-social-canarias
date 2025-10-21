@@ -6,10 +6,10 @@ import type { CardProps } from "../../types/card";
 import { icons } from "../../data/icons";
 
 // Components
-import H3 from './H3'
+import H3 from "./H3";
 
 // Libs
-import clsx from 'clsx'
+import clsx from "clsx";
 
 // Props
 const {
@@ -27,39 +27,38 @@ if (iconName != null) {
 }
 
 // Detect alignment from parent className
-let textAlignment = 'left'
-if (className.includes('text-center')) {
-  textAlignment = 'center'
+let textAlignment = "left";
+if (className.includes("text-center")) {
+  textAlignment = "center";
 }
-
 ---
 
-<article class:list={['card', 'w-full', 'p-4', 'text-left', className]}>
-  <div class:list={['card-body']}>
+<article class={clsx("card", "w-full", "p-4", "text-left", className)}>
+  <div class={clsx("card-body")}>
     <div
-      class:list={[
-        'flex',
-        'items-center',
-        textAlignment === 'center' ? 'justify-center' : 'justify-start',
-      ]}
+      class={clsx(
+        "flex",
+        "items-center",
+        textAlignment === "center" ? "justify-center" : "justify-start"
+      )}
     >
       {
         Icon != null && (
           <Icon
             size={36}
-            className={iconWhite ? 'text-white' : 'text-secondary'}
+            className={iconWhite ? "text-white" : "text-secondary"}
           />
         )
       }
     </div>
     <H3
       className={clsx(
-        'card-title',
-        'capitalize',
-        textWhite && 'text-white',
-        textAlignment === 'center' ? '!text-center' : '!text-left',
-        'w-full',
-        'block'
+        "card-title",
+        "capitalize",
+        textWhite && "text-white",
+        textAlignment === "center" ? "!text-center" : "!text-left",
+        "w-full",
+        "block"
       )}
     >
       {title}
