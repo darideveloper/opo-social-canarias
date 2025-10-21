@@ -81,7 +81,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           <label className={clsx('label', 'justify-between', 'pt-0')}>
             <span className='label-text'>Contraseña</span>
             <a
-              href='#'
+              href='/reset-password'
               className={clsx('label-text-alt', 'link', 'link-hover')}
             >
               ¿Olvidaste tu contraseña?
@@ -113,9 +113,9 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           </div>
 
           <p className={clsx('text-center', 'text-sm', 'mt-1')}>
-            ¿No tienes una cuenta?{' '}
+            ¿No tienes una cuenta?&nbsp;
             <a
-              href='#'
+              href='/sign-up'
               className={clsx('link', 'link-hover')}
             >
               Regístrate
