@@ -42,14 +42,14 @@ const legalInks: LegalLink[] = [
       'items-center'
     )}
   >
-    <p class={clsx('!mb-0')}>
+    <p class={clsx('!mb-0', 'text-center md:text-left', 'max-w-lg')}>
       &copy; 2025 Socialia. Todos los derechos reservados. Creado por Sociales
       Creativos. Powered by <a href="https://software3s.com/es/about/" class={clsx('link', 'link-hover', 'text-secondary')}>Smooth Software Solutions</a>
     </p>
     <ul
       class={clsx(
         'flex',
-        'flex-col md:flex-row',
+        'flex-col sm:flex-row',
         'gap-1 md:gap-6',
         'capitalize'
       )}
