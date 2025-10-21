@@ -13,11 +13,11 @@ export default function ButtonBase({
     <div
       className={clsx(
         "btn",
-        "btn-secondary",
-        isSoft && "btn-soft",
+        'btn-secondary',
+        isSoft ? "btn-soft" : "hover:btn-accent",
+        isSoft ? "hover:text-base-100" : "hover:text-secondary-content",
         "transition-all",
         "duration-200",
-        "hover:scale-[1.02]",
         className
       )}
     >

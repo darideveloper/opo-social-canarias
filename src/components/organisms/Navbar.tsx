@@ -1,4 +1,7 @@
+// Libs
 import clsx from 'clsx'
+
+// Components
 import ButtonLink from '../ui/ButtonLink'
 
 export default function Navbar() {
@@ -35,13 +38,12 @@ export default function Navbar() {
         <div className={clsx('navbar-end')}>
           <div className={clsx('flex', 'gap-2')}>
             <ButtonLink
-              className={clsx('btn btn-ghost')}
               href='/login'
+              isSoft={true}
             >
               Inicia Sesión
             </ButtonLink>
             <ButtonLink
-              className={clsx('btn btn-secondary')}
               href='/sign-up'
             >
               Prueba Gratis
