@@ -75,6 +75,25 @@ p {
   margin-bottom: 1rem;
 }
 
+/* Swiper navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 32px !important;
+  height: 32px !important;
+  color: var(--color-secondary) !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 0.8;
+}
+
 /* Custom scroll bar */
 
 
