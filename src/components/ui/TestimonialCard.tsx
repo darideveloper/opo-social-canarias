@@ -2,7 +2,7 @@ import { FaStar } from "react-icons/fa";
 import clsx from "clsx";
 
 
-interface TestimonialCardProps {
+interface TestimonialCardType {
   name: string;
   title: string;
   stars: number;
@@ -11,7 +11,7 @@ interface TestimonialCardProps {
 }
 
 
-const TestimonialCard = ({ name, title, stars, testimonial, avatar }: TestimonialCardProps) => {
+const TestimonialCard = ({ name, title, stars, testimonial, avatar }: TestimonialCardType) => {
   return (
     <div className={clsx(
       "flex",

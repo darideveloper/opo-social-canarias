@@ -2,7 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Input from "../../ui/Input";
 import ButtonAction from "../../ui/ButtonAction";
-import H1 from "../../ui/H1";
+import H1 from "../../atom/H1";
 import ImageUpload from "../../ui/ImageUpload";
 
 type RegistrationProps = {

@@ -1,12 +1,12 @@
 ---
 // Types
-import type { CardProps } from "../../types/card";
+import type { CardType } from "../../types/card";
 
 // Icons
 import { icons } from "../../data/icons";
 
 // Components
-import H3 from "./H3";
+import H3 from "../atom/H3";
 
 // Libs
 import clsx from "clsx";
@@ -18,7 +18,7 @@ const {
   iconWhite = false,
   textWhite = false,
   class: className = "",
-} = Astro.props as CardProps;
+} = Astro.props as CardType;
 
 // Get current icon
 let Icon = null;

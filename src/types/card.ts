@@ -1,6 +1,6 @@
 import { icons } from "../data/icons"
 
-export type CardProps = {
+export type CardType = {
   title: string
   iconWhite?: boolean
   textWhite?: boolean

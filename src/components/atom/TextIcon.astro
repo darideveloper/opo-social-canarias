@@ -1,25 +1,16 @@
 ---
-import type { ComponentType } from "react";
-import { FiCheckCircle, FiDownload, FiZap } from "react-icons/fi";
+// Types
+import type { TextIconType } from "../../types/text-icon";
 
-interface Props {
-  iconName?: string;
-  text: string;
-  textVariant?: "muted" | "secondary";
-}
-
-const ICONS: Record<string, ComponentType<any>> = {
-  check: FiCheckCircle,
-  download: FiDownload,
-  zap: FiZap,
-};
+// Icons
+import { icons } from "../../data/icons.ts";
 
 const {
   iconName = "check",
   text,
   textVariant = "muted",
-} = Astro.props as Props;
-const Icon = ICONS[iconName] ?? FiCheckCircle;
+} = Astro.props as TextIconType;
+const Icon = icons[iconName] ?? icons.check;
 ---
 
 <li
@@ -28,7 +19,7 @@ const Icon = ICONS[iconName] ?? FiCheckCircle;
     "items-center",
     "text-sm",
     textVariant === "muted"
-      ? "text-neutral"
+      ? "text-base-content"
       : "text-secondary",
   ]}
 >

@@ -1,32 +1,26 @@
 ---
-import Tag from "./Tag.astro";
-import ButtonLink from "./ButtonLink.tsx";
-import H3 from "./H3.tsx";
+// Components
+import Tag from "../ui/Tag.astro";
+import ButtonLink from "../ui/ButtonLink.tsx";
+import H3 from "../atom/H3.tsx";
+
+// Libs
 import clsx from "clsx";
 
-interface Props {
-  name: string;
-  description?: string;
-  price: string;
-  footerText?: string;
-  btnText?: string;
-  btnLink?: string;
-  tagText?: string;
-  important?: boolean;
-  class?: string;
-  className?: string;
-}
+// Props
+import type { PricingCardType } from "../../types/pricing-card";
 
 const {
   name,
   description = "",
   price,
   footerText = "",
-  btnText = "Get started",
-  btnLink = "#",
+  btnText,
+  btnLink,
   tagText = "",
   important = false,
-} = Astro.props as Props;
+  className = "",
+} = Astro.props as PricingCardType;
 ---
 
 <article
@@ -36,13 +30,13 @@ const {
     "bg-base-100",
     "shadow-sm",
     "mx-2",
-    "mt-4",
-    "my-6",
     important && "border-2",
-    important && "border-secondary"
+    important && "border-secondary",
+    important ? 'scale-100' : 'scale-90',
+    className
   )}
 >
-  <div class={clsx("card-body", "relative")}>
+  <div class={clsx("card-body", "relative", 'pt-12')}>
     {
       tagText && (
         <Tag
@@ -69,7 +63,7 @@ const {
       )
     }
 
-    <p class={clsx("mt-4", "!my-0")}>
+    <p class={clsx("mt-4", "!my-0", 'text-center md:text-left')}>
       <span class={clsx("text-6xl", "font-bold")}>{price}</span>
       <span class={clsx("text-xl")}>/año + IGIC</span>
     </p>
@@ -80,7 +74,7 @@ const {
 
     {
       footerText && (
-        <p class={clsx("mt-4", "!mb-0", "text-xs", "text-base-content")}>
+        <p class={clsx("mt-4", "!-mb-2", "text-xs", "text-base-content")}>
           {footerText}
         </p>
       )

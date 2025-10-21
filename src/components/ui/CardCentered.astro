@@ -3,7 +3,7 @@
 import clsx from "clsx";
 
 // Types
-import type { CardProps } from "../../types/card";
+import type { CardType } from "../../types/card";
 
 // Props
 const {
@@ -12,7 +12,7 @@ const {
   iconWhite = false,
   textWhite = false,
   class: className = "",
-} = Astro.props as CardProps;
+} = Astro.props as CardType;
 
 // components
 import Card from "./Card.astro";

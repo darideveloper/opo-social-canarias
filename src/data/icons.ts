@@ -1,5 +1,5 @@
 //Icons
-import { FaBook, FaBookOpen, FaTrophy } from 'react-icons/fa'
+import { FaBook, FaBookOpen, FaTrophy, FaCheckCircle } from 'react-icons/fa'
 import {
   FaShieldHalved,
   FaBolt,
@@ -24,5 +24,6 @@ export const icons = {
   graduation: FaGraduationCap,
   trophy: FaTrophy,
   bookOpen: FaBookOpen,
-  brain: LuBrainCircuit
+  brain: LuBrainCircuit,
+  check: FaCheckCircle,
 }
