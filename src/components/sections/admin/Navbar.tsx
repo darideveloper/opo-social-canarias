@@ -15,7 +15,7 @@ export default function AdminNavbar({
   const drawerId = 'admin-drawer'
 
   return (
-    <header className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>
+    <nav className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>
       <div className={clsx('navbar-start')}>
         <label
           htmlFor={drawerId}
@@ -102,6 +102,6 @@ export default function AdminNavbar({
           </ul>
         </div>
       </div>
-    </header>
+    </nav>
   )
 }

@@ -52,8 +52,8 @@ const defaultItems: Testimonial[] = [
 
 export default function Testimonials({ items = defaultItems, className, autoplayMs = 5000, loop = true}: TestimonialsProps) {
   return (
-    <section className={clsx("w-full", "py-12", className)}>
-      <div className={clsx("container mx-auto", "px-4")}>
+    <section className={clsx("container","w-full", "py-12", className)}>
+      <div className={clsx("w-full", "mx-auto", "px-4")}>
         <div className={clsx("mb-6", "text-center")}>
           <h2 className={clsx("text-2xl", "font-semibold")}>
             Opiniones de nuestros usuarios
