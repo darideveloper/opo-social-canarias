@@ -2,6 +2,7 @@
 import Tag from "../ui/Tag.astro";
 import H2 from "../ui/H2.tsx";
 import CardInfo from "../ui/CardInfo.astro";
+import clsx from 'clsx';
 
 const tags = ["Ayuntamiento", "Cabildo", "Gobierno", "SCS", "Penitenciario"];
 const cardsInfo = [
@@ -32,20 +33,20 @@ const cardsInfo = [
 ];
 ---
 
-<section class:list={["container"]}>
-  <div class:list={["flex", "justify-center", "gap-2"]}>
+<section class={clsx('container')}>
+  <div class={clsx('flex', 'justify-center', 'gap-2')}>
     {tags.map((tag) => <Tag>{tag}</Tag>)}
   </div>
 
   <H2 className="mt-8">Prepárate para la Oposición como nunca antes</H2>
   <p
-    class:list={[
-      "text-center",
-      "text-xl",
-      "mt-2",
-      "max-w-4xl", 
-      "mx-auto",
-    ]}
+    class={clsx(
+      'text-center',
+      'text-xl',
+      'mt-2',
+      'max-w-4xl',
+      'mx-auto'
+    )}
   >
     Al registrarte, accederás a un ecosistema de herramientas enfocado en un
     solo objetivo: que consigas tu plaza.
@@ -54,7 +55,7 @@ const cardsInfo = [
     {
       cardsInfo.map((card, index) => (
         <CardInfo
-          class:list={["mt-12"]}
+          class={clsx('mt-12')}
           key={index}
           title={card.cardTitle}
           iconName={card.iconName}

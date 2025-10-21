@@ -1,21 +1,27 @@
 ---
+// Libs
+import clsx from "clsx";
+
+// Props
 interface Props {
-  class?: string
+  class?: string;
+  [key: string]: any; // Allow any other props
 }
 
-const { class: className = '' } = Astro.props as Props
+const { class: className = "", ...rest } = Astro.props as Props;
 ---
 
 <div
-  class:list={[
-    'badge',
-    'badge-warning',
-    'inline-block',
-    'px-4',
-    'py-1',
-    'text-xs',
-    className,
-  ]}
+  {...rest}
+  class={clsx(
+    "badge",
+    "badge-warning",
+    "inline-block",
+    "px-4",
+    "py-1",
+    "text-xs",
+    className
+  )}
 >
   <p><slot /></p>
 </div>

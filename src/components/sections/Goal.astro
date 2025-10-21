@@ -1,10 +1,10 @@
 ---
 import Card from "../ui/Card.astro";
 import CardInfo from "../ui/CardInfo.astro";
+import clsx from "clsx";
 ---
 
-<section class:list={["container", "py-16", "md:py-24"]}>
-
+<section class={clsx("container", "py-16", "md:py-24")}>
   <CardInfo
     title="Tu Objetivo es Nuestro Objetivo"
     iconName="book"
@@ -12,11 +12,11 @@ import CardInfo from "../ui/CardInfo.astro";
     imageSrc="/doctor.png"
     imageAlt="Doctor"
   >
-    <p class:list={["mb-4", "text-neutral"]}>
-      Más allá de los puntos y los niveles, nuestro único fin es que
-      consigas tu plaza. Cada herramienta, cada tema y cada test está
-      diseñado para acercarte un paso más a ese día en que veas tu nombre en
-      la lista de admitidos.
+    <p class={clsx("mb-4", "text-neutral")}>
+      Más allá de los puntos y los niveles, nuestro único fin es que consigas tu
+      plaza. Cada herramienta, cada tema y cada test está diseñado para
+      acercarte un paso más a ese día en que veas tu nombre en la lista de
+      admitidos.
     </p>
   </CardInfo>
 </section>

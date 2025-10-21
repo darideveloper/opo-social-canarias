@@ -1,4 +1,7 @@
 ---
+// Libs
+import clsx from "clsx";
+
 // Types
 import type { CardProps } from "../../types/card";
 
@@ -13,6 +16,8 @@ const {
 
 // components
 import Card from "./Card.astro";
+
+
 ---
 
 <Card
@@ -20,15 +25,15 @@ import Card from "./Card.astro";
   iconName={iconName}
   iconWhite={iconWhite}
   textWhite={textWhite}
-  class:list={[
-    'text-center',
-    'items-center',
-    'bg-base-100',
-    'shadow-sm',
-    className,
-  ]}
+  class={clsx(
+    "text-center",
+    "items-center",
+    "bg-base-100",
+    "shadow-sm",
+    className
+  )}
 >
-  <p class:list={['text-center', '!m-0', '!p-0', 'text-center']}>
+  <p class={clsx("text-center", "!m-0", "!p-0")}>
     <slot />
   </p>
 </Card>

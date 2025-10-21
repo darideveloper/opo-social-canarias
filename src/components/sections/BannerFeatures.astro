@@ -1,34 +1,35 @@
 ---
-import Card from '../ui/Card.astro'
+import Card from "../ui/Card.astro";
+import clsx from "clsx";
 
 interface Feature {
-  title: string
-  text: string
-  iconName: 'trophy' | 'brain' | 'bookOpen'
-  iconWhite?: boolean
+  title: string;
+  text: string;
+  iconName: "trophy" | "brain" | "bookOpen";
+  iconWhite?: boolean;
 }
 
 const features: Feature[] = [
   {
-    title: '1. Estudia',
-    text: 'Accede a un temario 100% canario, siempre actualizado y al grano',
-    iconName: 'bookOpen',
+    title: "Estudia",
+    text: "Accede a un temario 100% canario, siempre actualizado y al grano",
+    iconName: "bookOpen",
   },
   {
-    title: 'Practica',
-    text: 'Genera tests y casos prácticos con IA para dominar cada tema.',
-    iconName: 'brain',
+    title: "Practica",
+    text: "Genera tests y casos prácticos con IA para dominar cada tema.",
+    iconName: "brain",
   },
   {
-    title: 'Compite',
-    text: 'Gana puntos, sube de nivel y mídete con otras opositoras en el ranking',
-    iconName: 'trophy',
+    title: "Compite",
+    text: "Gana puntos, sube de nivel y mídete con otras opositoras en el ranking",
+    iconName: "trophy",
   },
-]
+];
 ---
 
-<section class:list={["w-full", 'bg-secondary']}>
-  <div class:list={['container','bg-secondary', 'grid', 'md:grid-cols-3']}>
+<section class={clsx("w-full", "bg-secondary")}>
+  <div class={clsx("container", "bg-secondary", "grid", "md:grid-cols-3")}>
     {
       features.map((feature) => (
         <Card
@@ -36,7 +37,14 @@ const features: Feature[] = [
           iconName={feature.iconName}
           iconWhite={true}
           textWhite={true}
-          class:list={['bg-secondary', "!shadow-none", "text-white", "flex", "items-center", "text-center"]}
+          class={clsx(
+            "bg-secondary",
+            "!shadow-none",
+            "text-white",
+            "flex",
+            "items-center",
+            "text-center"
+          )}
         >
           {feature.text}
         </Card>
