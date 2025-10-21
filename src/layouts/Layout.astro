@@ -7,7 +7,7 @@ import '@fontsource/belleza'
 import '../styles/global.css'
 
 // Components
-import Navbar from '../components/organisms/Navbar.tsx'
+import Header from '../components/organisms/Header.tsx'
 import Footer from '../components/organisms/Footer.astro'
 ---
 
@@ -34,7 +34,7 @@ import Footer from '../components/organisms/Footer.astro'
     <title>Astro Basics</title>
   </head>
   <body class:list={['!bg-base-200']}>
-    <Navbar />
+    <Header />
     <main>
       <slot />
     </main>

@@ -6,7 +6,7 @@ import ButtonLink from '../ui/ButtonLink'
 
 export default function Navbar() {
   return (
-    <nav className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>
+    <header className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>
       <div className={clsx('container', 'mx-auto', 'flex', '!p-0')}>
         <div className={clsx('navbar-start')}>
           <a
@@ -21,7 +21,7 @@ export default function Navbar() {
           </a>
         </div>
 
-        <div className={clsx('navbar-center', 'hidden lg:flex')}>
+        <nav className={clsx('navbar-center', 'hidden lg:flex')}>
           <ul className={clsx('menu menu-horizontal', 'px-1')}>
             <li>
               <a href='/'>Inicio</a>
@@ -33,7 +33,7 @@ export default function Navbar() {
               <a href='/pricing'>Precios</a>
             </li>
           </ul>
-        </div>
+        </nav>
 
         <div className={clsx('navbar-end')}>
           <div className={clsx('flex', 'gap-2')}>
@@ -51,6 +51,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   )
 }
