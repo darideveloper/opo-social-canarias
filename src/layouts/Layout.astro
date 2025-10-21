@@ -1,28 +1,43 @@
 ---
 // Fonts
-import '@fontsource-variable/inter';
-import '@fontsource/belleza';
+import '@fontsource-variable/inter'
+import '@fontsource/belleza'
 
 // Styles
-import '../styles/global.css';
+import '../styles/global.css'
 
 // Components
-import Navbar from "../components/sections/Navbar.tsx";
-import Footer from "../components/organisms/Footer.astro";
+import Navbar from '../components/sections/Navbar.tsx'
+import Footer from '../components/organisms/Footer.astro'
 ---
 
 <!doctype html>
-<html lang="en" data-theme="winter">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body class:list={["!bg-base-200"]}>
-		<Navbar />
-		<slot />
-		<Footer />
-	</body>
+<html
+  lang='en'
+  data-theme='winter'
+>
+  <head>
+    <meta charset='UTF-8' />
+    <meta
+      name='viewport'
+      content='width=device-width'
+    />
+    <link
+      rel='icon'
+      type='image/svg+xml'
+      href='/favicon.svg'
+    />
+    <meta
+      name='generator'
+      content={Astro.generator}
+    />
+    <title>Astro Basics</title>
+  </head>
+  <body class:list={['!bg-base-200']}>
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
