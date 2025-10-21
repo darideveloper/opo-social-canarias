@@ -1,0 +1,66 @@
+---
+// Components
+import CardCentered from '../ui/CardCentered.astro'
+
+// Libs
+import clsx from 'clsx'
+
+// Data
+interface Feature {
+  title: string
+  text: string
+  iconName: 'trophy' | 'brain' | 'bookOpen'
+  iconWhite?: boolean
+}
+
+const features: Feature[] = [
+  {
+    title: 'Estudia',
+    text: 'Accede a un temario 100% canario, siempre actualizado y al grano',
+    iconName: 'bookOpen',
+  },
+  {
+    title: 'Practica',
+    text: 'Genera tests y casos prácticos con IA para dominar cada tema.',
+    iconName: 'brain',
+  },
+  {
+    title: 'Compite',
+    text: 'Gana puntos, sube de nivel y mídete con otras opositoras en el ranking',
+    iconName: 'trophy',
+  },
+]
+---
+
+<section class={clsx('w-full', 'bg-secondary')}>
+  <div
+    class={clsx(
+      'container',
+      '!py-12',
+      'bg-secondary',
+      'grid',
+      'md:grid-cols-3'
+    )}
+  >
+    {
+      features.map((feature) => (
+        <CardCentered
+          title={feature.title}
+          iconName={feature.iconName}
+          iconWhite={true}
+          textWhite={true}
+          class={clsx(
+            'bg-secondary',
+            '!shadow-none',
+            'text-white',
+            'flex',
+            'items-center',
+            'text-center'
+          )}
+        >
+          {feature.text}
+        </CardCentered>
+      ))
+    }
+  </div>
+</section>
