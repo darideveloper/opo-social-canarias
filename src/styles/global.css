@@ -64,7 +64,8 @@ html {
 .container {
   margin: 0 auto;
   max-width: 1350px;
-  padding: 4rem 1rem;
+  padding: 8rem 1rem;
+  background-color: inherit;
 }
 
 .debug {
