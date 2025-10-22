@@ -1,0 +1,18 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ResetPasswordForm from "../../../components/sections/forms/ResetPasswordForm";
+
+// Get the token from the URL
+const { token } = Astro.params;
+
+// Redirect if no token
+if (!token) {
+    return Astro.redirect("/silvia/reset-password");
+}
+---
+
+<Layout>
+    <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
+        <ResetPasswordForm token={token} client:load />
+    </div>
+</Layout>

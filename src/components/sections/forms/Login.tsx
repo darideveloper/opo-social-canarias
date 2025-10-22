@@ -76,7 +76,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           {/* Passoword extra lavel */}
           <label className={clsx("label", "justify-between", "pt-0")}>
             <span className="label-text">Contraseña</span>
-            <a href="#" className={clsx("label-text-alt", "link", "link-hover")}>¿Olvidaste tu contraseña?</a>
+            <a href="/silvia/reset-password" className={clsx("label-text-alt", "link", "link-hover")}>¿Olvidaste tu contraseña?</a>
           </label>
 
           {/* Password input */}
