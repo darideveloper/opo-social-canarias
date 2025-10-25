@@ -20,5 +20,6 @@ export async function login(username: string, password: string) {
 
   const response = await fetch(`${PUBLIC_API_BASE}/auth/token/`, requestOptions as RequestInit)
   const data = await response.json()
-  return data
+  const statusCode = response.status
+  return { data, statusCode }
 }

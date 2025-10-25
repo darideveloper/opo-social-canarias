@@ -43,14 +43,14 @@ export default function Forms({ onSubmit, className }: FormsProps) {
       setIsLoading(true)
 
       // Login
-      const response = await login(email, password)
-      console.log('response', response)
+      const { data, statusCode } = await login(email, password)
+      console.log('response', data, statusCode)
 
-      if (response.status == "ok") {
+      if (statusCode == 200) {
         // Direct to dashboard
         // window.location.href = '/dashboard'
       } else {
-        toast.error("La combinación de credenciales no tiene una cuenta activa");
+        toast.error('La combinación de credenciales no tiene una cuenta activa')
       }
 
       setIsLoading(false)
@@ -95,11 +95,14 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           />
 
           {/* Passoword extra lavel */}
-          <label className={clsx('label', 'justify-between', 'pt-0')}>
+          <label
+            className={clsx('label', 'justify-between', 'pt-0')}
+          >
             <span className='label-text'>Contraseña</span>
             <a
               href='/reset-password'
               className={clsx('label-text-alt', 'link', 'link-hover')}
+              tabIndex={-1}
             >
               ¿Olvidaste tu contraseña?
             </a>
