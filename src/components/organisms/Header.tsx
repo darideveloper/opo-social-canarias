@@ -2,7 +2,7 @@
 import clsx from 'clsx'
 
 // Components
-import ButtonLink from '../ui/ButtonLink'
+import ButtonLink from '../atoms/ButtonLink'
 
 export default function Navbar() {
   return (

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import clsx from 'clsx'
-import Input from '../../ui/Input'
-import ButtonAction from '../../ui/ButtonAction'
-import H1 from '../../atom/H1'
+import Input from '../../atoms/Input'
+import ButtonAction from '../../atoms/ButtonAction'
+import H1 from '../../atoms/H1'
 
 type FormsProps = {
   onSubmit?: (payload: { email: string; password: string }) => void
