@@ -1,4 +1,7 @@
 ---
+// Libs
+import clsx from "clsx";
+
 // Types
 import type { TextIconType } from "../../types/text-icon";
 
@@ -14,17 +17,17 @@ const Icon = icons[iconName] ?? icons.check;
 ---
 
 <li
-  class:list={[
+  class={clsx(
     "flex",
     "items-center",
     "text-sm",
     textVariant === "muted"
       ? "text-base-content"
       : "text-secondary",
-  ]}
+  )}
 >
   <span
-    class:list={[
+    class={clsx(
       "inline-flex",
       "items-center",
       "justify-center",
@@ -33,9 +36,9 @@ const Icon = icons[iconName] ?? icons.check;
       "mr-3",
       "rounded-full",
       "bg-white",
-    ]}
+    )}
   >
     <Icon size={16} class:list={["text-secondary"]} />
   </span>
-  <span>{text}</span>
+  <span class={clsx("text-sm")}>{text}</span>
 </li>

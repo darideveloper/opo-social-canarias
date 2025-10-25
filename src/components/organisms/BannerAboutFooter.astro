@@ -1,0 +1,22 @@
+---
+// Libs
+import clsx from 'clsx'
+
+// Components
+import BannerBasic from '../molecules/BannerBasic.astro'
+import ButtonLink from '../atoms/ButtonLink.tsx'
+---
+
+<BannerBasic title='¿Lista para empezar a sumar Gofitos?'>
+  <p class={clsx('pt-2', 'pb-3')}>
+    Tu plaza está más cerca de lo que crees. Da el primer paso hoy mismo con
+    acceso completo a todas las herramientas.
+  </p>
+  <ButtonLink
+    isSoft
+    href='/pricing'
+    className='hover:!bg-secondary-content hover:!text-secondary'
+  >
+    Empezar mi prueba gratis de 24 horas
+  </ButtonLink>
+</BannerBasic>

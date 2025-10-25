@@ -1,0 +1,36 @@
+---
+// Components
+import H2 from "../atoms/H2";
+
+// Libs
+import clsx from "clsx";
+
+// Props
+interface Props {
+  title: string;
+  className?: string;
+}
+
+const {
+  title,
+  className = "",
+} = Astro.props as Props;
+
+---
+
+<section
+  class={clsx(
+    "w-full",
+    "hero",
+    "bg-secondary",
+    "text-secondary-content",
+    className
+  )}
+>
+  <div class={clsx("container", "hero-content", "text-center")}>
+    <div class={clsx("max-w-xl")}>
+      <H2 className="!text-white mb-4">{title}</H2>
+      <slot />
+    </div>
+  </div>
+</section>
