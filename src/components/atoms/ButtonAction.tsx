@@ -5,13 +5,13 @@ export default function ButtonAction({
   isSoft = false,
   type = 'button',
   className = '',
-  onClick,
+  onClick = () => {},
   children,
 }: {
   isSoft?: boolean
   type?: 'button' | 'submit' | 'reset'
   className?: string
-  onClick: Function
+  onClick?: () => void
   children: React.ReactNode
 }) {
   return (

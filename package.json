@@ -26,11 +26,13 @@
     "astro-show-tailwindcss-breakpoint": "^1.0.10",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
+    "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
-    "tailwindcss": "^4.1.14",
-    "swiper": "^11.2.0"
+    "react-toastify": "^11.0.5",
+    "swiper": "^11.2.0",
+    "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

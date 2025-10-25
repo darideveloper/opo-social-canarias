@@ -1,9 +1,17 @@
-import { useState } from 'react'
+// Libs
 import clsx from 'clsx'
+import { login } from '../../../libs/api/login'
+import { toast } from 'react-toastify'
+
+// Hooks
+import React, { useState } from 'react'
+
+// Components
 import Input from '../../atoms/Input'
 import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
 
+// Types
 type FormsProps = {
   onSubmit?: (payload: { email: string; password: string }) => void
   className?: string
@@ -32,11 +40,20 @@ export default function Forms({ onSubmit, className }: FormsProps) {
     if (!validate()) return
     setIsLoading(true)
     try {
-      onSubmit?.({ email, password })
-      // Simulate request
-      await new Promise((r) => setTimeout(r, 600))
+      setIsLoading(true)
 
-      console.log('submit', { email, password })
+      // Login
+      const response = await login(email, password)
+      console.log('response', response)
+
+      if (response.status == "ok") {
+        // Direct to dashboard
+        // window.location.href = '/dashboard'
+      } else {
+        toast.error("La combinación de credenciales no tiene una cuenta activa");
+      }
+
+      setIsLoading(false)
     } finally {
       setIsLoading(false)
     }
@@ -44,7 +61,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => handleSubmit(e)}
       className={clsx(
         'w-full',
         'max-w-lg',
@@ -104,7 +121,6 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           <div className={clsx('card-actions', 'mt-2', 'w-full')}>
             <ButtonAction
               type='submit'
-              onClick={handleSubmit}
               isSoft
               className={clsx('w-full')}
             >

@@ -9,6 +9,7 @@ import '../styles/global.css'
 // Components
 import Header from '../components/organisms/Header.tsx'
 import Footer from '../components/organisms/Footer.astro'
+import { ToastContainer } from 'react-toastify'
 ---
 
 <!doctype html>
@@ -39,5 +40,11 @@ import Footer from '../components/organisms/Footer.astro'
       <slot />
     </main>
     <Footer />
+    <ToastContainer
+      client:load
+      position='bottom-right'
+      pauseOnHover
+      theme='light'
+    />
   </body>
 </html>
