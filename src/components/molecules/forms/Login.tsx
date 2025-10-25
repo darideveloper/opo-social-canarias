@@ -48,7 +48,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
 
       if (statusCode == 200) {
         // Direct to dashboard
-        // window.location.href = '/dashboard'
+        window.location.href = '/dashboard'
       } else {
         toast.error('La combinación de credenciales no tiene una cuenta activa')
       }
