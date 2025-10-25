@@ -1,0 +1,72 @@
+---
+// Libs
+import clsx from 'clsx'
+import { icons } from '../../libs/constants/icons'
+
+// Components
+import ButtonLink from '../atoms/ButtonLink.tsx'
+import H2 from '../atoms/H2.tsx'
+
+// Props
+interface Props {
+  title: string
+  buttonText: string
+  buttonLink: string
+  iconName: keyof typeof icons
+  className?: string
+}
+
+const {
+  title,
+  buttonText,
+  buttonLink,
+  iconName,
+  className = '',
+} = Astro.props as Props
+
+// Get current icon
+let Icon = null
+if (iconName != null) {
+  Icon = icons[iconName]
+}
+---
+
+<div
+  class={clsx(
+    'card',
+    'card-side',
+    'bg-base-100',
+    'shadow-sm',
+    'max-w-4xl',
+    'flex',
+    'flex-col md:flex-row',
+    'items-center',
+    'justify-center md:justify-start',
+    'gap-4',
+    'px-4 md:px-8',
+    'py-6',
+    'text-center md:text-left',
+    className
+  )}
+>
+  {
+    Icon != null && (
+      <Icon
+        name={iconName}
+        className={clsx('w-24 md:w-36', 'h-auto', 'text-secondary')}
+      />
+    )
+  }
+  <div class={clsx('card-body')}>
+    <H2 className={clsx('!text-center md:!text-left')}>{title}</H2>
+    <slot />
+    <div class={clsx('card-actions', 'justify-center md:justify-start', 'mt-1')}>
+      <ButtonLink
+        href={buttonLink}
+        isSoft={false}
+      >
+        {buttonText}
+      </ButtonLink>
+    </div>
+  </div>
+</div>

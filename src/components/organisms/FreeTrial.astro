@@ -1,0 +1,22 @@
+---
+// Components
+import clsx from 'clsx'
+import Alert from '../molecules/Alert.astro'
+---
+
+<section class={clsx('container', '!pt-6')}>
+  <Alert
+    title='¿No estás segura? Pruebalo todo sin riezgo.'
+    buttonText='Empezar mi prueba gratis'
+    buttonLink='/sign-up'
+    iconName='shield'
+    className={clsx('mx-auto')}
+  >
+  <p class={clsx('!mb-0')}>
+    Todas las nuevas altas incluyen una 
+    <strong>prueba gratis de 24 horas con acceso COMPLETO</strong>
+    a todas las funcionalidades del Plan Pro. Queremos que compruebes por ti misma,
+    el poder de nuestra plataforma.
+  </p>
+  </Alert>
+</section>

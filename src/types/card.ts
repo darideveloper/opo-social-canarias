@@ -1,4 +1,4 @@
-import { icons } from "../data/icons"
+import { icons } from "../libs/constants/icons"
 
 export type CardType = {
   title: string
