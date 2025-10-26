@@ -95,7 +95,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await page.waitForTimeout(waitTime)
 
     // verify message
-    await expect(page.locator('main [role="status"]')).toHaveText(message)
+    await expect(page.locator('.Toastify')).toHaveText(message)
   }
 
   /**

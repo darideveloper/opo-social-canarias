@@ -246,7 +246,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
       await submitForm(page, '', '')
 
       // Assert: Verify no toast (form does not submit)
-      await expect(page.locator('main [role="status"]')).not.toBeVisible()
+      await expect(page.locator('.Toastify')).not.toBeVisible()
 
       // Assert: Verify still at login page
       await expect(page).toHaveURL(`${BASE_URL}/login`)

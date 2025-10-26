@@ -19,10 +19,9 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import {
-  getProfileByUserId,
-  getUserByEmail,
-} from '../helpers/db-helpers'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { getProfileByUserId, getUserByEmail } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -33,7 +32,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
    */
   test.beforeEach(async ({ page }) => {
     // Navigate to login page and wait for it to fully load
-    await page.goto(`${BASE_URL}/register`)
+    await page.goto(`${BASE_URL}/sign-up`)
     await page.waitForTimeout(2000)
   })
 
@@ -44,6 +43,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
    * @param email - User email
    * @param password - User password
    * @param confirmPassword - User confirm password
+   * @param imagePath - Path to image file to upload
    * @param submit - Submit form
    */
   async function fillFormData(
@@ -52,6 +52,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
     email: string | null,
     password: string | null,
     confirmPassword: string | null = null,
+    imagePath: string | null = null,
     submit: boolean = true
   ) {
     // Fill data
@@ -68,7 +69,12 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       confirmPassword = password
     }
     if (confirmPassword) {
-      await page.fill('input#confirmPassword', confirmPassword)
+      await page.fill('input#passwordValidation', confirmPassword)
+    }
+
+    // Upload image if provided
+    if (imagePath) {
+      await page.setInputFiles('input[name="profileImage"]', imagePath)
     }
 
     // Submit form
@@ -88,7 +94,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
     await page.waitForTimeout(2000)
 
     // verify message
-    await expect(page.locator('main [role="status"]')).toHaveText(message)
+    await expect(page.locator('.Toastify')).toHaveText(message)
   }
 
   async function getRandomData(): Promise<{
@@ -129,7 +135,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
     await fillFormData(page, name, email, password, password + '1')
 
     // Assert: Verify both passwords match
-    const errorMessageElement = page.locator('p.text-sm.text-destructive')
+    const errorMessageElement = page.locator('.label-text-alt.text-error')
     await expect(errorMessageElement).toHaveText('Las contraseñas no coinciden')
   })
 
@@ -149,7 +155,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       await fillFormData(page, name, email, '123')
 
       // Assert: Verify error message
-      const errorMessageElement = page.locator('p.text-sm.text-destructive')
+      const errorMessageElement = page.locator('.label-text-alt.text-error')
       await expect(errorMessageElement).toHaveText(
         'La contraseña debe tener al menos 6 caracteres'
       )
@@ -177,6 +183,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
 
       // validate user inactive in db
       const user = await getUserByEmail(email)
+      console.log({ user })
       expect(user.is_active).toBe(false)
     }
   )
@@ -243,7 +250,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       await page.click('button[type="submit"]')
 
       // Assert: Verify no toast (form does not submit)
-      await expect(page.locator('main [role="status"]')).not.toBeVisible()
+      await expect(page.locator('.Toastify')).not.toBeVisible()
     }
   )
 
@@ -302,7 +309,65 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       await fillFormData(page, name, email, password)
 
       // Assert: Verify error message
-      await validateMessage(page, 'Por favor, ingresa un email válido')
+      const errorMessageElement = page.locator('.label-text-alt.text-error')
+      await expect(errorMessageElement).toHaveText(
+        'Por favor, ingresa un email válido'
+      )
+    }
+  )
+
+  /**
+   * Register with profile image upload
+   * - Submit register form with random credentials and profile image
+   * - Validate successful registration
+   */
+  test(
+    'register with profile image upload',
+    { tag: ['@positive'] },
+    async ({ page }) => {
+      // Arrange: use random email and password
+      const { name, email, password } = await getRandomData()
+      const imagePath = path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        '../fixtures/test-image.jpg'
+      )
+
+      // Act: Submit register form with image
+      await fillFormData(page, name, email, password, null, imagePath)
+
+      // Assert: Verify successful registration
+      await validateSuccessRegistration(page)
+
+      // Validate user profile image exists in db
+      const user = await getUserByEmail(email)
+      const profile = await getProfileByUserId(user.id)
+      expect(profile.profile_img).not.toBeNull()
+    }
+  )
+
+  /**
+   * Register without profile image (optional field)
+   * - Submit register form with random credentials without image
+   * - Validate successful registration
+   */
+  test(
+    'register without profile image',
+    { tag: ['@positive'] },
+    async ({ page }) => {
+      // Arrange: use random email and password
+      const { name, email, password } = await getRandomData()
+
+      // Act: Submit register form without image
+      await fillFormData(page, name, email, password, null, null)
+
+      // Assert: Verify successful registration
+      await validateSuccessRegistration(page)
+
+      // Validate user profile image does not exist in db
+      const user = await getUserByEmail(email)
+      const profile = await getProfileByUserId(user.id)
+      console.log(profile)
+      expect(profile.profile_img).toBe("")
     }
   )
 })

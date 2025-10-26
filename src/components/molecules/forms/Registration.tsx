@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import clsx from 'clsx'
+import { toast } from 'react-toastify'
+import { signUp } from '../../../libs/api/signUp'
 import Input from '../../atoms/Input'
 import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
@@ -15,7 +17,7 @@ type RegistrationProps = {
   className?: string
 }
 
-export default function Registration({
+export default function RegistrationForm({
   onSubmit,
   className,
 }: RegistrationProps) {
@@ -46,7 +48,14 @@ export default function Registration({
 
     if (!name) next.name = 'El nombre es obligatorio'
     if (!email) next.email = 'El email es obligatorio'
+    
+    // Email format validation
+    if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      next.email = 'Por favor, ingresa un email válido'
+    }
+    
     if (!password) next.password = 'La contraseña es obligatoria'
+    if (password && password.length < 6) next.password = 'La contraseña debe tener al menos 6 caracteres'
     if (!passwordValidation)
       next.passwordValidation = 'Debes confirmar tu contraseña'
     if (password && passwordValidation && password !== passwordValidation) {
@@ -66,11 +75,52 @@ export default function Registration({
     if (!validate()) return
     setIsLoading(true)
     try {
-      onSubmit?.({ name, email, profileImage, password })
-      // Simulate request
-      await new Promise((r) => setTimeout(r, 600))
+      // Sign up
+      const { data, statusCode } = await signUp(email, password, name, profileImage || undefined)
+      
+      console.log('response', data, statusCode)
 
-      console.log('submit', { name, email, profileImage, password })
+      if (statusCode === 201 || statusCode === 200) {
+        // Success - matches test expectation
+        toast.success('¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta')
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 5000)
+      } else if (statusCode === 400) {
+        // Bad request - could be validation error
+        let errorMessage = 'Error al registrar'
+        
+        // Check for email validation errors
+        if (data?.data?.email && Array.isArray(data.data.email)) {
+          // Handle error structure with data.data.email array
+          const emailError = data.data.email[0]
+          if (emailError === 'duplicated_email') {
+            errorMessage = 'El email ya está registrado'
+          } else {
+            errorMessage = emailError
+          }
+        } else if (data?.email) {
+          errorMessage = Array.isArray(data.email) ? data.email[0] : data.email
+        } else if (data?.message) {
+          errorMessage = data.message
+          // Check if it's the specific email validation message
+          if (errorMessage.includes('email') && errorMessage.includes('válid')) {
+            errorMessage = 'Por favor, ingresa un email válido'
+          }
+        }
+        
+        toast.error(errorMessage)
+      } else if (statusCode === 409) {
+        // Conflict - email already exists - matches test expectation
+        toast.error('El email ya está registrado')
+      } else {
+        // Other errors
+        const errorMessage = data?.message || 'Error al registrar'
+        toast.error(errorMessage)
+      }
+    } catch (error) {
+      console.error('Registration error:', error)
+      toast.error('Error al registrar. Intenta más tarde')
     } finally {
       setIsLoading(false)
     }
@@ -78,7 +128,7 @@ export default function Registration({
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => handleSubmit(e)}
       className={clsx(
         'w-full',
         'max-w-lg',
@@ -161,7 +211,6 @@ export default function Registration({
           <div className={clsx('card-actions', 'mt-2', 'w-full')}>
             <ButtonAction
               type='submit'
-              onClick={handleSubmit}
               isSoft
               className={clsx('w-full')}
             >
