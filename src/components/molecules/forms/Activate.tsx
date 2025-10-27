@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react'
 // Libs
 import { toast } from 'react-toastify'
 import { activate } from '../../../libs/api/activate'
+import clsx from 'clsx'
+
+// Components
+import ButtonLink from '../../atoms/ButtonLink'
 
 // Types
 type ActivateProps = {
@@ -47,19 +51,24 @@ export default function Activate({ token = '' }: ActivateProps) {
     activateAccount()
   }, [token])
 
-  // Direct after validate token
-  useEffect(() => {
-    console.log('status', status)
-    // Redirect to login page or register page
-    setTimeout(() => {
-      if (status === 'success') {
-        window.location.href = '/login'
-      } else {
-        window.location.href = '/sign-up'
-      }
-    }, 6000)
-  }, [status])
-
   // No render, just show toasts messages
-  return <></>
+  return (
+    <>
+      {status == 'loading' ? (
+        <span
+          className={clsx(
+            'loading',
+            'loading-dots',
+            'loading-xl',
+            'text-secondary'
+          )}
+        />
+      ) : (
+        <ButtonLink href={status === 'success' ? '/login' : '/sign-up'} isSoft={status === 'success'}>
+          {status === 'success' ? 'Ir a Login' : 'Ir a Registro'}
+        </ButtonLink>
+      )
+    }
+    </>
+  )
 }

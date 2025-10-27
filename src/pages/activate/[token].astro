@@ -21,16 +21,9 @@ const { token } = Astro.params
       <div class={clsx('card-body', 'gap-3', 'text-center')}>
         <H1>Activación de Cuenta</H1>
         <p>Estamos validando tu cuenta, espera un momento...</p>
-        <p class='flex items-center justify-center gap-2'>
-          <span
-            class={clsx(
-              'loading',
-              'loading-dots',
-              'loading-xl',
-              'text-secondary',
-            )} />
-        </p>
-        <Activate token={token || ''} client:load />
+        <div class='flex items-center justify-center gap-2'>
+          <Activate token={token || ''} client:load />
+        </div>
       </div>
     </div>
   </section>

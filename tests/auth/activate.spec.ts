@@ -54,14 +54,14 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
     currentPassword = password
 
     // Navigate to login page and wait for it to fully load
-    await page.goto(`${BASE_URL}/register`)
+    await page.goto(`${BASE_URL}/sign-up`)
     await page.waitForTimeout(2000)
 
     // Fill data
     await page.fill('input#name', name)
     await page.fill('input#email', email)
     await page.fill('input#password', password)
-    await page.fill('input#confirmPassword', password)
+    await page.fill('input#passwordValidation', password)
 
     // Submit form
     await page.click('button[type="submit"]')
@@ -100,13 +100,15 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
    */
   async function validateActivationSuccessScreen(page: Page) {
     // Assert: validate activate account
-    await expect(page.locator('main h1.text-2xl')).toHaveText(
-      'Activación de Cuenta'
+    await expect(page.locator('.Toastify')).toHaveText(
+      '¡Cuenta activada exitosamente!'
     )
-    await expect(page.locator('main h1 + p')).toHaveText(
-      'Tu cuenta ha sido activada exitosamente.'
-    )
-    await expect(page.locator('main a.bg-primary')).toHaveText('Ir al Login')
+    await expect(page.locator('main h1')).toHaveText('Activación de Cuenta')
+
+    // Validate login button
+    const button = page.locator('.card-body a')
+    await expect(button).toHaveText('Ir a Login')
+    await expect(button).toHaveAttribute('href', `/login`)
   }
 
   /**
@@ -115,16 +117,15 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
    */
   async function validateActivationErrorScreen(page: Page) {
     // Assert: validate activate account
-    await expect(page.locator('main h1.text-2xl')).toHaveText(
-      'Activación de Cuenta'
+    await expect(page.locator('.Toastify')).toHaveText(
+      'Error al activar la cuenta. Intenta registrarte nuevamente.'
     )
-    await expect(page.locator('main h1 + p')).toHaveText(
-      'Hubo un problema con la activación.'
-    )
-    await expect(page.locator('main a.bg-primary')).toHaveText('Ir al Login')
-    await expect(page.locator('main button.bg-background')).toHaveText(
-      'Reintentar'
-    )
+    await expect(page.locator('main h1')).toHaveText('Activación de Cuenta')
+
+    // Validate login button
+    const button = page.locator('.card-body a')
+    await expect(button).toHaveText('Ir a Registro')
+    await expect(button).toHaveAttribute('href', `/sign-up`)
   }
 
   /**
