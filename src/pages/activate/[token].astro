@@ -1,0 +1,37 @@
+---
+// Libs
+import clsx from 'clsx'
+
+// Layout
+import Layout from '../../layouts/Layout.astro'
+
+// Components
+import H1 from '../../components/atoms/H1'
+import Activate from '../../components/molecules/forms/Activate'
+
+// Params
+const { token } = Astro.params
+---
+
+<Layout>
+  <section class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
+    <div
+      class={clsx('w-full', 'max-w-lg', 'mx-auto', 'bg-base-100', 'shadow-md')}
+    >
+      <div class={clsx('card-body', 'gap-3', 'text-center')}>
+        <H1>Activación de Cuenta</H1>
+        <p>Estamos validando tu cuenta, espera un momento...</p>
+        <p class='flex items-center justify-center gap-2'>
+          <span
+            class={clsx(
+              'loading',
+              'loading-dots',
+              'loading-xl',
+              'text-secondary',
+            )} />
+        </p>
+        <Activate token={token || ''} client:load />
+      </div>
+    </div>
+  </section>
+</Layout>
