@@ -6,17 +6,30 @@ import ButtonLink from '../atoms/ButtonLink'
 
 export default function Navbar() {
   return (
-    <header className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>
-      <div className={clsx('container', 'mx-auto', 'flex', '!p-0')}>
+    <header className={clsx('navbar', '!bg-base-100', 'shadow-sm')}>
+      <div
+        className={clsx(
+          'container',
+          'mx-auto',
+          'flex',
+          'flex-col sm:flex-row',
+          'items-center',
+          'justify-between',
+          '!p-0',
+          'gap-2',
+          'container',
+          '!p-2'
+        )}
+      >
         <div className={clsx('navbar-start')}>
           <a
-            className={clsx('text-xl')}
+            className={clsx('text-xl', 'mx-auto sm:mx-0')}
             href='/'
           >
             <img
               src='/logo.webp'
               alt='Logo'
-              className={clsx('h-6', 'md:h-10')}
+              className={clsx('h-6', 'sm:h-10')}
             />
           </a>
         </div>
@@ -35,7 +48,15 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        <div className={clsx('navbar-end')}>
+        <div
+          className={clsx(
+            'navbar-end',
+            '!w-full md:!w-1/2',
+            'flex',
+            'justify-center',
+            'sm:justify-end'
+          )}
+        >
           <div className={clsx('flex', 'gap-2')}>
             <ButtonLink
               href='/login'
@@ -43,11 +64,7 @@ export default function Navbar() {
             >
               Inicia Sesión
             </ButtonLink>
-            <ButtonLink
-              href='/sign-up'
-            >
-              Prueba Gratis
-            </ButtonLink>
+            <ButtonLink href='/sign-up'>Prueba Gratis</ButtonLink>
           </div>
         </div>
       </div>
