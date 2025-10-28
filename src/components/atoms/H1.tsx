@@ -14,6 +14,7 @@ export default function H1({ className = "", children }: H1Props) {
         "text-center",
         "font-semibold",
         "xl:text-5xl sm:text-2xl md:text-3xl lg:text-4xl",
+        "pb-2",
         className
       )}
     >

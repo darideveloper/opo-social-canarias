@@ -75,7 +75,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
         <div className={clsx('card-body', 'gap-3')}>
           {/* Header */}
           <div className={clsx('text-center', 'mb-1')}>
-            <H1 className='!text-xl'>Iniciar Sesión</H1>
+            <H1 className=''>Iniciar Sesión</H1>
             <p className={clsx('text-sm', 'opacity-70')}>
               Accede a tu panel de control.
             </p>

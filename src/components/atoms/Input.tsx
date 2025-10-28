@@ -57,9 +57,9 @@ export default function Input({
         required={required}
       />
       {error && (
-        <div className="label">
-          <span className={clsx("label-text-alt", "text-error")} >{error}</span>
-        </div>
+        <p className="label">
+          <span className={clsx("label-text-alt", "text-error", "text-wrap")} >{error}</span>
+        </p>
       )}
     </div>
   );

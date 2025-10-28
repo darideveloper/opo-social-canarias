@@ -2,7 +2,17 @@
  * Reset Password Authentication Tests
  *
  * This test suite validates the complete reset password authentication flow including:
- * - test 1
+ * - post - request valid email
+ * - post - request invalid email
+ * - post - invalid email format
+ * - post - missing fields
+ * - put - reset password with valid token
+ * - put - reset password with invalid token
+ * - put - password validation: missing fields
+ * - put - password validation: invalid password (less than 6 characters)
+ * - put - password validation: invalid password (dont match)
+ * - put - reset password with an expired token
+ * - put - reset password with an disabled token
  *
  * Prerequisites:
  * - Environment variables must be set for test credentials
@@ -13,10 +23,7 @@
  */
 
 import { test, expect, type Page } from '@playwright/test'
-import {
-  getTokenFromEmail,
-  updateToken,
-} from '../helpers/db-helpers'
+import { getTokenFromEmail, updateToken } from '../helpers/db-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -54,14 +61,14 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     currentPassword = password
 
     // Navigate to login page and wait for it to fully load
-    await page.goto(`${BASE_URL}/register`)
+    await page.goto(`${BASE_URL}/sign-up`)
     await page.waitForTimeout(2000)
 
     // Fill data
     await page.fill('input#name', name)
     await page.fill('input#email', email)
     await page.fill('input#password', password)
-    await page.fill('input#confirmPassword', password)
+    await page.fill('input#passwordValidation', password)
 
     // Submit form
     await page.click('button[type="submit"]')
@@ -95,7 +102,53 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await page.waitForTimeout(waitTime)
 
     // verify message
-    await expect(page.locator('.Toastify')).toHaveText(message)
+    await expect(page.locator('.label-text-alt.text-error')).toHaveText(message)
+  }
+
+  /**
+   * Validate confirmation screen
+   * @param page - Playwright page instance
+   * @param title - Title to validate
+   * @param message - Message to validate
+   */
+  async function validateConfirmationScreen(
+    page: Page,
+    title: string,
+    message: string,
+  ) {
+    // Validate h1 and text
+    await expect(page.locator('.card-body h1')).toHaveText(title)
+    await expect(page.locator('.card-body p')).toHaveText(message)
+
+    // Validate go back button
+    const button = await page.locator('.card-body a')
+    await expect(button).toHaveText('Volver al inicio de sesión')
+    await expect(button).toHaveAttribute('href', '/login')
+  }
+
+  /**
+   * Validate confirmation post screen (email form)
+   * @param page - Playwright page instance
+   */
+  async function validateConfirmationPost(page: Page) {
+    await validateConfirmationScreen(
+      page,
+      'Email Enviado',
+      'Hemos enviado un enlace de recuperación a tu correo electrónico. Por favor revisa tu bandeja de entrada.',
+    )
+  }
+
+
+  /**
+   * Validate confirmation put screen (reset password form)
+   * @param page - Playwright page instance
+   */
+  async function validateConfirmationPut(page: Page) {
+    await validateConfirmationScreen(
+      page,
+      'Contraseña Actualizada',
+      'Tu contraseña ha sido actualizada exitosamente. Ya puedes iniciar sesión con tu nueva contraseña.',
+    )
   }
 
   /**
@@ -111,6 +164,9 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     // Act: request valid email
     await page.fill('input#email', email)
     await page.click('button[type="submit"]')
+
+    // Act: wait to submit form
+    await page.waitForTimeout(2000)
   }
 
   /**
@@ -157,18 +213,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await page.click('button[type="submit"]')
 
     // Assert: redirect to home page
-    await expect(page).toHaveURL(`${BASE_URL}/`)
-
-    // Assert: welcome message is displayed
-    if (validLogin) {
-      await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
-        'Welcome to Socialia'
-      )
-    } else {
-      await expect(page.locator('main h1.text-3xl.font-bold')).toHaveText(
-        'Welcome to Socialia'
-      )
-    }
+    await expect(page).toHaveURL(`${BASE_URL}/dashboard`)
   }
 
   /**
@@ -176,7 +221,6 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
    * @param page - Playwright page instance
    */
   test.beforeEach(async ({ page }) => {
-
     // Register a new user
     await registerUser(page)
 
@@ -203,11 +247,8 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       // Act: Submit email form
       await submitEmailForm(page, currentEmail)
 
-      // Assert: toast message
-      await validateMessage(
-        page,
-        'Si el email existe en nuestro sistema, recibirás un enlace para restablecer tu contraseña.'
-      )
+      // Assert email confirmation screen
+      await validateConfirmationPost(page)
 
       // Assert: token generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -228,11 +269,8 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       // Act: request valid email
       await submitEmailForm(page, 'invalid-no-registered@email.com')
 
-      // Assert: toast message
-      await validateMessage(
-        page,
-        'Si el email existe en nuestro sistema, recibirás un enlace para restablecer tu contraseña.'
-      )
+      // Assert email confirmation screen
+      await validateConfirmationPost(page)
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -255,10 +293,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await submitEmailForm(page, email)
 
       // Assert: error message
-      const errorMessageElement = page.locator('p.text-sm.text-destructive')
-      await expect(errorMessageElement).toHaveText(
-        'Por favor ingresa un email válido'
-      )
+      await validateMessage(page, 'Por favor ingresa un email válido')
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -324,7 +359,10 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: toast message
-      await validateMessage(page, 'Contraseña restablecida exitosamente')
+      await validateConfirmationPut(page)
+
+      // Act: delete browser cookies to allow login with new password
+      await page.context().clearCookies()
 
       // Assert: login with new password
       await login(page, currentEmail, currentPassword)
@@ -370,7 +408,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       // Assert: toast message
       await validateMessage(
         page,
-        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+        'Error al actualizar la contraseña. Intenta más tarde.'
       )
 
       // Assert: login with new password
@@ -442,13 +480,10 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     { tag: ['@negative'] },
     async ({ page }) => {
       // Act: fill password fields
-      await submitResetPasswordForm(page, '123456', '1234567', 'fake-token')
+      await submitResetPasswordForm(page, '1234567890', '0987654321', 'fake-token')
 
       // Assert: error in toast
-      const errorMessageElement = page.locator('p.text-sm.text-destructive')
-      await expect(errorMessageElement).toHaveText(
-        'Las contraseñas no coinciden'
-      )
+      await validateMessage(page, 'Las contraseñas no coinciden')
 
       // Assert: token not generated in db
       const token = await getTokenFromEmail(currentEmail, 'pass')
@@ -488,12 +523,12 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await page.waitForTimeout(3 * 60 * 1000)
 
       // Act: fill password fields
-      await submitResetPasswordForm(page, '123456', '123456', token!)
+      await submitResetPasswordForm(page, '1234567890', '1234567890', token!)
 
       // Assert: toast message
       await validateMessage(
         page,
-        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+        'Error al actualizar la contraseña. Intenta más tarde.'
       )
 
       // Assert: token still active in db (but expired)
@@ -531,12 +566,12 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       await updateToken(token!, false)
 
       // Act: fill password fields
-      await submitResetPasswordForm(page, '123456', '123456', token!)
+      await submitResetPasswordForm(page, '1234567890', '1234567890', token!)
 
       // Assert: toast message
       await validateMessage(
         page,
-        'Error al restablecer la contraseña. Intenta más tarde o solicita un nuevo enlace de restablecimiento.'
+        'Error al actualizar la contraseña. Intenta más tarde.'
       )
 
       // Assert: token not active in db

@@ -72,11 +72,11 @@ export default function ImageUpload({
         </div>
       </div>
       {error && (
-        <div className={clsx("label")}>
-          <span className={clsx("label-text-alt", "text-error")}>
+        <p className={clsx("label")}>
+          <span className={clsx("label-text-alt", "text-error", "text-wrap")}>
             {error}
           </span>
-        </div>
+        </p>
       )}
     </div>
   );

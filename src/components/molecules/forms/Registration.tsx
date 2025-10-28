@@ -142,7 +142,7 @@ export default function RegistrationForm({
         <div className={clsx('card-body', 'gap-3')}>
           {/* Header */}
           <div className={clsx('text-center', 'mb-1')}>
-            <H1 className='!text-xl'>Registro</H1>
+            <H1 className=''>Registro</H1>
             <p className={clsx('text-sm', 'opacity-70')}>Crea tu cuenta.</p>
           </div>
 
