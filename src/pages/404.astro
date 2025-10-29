@@ -1,0 +1,107 @@
+---
+// Layout
+import Layout from '../layouts/Layout.astro'
+import PageSEO from '../components/utils/PageSEO.astro'
+import H1 from '../components/atoms/H1'
+
+// Components
+import ButtonLink from '../components/atoms/ButtonLink'
+
+// Libs
+import { clsx } from 'clsx'
+---
+
+<Layout>
+  <PageSEO
+    slot='seo'
+    currentPage='404 - Página no encontrada'
+    pageDescription='La página que buscas no existe o ha sido movida.'
+  />
+
+  <section
+    class={clsx(
+      'container',
+      'flex',
+      'flex-col',
+      'items-center',
+      'justify-center',
+      'text-center',
+      'min-h-[60vh]',
+      'py-8',
+      'md:py-16',
+      'lg:py-20',
+      'min-h-screen'
+    )}
+  >
+    <div
+      class={clsx(
+        'flex',
+        'flex-col',
+        'items-center',
+        'justify-center',
+        'gap-4',
+        'md:gap-6',
+        'lg:gap-8',
+        'max-w-2xl',
+        'mx-auto',
+        'px-4'
+      )}
+    >
+      <!-- 404 Number Display -->
+      <p
+        class={clsx(
+          'text-6xl',
+          'md:text-8xl',
+          'lg:text-9xl',
+          'font-bold',
+          'text-secondary',
+          'opacity-80',
+          'leading-none',
+          'mb-2',
+          'font-title'
+        )}
+      >
+        404
+      </p>
+
+      <!-- Title -->
+      <H1 className={clsx('mb-2')}> Página no encontrada </H1>
+
+      <!-- Description -->
+      <p
+        class={clsx(
+          'text-base',
+          'md:text-lg',
+          'text-neutral',
+          'mb-4',
+          'md:mb-6'
+        )}
+      >
+        Lo sentimos, la página que buscas no existe o ha sido movida.
+      </p>
+
+      <!-- Navigation Buttons -->
+      <div
+        class={clsx(
+          'flex',
+          'flex-col',
+          'items-center',
+          'justify-center',
+          'sm:flex-row',
+          'gap-3',
+          'md:gap-4',
+          'w-full',
+          'sm:w-auto'
+        )}
+      >
+        <!-- Go Home Button -->
+        <ButtonLink
+          href='/'
+          className={clsx('w-full sm:w-auto')}
+        >
+          Ir al inicio
+        </ButtonLink>
+      </div>
+    </div>
+  </section>
+</Layout>
