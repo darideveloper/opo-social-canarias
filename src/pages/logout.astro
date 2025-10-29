@@ -1,0 +1,13 @@
+---
+// Delete a specific cookie
+Astro.cookies.delete('access_token', {
+  path: '/'
+});
+
+Astro.cookies.delete('refresh_token', {
+  path: '/'
+});
+
+// Redirect to login page
+return Astro.redirect('/login');
+---
