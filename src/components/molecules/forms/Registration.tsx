@@ -150,8 +150,8 @@ export default function RegistrationForm({
           <Input
             name='name'
             type='text'
-            label='name (Nombre)'
-            placeholder='Nombre'
+            label='Nombre'
+            placeholder='John Doe'
             value={name}
             onChange={setName}
             error={errors.name}
@@ -163,8 +163,8 @@ export default function RegistrationForm({
           <Input
             name='email'
             type='email'
-            label='email (Correo electrónico)'
-            placeholder='Email'
+            label='Correo electrónico'
+            placeholder='tu@email.com'
             value={email}
             onChange={setEmail}
             error={errors.email}
@@ -176,8 +176,8 @@ export default function RegistrationForm({
           <Input
             name='password'
             type='password'
-            label='password (Contraseña)'
-            placeholder='Contraseña'
+            label='Contraseña'
+            placeholder='Mínimo 8 caracteres'
             value={password}
             onChange={setPassword}
             error={errors.password}
@@ -189,8 +189,8 @@ export default function RegistrationForm({
           <Input
             name='passwordValidation'
             type='password'
-            label='password validation (Confirma tu contraseña)'
-            placeholder='Confirma tu contraseña'
+            label='Confirma tu contraseña'
+            placeholder='Repite tu contraseña'
             value={passwordValidation}
             onChange={setPasswordValidation}
             error={errors.passwordValidation}
@@ -201,7 +201,7 @@ export default function RegistrationForm({
           {/* Profile Image input */}
           <ImageUpload
             name='profileImage'
-            label='profile image (Imagen de perfil)'
+            label='Imagen de perfil'
             defaultPreview='/user.svg'
             onChange={handleImageChange}
             error={errors.profileImage}

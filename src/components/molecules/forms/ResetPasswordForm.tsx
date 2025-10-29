@@ -156,7 +156,7 @@ export default function ResetPasswordForm({
             name='confirmPassword'
             type='password'
             label='Confirmar Contraseña'
-            placeholder='Repite tu contraseña'
+            placeholder='Repite la nueva contraseña'
             value={confirmPassword}
             onChange={setConfirmPassword}
             error={errors.confirmPassword}

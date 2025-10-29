@@ -86,7 +86,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
             name='email'
             type='email'
             label='Email'
-            placeholder='Email'
+            placeholder='tu@email.com'
             value={email}
             onChange={setEmail}
             error={errors.email}
