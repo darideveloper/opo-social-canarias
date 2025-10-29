@@ -1,9 +1,20 @@
 ---
-export const prerender = false;
+export const prerender = false
 
 // Utils components
 import PageSEO from '../../components/utils/PageSEO.astro'
 
-return Astro.redirect('/');
+// Layout
+import Layout from '../../layouts/Layout.astro'
+
+return Astro.redirect('/')
 ---
-<PageSEO currentPage='activate' />
+
+<Layout>
+  <PageSEO
+    slot="seo"
+    currentPage='Activación de Cuenta'
+    pageDescription='Activación de Cuenta'
+    extraKeywords='activate, activar cuenta'
+  />
+</Layout>

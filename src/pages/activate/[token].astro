@@ -17,8 +17,13 @@ const { token } = Astro.params
 ---
 
 <Layout>
-  <PageSEO currentPage='activate' />
-  
+  <PageSEO
+    slot="seo"
+    currentPage='Activación de Cuenta'
+    pageDescription='Activación de Cuenta'
+    extraKeywords='activate, activar cuenta'
+  />
+
   <section class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
     <div
       class={clsx('w-full', 'max-w-lg', 'mx-auto', 'bg-base-100', 'shadow-md')}
@@ -27,7 +32,10 @@ const { token } = Astro.params
         <H1>Activación de Cuenta</H1>
         <p>Estamos validando tu cuenta, espera un momento...</p>
         <div class='flex items-center justify-center gap-2'>
-          <Activate token={token || ''} client:load />
+          <Activate
+            token={token || ''}
+            client:load
+          />
         </div>
       </div>
     </div>

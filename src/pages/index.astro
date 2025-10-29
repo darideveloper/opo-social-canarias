@@ -14,7 +14,11 @@ import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
-  <PageSEO currentPage='home' />
+  <PageSEO
+    slot="seo"
+    currentPage='Tu mejor opción para estudiar Trabajo Social en Canarias'
+    pageDescription='Socialia es una plataforma de estudio para transformarte en un experto en Trabajo Social en Canarias, haciendo uso de las herramientas de IA mas avanzadas del mercado.'
+  />
   <HeroHome />
   <InfoCards />
   <Features />

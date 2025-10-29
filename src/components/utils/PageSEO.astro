@@ -9,12 +9,24 @@ import { heroTitle, heroDescription } from '../../libs/constants/hero'
 // Reas props
 interface Props {
   currentPage: string // Current page
+  pageDescription: string // Description
+  extraKeywords?: string // Extra keywords
 }
-const { currentPage } = Astro.props as Props
+const {
+  currentPage,
+  pageDescription,
+  extraKeywords = '',
+} = Astro.props as Props
 
 // Environment variables
 const domain = import.meta.env.VITE_BASE_URL
 
+// Description and keywords
+const defaultDescription = `${heroTitle} ${heroDescription}`
+const defaultKeywords =
+  'socialia, trabajo social, canarias, oposiciones, estudiar, examenes, conocimiento, practica, ia, generador de casos, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas, generador de examenes, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas'
+const description = pageDescription || defaultDescription
+const keywords = `${defaultKeywords}, ${extraKeywords}`
 
 // addressElems = {
 //   streetAddress: "Cto. Colonias 118",
@@ -44,7 +56,7 @@ const domain = import.meta.env.VITE_BASE_URL
 
 // Extra JSON
 const extraJson = {
-  // Price 
+  // Price
   priceRange: '$$',
 
   // Contact
@@ -95,6 +107,6 @@ const extraJson = {
   currentPage={currentPage}
   jsonType='EducationalOrganization'
   extraJson={extraJson}
-  baseDescription=`${heroTitle} ${heroDescription}`
-  baseKeywords='socialia, trabajo social, canarias, oposiciones, estudiar, examenes, conocimiento, practica, ia, generador de casos, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas, generador de examenes, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas'
+  description={description}
+  baseKeywords={keywords}
 />

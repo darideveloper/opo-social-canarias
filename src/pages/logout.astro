@@ -1,17 +1,28 @@
 ---
+// Layout
+import Layout from '../layouts/Layout.astro'
+
 // Components
 import PageSEO from '../components/utils/PageSEO.astro'
 
 // Delete a specific cookie
 Astro.cookies.delete('access_token', {
-  path: '/'
-});
+  path: '/',
+})
 
 Astro.cookies.delete('refresh_token', {
-  path: '/'
-});
+  path: '/',
+})
 
 // Redirect to login page
-return Astro.redirect('/login');
+return Astro.redirect('/login')
 ---
-<PageSEO currentPage='logout' />
+
+<Layout>
+  <PageSEO
+    slot="seo"
+    currentPage='Logout'
+    pageDescription='Cierra sesión en Socialia'
+    extraKeywords='logout, cerrar sesión, cerrar cuenta'
+  />
+</Layout>

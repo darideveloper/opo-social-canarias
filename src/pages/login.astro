@@ -10,9 +10,13 @@ import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
-  <PageSEO currentPage='login' />
+  <PageSEO
+    slot="seo"
+    currentPage='Login'
+    pageDescription='Inicia sesión en Socialia'
+    extraKeywords='login, comenzar, crear cuenta'
+  />
   <div class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
     <Forms client:load />
   </div>
 </Layout>
-

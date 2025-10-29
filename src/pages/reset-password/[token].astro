@@ -1,26 +1,33 @@
 ---
 // Layout
-import Layout from "../../layouts/Layout.astro"
+import Layout from '../../layouts/Layout.astro'
 
 // Components
-import ResetPasswordForm from "../../components/molecules/forms/ResetPasswordForm";
+import ResetPasswordForm from '../../components/molecules/forms/ResetPasswordForm'
 
 // Utils components
 import PageSEO from '../../components/utils/PageSEO.astro'
 
 // Get the token from the URL
-const { token } = Astro.params;
+const { token } = Astro.params
 
 // Redirect if no token
 if (!token) {
-    return Astro.redirect("/silvia/reset-password");
+  return Astro.redirect('/silvia/reset-password')
 }
 ---
 
 <Layout>
-  <PageSEO currentPage='reset-password' />
-  
-    <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
-        <ResetPasswordForm token={token} client:load />
-    </div>
+  <PageSEO
+    slot="seo"
+    currentPage='Restablecer Contraseña'
+    pageDescription='Restablece tu contraseña en Socialia'
+    extraKeywords='reset password, olvidé mi contraseña'
+  />
+  <div class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
+    <ResetPasswordForm
+      token={token}
+      client:load
+    />
+  </div>
 </Layout>

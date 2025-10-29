@@ -12,7 +12,12 @@ import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
-  <PageSEO currentPage='pricing' />
+  <PageSEO
+    slot="seo"
+    currentPage='Pricing'
+    pageDescription='Planes de Socialia'
+    extraKeywords='planes, precios, socialia, trabajo social, canarias, oposiciones, estudiar, examenes, conocimiento, practica, ia, generador de casos, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas, generador de examenes, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas'
+  />
   <BannerPricingHero />
   <PricingCards />
   <FreeTrial />

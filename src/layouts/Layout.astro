@@ -32,7 +32,7 @@ import { ToastContainer } from 'react-toastify'
       name='generator'
       content={Astro.generator}
     />
-    <title>Astro Basics</title>
+    <slot name='seo' />
   </head>
   <body class:list={['!bg-base-200']}>
     <Header />

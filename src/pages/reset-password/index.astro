@@ -1,18 +1,22 @@
 ---
 // Layout
-import Layout from "../../layouts/Layout.astro"
+import Layout from '../../layouts/Layout.astro'
 
 // Components
-import ResetPasswordEmail from "../../components/molecules/forms/ResetPasswordEmail"
+import ResetPasswordEmail from '../../components/molecules/forms/ResetPasswordEmail'
 
 // Utils components
 import PageSEO from '../../components/utils/PageSEO.astro'
 ---
 
 <Layout>
-  <PageSEO currentPage='reset-password' />
-
-  <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
+  <PageSEO
+    slot="seo"
+    currentPage='Restablecer Contraseña'
+    pageDescription='Restablece tu contraseña en Socialia'
+    extraKeywords='reset password, olvidé mi contraseña'
+  />
+  <div class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
     <ResetPasswordEmail client:load />
   </div>
 </Layout>

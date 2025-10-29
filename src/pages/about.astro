@@ -14,7 +14,12 @@ import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
-  <PageSEO currentPage='about' />
+  <PageSEO
+    slot="seo"
+    currentPage='Acerca de'
+    pageDescription='Sobre Socialia'
+    extraKeywords='acerca de, about, nosotros'
+  />
   <HeroAbout />
   <BannerFeatures />
   <AboutGofitos />
