@@ -1,5 +1,5 @@
 // Libs
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 // Components
 import { Swiper, SwiperSlide } from 'swiper/react'

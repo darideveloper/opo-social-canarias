@@ -1,5 +1,5 @@
 import { FaStar } from 'react-icons/fa'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 interface TestimonialCardType {
   name: string

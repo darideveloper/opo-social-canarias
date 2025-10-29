@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import ButtonBase from './base/ButtonBase'
 
 export default function ButtonAction({

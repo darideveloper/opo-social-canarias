@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 // Libs
 import { toast } from 'react-toastify'
 import { activate } from '../../../libs/api/activate'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 // Components
 import ButtonLink from '../../atoms/ButtonLink'

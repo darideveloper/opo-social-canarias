@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi'
 
 type AdminNavbarProps = {

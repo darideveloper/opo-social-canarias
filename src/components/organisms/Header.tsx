@@ -1,5 +1,5 @@
 // Libs
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 // Components
 import ButtonLink from '../atoms/ButtonLink'

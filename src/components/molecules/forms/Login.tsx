@@ -1,5 +1,5 @@
 // Libs
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { login } from '../../../libs/api/login'
 import { toast } from 'react-toastify'
 

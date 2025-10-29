@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { toast } from 'react-toastify'
 import { signUp } from '../../../libs/api/signUp'
 import Input from '../../atoms/Input'

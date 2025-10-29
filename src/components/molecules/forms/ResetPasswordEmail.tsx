@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 // Libs
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { requestResetPasswordEmail } from '../../../libs/api/reset'
 
 // Components
