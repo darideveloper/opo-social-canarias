@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules'
 import TestimonialCard from '../molecules/TestimonialCard'
-import H2 from '../atoms/H2.tsx'
+import H2 from '../atoms/H2'
 
 // Styles
 import 'swiper/css'
