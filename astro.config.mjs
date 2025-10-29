@@ -16,7 +16,7 @@ import showTailwindcssBreakpoint from 'astro-show-tailwindcss-breakpoint';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://socialia.com',
+  site: 'https://socialia.apps.darideveloper.com',
 
   output: 'server',
 
