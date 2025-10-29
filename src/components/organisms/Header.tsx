@@ -12,7 +12,7 @@ export default function Navbar() {
           'container',
           'mx-auto',
           'flex',
-          'flex-col sm:flex-row',
+          'flex-col md:flex-row',
           'items-center',
           'justify-between',
           '!p-0',
@@ -23,18 +23,18 @@ export default function Navbar() {
       >
         <div className={clsx('navbar-start')}>
           <a
-            className={clsx('text-xl', 'mx-auto sm:mx-0')}
+            className={clsx('text-xl', 'mx-auto md:mx-0')}
             href='/'
           >
             <img
               src='/logo.webp'
               alt='Logo'
-              className={clsx('h-6', 'sm:h-10')}
+              className={clsx('h-6', 'md:h-10')}
             />
           </a>
         </div>
 
-        <nav className={clsx('navbar-center', 'hidden lg:flex')}>
+        <nav className={clsx('navbar-center', '!flex')}>
           <ul className={clsx('menu menu-horizontal', 'px-1')}>
             <li>
               <a href='/'>Inicio</a>
@@ -54,7 +54,7 @@ export default function Navbar() {
             '!w-full md:!w-1/2',
             'flex',
             'justify-center',
-            'sm:justify-end'
+            'md:justify-end'
           )}
         >
           <div className={clsx('flex', 'gap-2')}>
