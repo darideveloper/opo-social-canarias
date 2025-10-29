@@ -8,9 +8,13 @@ import InfoCards from '../components/organisms/InfoCards.astro'
 import Features from '../components/organisms/Features.astro'
 import PricingCards from '../components/organisms/PricingCards.astro'
 import Testimonials from '../components/organisms/Testimonials.tsx'
+
+// Utils components
+import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
+  <PageSEO currentPage='home' />
   <HeroHome />
   <InfoCards />
   <Features />

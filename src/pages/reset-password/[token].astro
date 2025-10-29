@@ -1,6 +1,12 @@
 ---
+// Layout
 import Layout from "../../layouts/Layout.astro"
+
+// Components
 import ResetPasswordForm from "../../components/molecules/forms/ResetPasswordForm";
+
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
 
 // Get the token from the URL
 const { token } = Astro.params;
@@ -12,6 +18,8 @@ if (!token) {
 ---
 
 <Layout>
+  <PageSEO currentPage='reset-password' />
+  
     <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
         <ResetPasswordForm token={token} client:load />
     </div>

@@ -1,0 +1,100 @@
+---
+// Components
+import BaseSEO from './base/BaseSEO.astro'
+
+// Data
+import { plansData } from '../../libs/constants/plans'
+import { heroTitle, heroDescription } from '../../libs/constants/hero'
+
+// Reas props
+interface Props {
+  currentPage: string // Current page
+}
+const { currentPage } = Astro.props as Props
+
+// Environment variables
+const domain = import.meta.env.VITE_BASE_URL
+
+
+// addressElems = {
+//   streetAddress: "Cto. Colonias 118",
+//   addressLocality: "Mérida",
+//   addressRegion: "Yucatán",
+//   postalCode: "97100",
+//   addressCountry: "Mexico"
+// }
+
+// const phoneUnformatted = '+52 999 448 6075'
+// const phone = phoneUnformatted.replace(/\s/g, '').replace('+', '')
+// const openingHours = ['Mo-Fr 10:00-20:00', 'Sa 11:00-17:00']
+// const openingHoursSpecification = [
+//   {
+//     '@type': 'OpeningHoursSpecification',
+//     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+//     opens: '10:00',
+//     closes: '20:00',
+//   },
+//   {
+//     '@type': 'OpeningHoursSpecification',
+//     dayOfWeek: 'Saturday',
+//     opens: '11:00',
+//     closes: '17:00',
+//   }
+// ]
+
+// Extra JSON
+const extraJson = {
+  // Price 
+  priceRange: '$$',
+
+  // Contact
+  // telephone: phoneUnformatted,
+
+  // Hours
+  // openingHours: openingHours,
+  // openingHoursSpecification: openingHoursSpecification,
+
+  // Services
+  makesOffer: [
+    ...plansData.map((plan) => ({
+      '@type': 'Offer',
+      name: plan.name,
+      description: plan.description,
+      url: `${domain}/`,
+    })),
+  ],
+
+  // Founder
+  foundingDate: '2025',
+  founder: {
+    '@type': 'Company',
+    name: 'Socialia',
+  },
+
+  // rating
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '75',
+  },
+
+  // // Location
+  // address: {
+  //   '@type': 'PostalAddress',
+  //   ...addressElems,
+  // },
+  // geo: {
+  //   '@type': 'GeoCoordinates',
+  //   latitude: 20.9984621,
+  //   longitude: -89.6152096,
+  // },
+}
+---
+
+<BaseSEO
+  currentPage={currentPage}
+  jsonType='EducationalOrganization'
+  extraJson={extraJson}
+  baseDescription=`${heroTitle} ${heroDescription}`
+  baseKeywords='socialia, trabajo social, canarias, oposiciones, estudiar, examenes, conocimiento, practica, ia, generador de casos, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas, generador de examenes, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas'
+/>

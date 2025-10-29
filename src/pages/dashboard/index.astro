@@ -1,7 +1,12 @@
 ---
+// Layout
 import AdminLayout from "../../layouts/AdminLayout.astro";
+
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
 ---
 
 <AdminLayout client:load>
+    <PageSEO currentPage='dashboard' />
     <h1>Panel de Control</h1>
 </AdminLayout>

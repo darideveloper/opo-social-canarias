@@ -1,4 +1,7 @@
 ---
+// Components
+import PageSEO from '../components/utils/PageSEO.astro'
+
 // Delete a specific cookie
 Astro.cookies.delete('access_token', {
   path: '/'
@@ -11,3 +14,4 @@ Astro.cookies.delete('refresh_token', {
 // Redirect to login page
 return Astro.redirect('/login');
 ---
+<PageSEO currentPage='logout' />

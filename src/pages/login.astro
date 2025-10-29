@@ -1,9 +1,16 @@
 ---
+// Layout
 import Layout from '../layouts/Layout.astro'
+
+// Components
 import Forms from '../components/molecules/forms/Login'
+
+// Utils components
+import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
+  <PageSEO currentPage='login' />
   <div class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
     <Forms client:load />
   </div>

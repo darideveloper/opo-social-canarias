@@ -2,15 +2,19 @@
 // Layout
 import Layout from '../layouts/Layout.astro'
 
-// Sections
+// Components
 import HeroAbout from '../components/organisms/HeroAbout.astro'
 import BannerFeatures from '../components/organisms/BannerFeatures.astro'
 import AboutGofitos from '../components/organisms/AboutGofitos.astro'
 import Goal from '../components/organisms/Goal.astro'
 import BannerAboutFooter from '../components/organisms/BannerAboutFooter.astro'
+
+// Utils components
+import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
-<Layout title='Socialia - Una Metodología para Aprobar'>
+<Layout>
+  <PageSEO currentPage='about' />
   <HeroAbout />
   <BannerFeatures />
   <AboutGofitos />

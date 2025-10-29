@@ -1,9 +1,17 @@
 ---
+// Layout
 import Layout from "../../layouts/Layout.astro"
+
+// Components
 import ResetPasswordEmail from "../../components/molecules/forms/ResetPasswordEmail.tsx"
+
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
 ---
 
 <Layout>
+  <PageSEO currentPage='reset-password' />
+
   <div class="min-h-[calc(100vh-4rem)] grid place-items-center px-4">
     <ResetPasswordEmail client:load />
   </div>

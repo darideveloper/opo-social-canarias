@@ -1,5 +1,9 @@
 ---
 export const prerender = false;
 
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
+
 return Astro.redirect('/');
 ---
+<PageSEO currentPage='activate' />

@@ -9,11 +9,16 @@ import Layout from '../../layouts/Layout.astro'
 import H1 from '../../components/atoms/H1'
 import Activate from '../../components/molecules/forms/Activate'
 
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
+
 // Params
 const { token } = Astro.params
 ---
 
 <Layout>
+  <PageSEO currentPage='activate' />
+  
   <section class='min-h-[calc(100vh-4rem)] grid place-items-center px-4'>
     <div
       class={clsx('w-full', 'max-w-lg', 'mx-auto', 'bg-base-100', 'shadow-md')}
