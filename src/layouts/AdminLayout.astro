@@ -16,12 +16,6 @@ interface Props {
   userName?: string;
   userEmail?: string;
 }
-
-const {
-  avatarUrl,
-  userName = "Administrador",
-  userEmail = "administrador@gmail.com",
-} = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -36,12 +30,7 @@ const {
   </head>
   <body class:list={["bg-base-200", "min-h-screen"]}>
     <AdminDrawer client:load>
-      <AdminNavbar 
-        client:load 
-        avatarUrl={avatarUrl}
-        userName={userName}
-        userEmail={userEmail}
-      />
+      <AdminNavbar client:load />
       <slot />
     </AdminDrawer>
   </body>

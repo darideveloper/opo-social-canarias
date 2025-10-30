@@ -22,7 +22,6 @@ export default function Activate({ token = '' }: ActivateProps) {
 
   // Validate token
   useEffect(() => {
-    console.log('token', token)
     const activateAccount = async () => {
       if (!token) {
         setStatus('error')

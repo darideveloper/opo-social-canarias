@@ -1,18 +1,39 @@
-import { clsx } from 'clsx'
+// Icons
 import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi'
 
-type AdminNavbarProps = {
-  avatarUrl?: string
-  userName?: string
-  userEmail?: string
-}
+// Libs
+import { clsx } from 'clsx'
+import { getProfile } from '../../../libs/api/profile'
 
-export default function AdminNavbar({
-  avatarUrl,
-  userName = 'Administrador',
-  userEmail = 'administrador@gmail.com',
-}: AdminNavbarProps) {
+// Hooks
+import { useEffect, useState } from 'react'
+
+export default function AdminNavbar() {
   const drawerId = 'admin-drawer'
+
+
+  // Profile data states
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [userName, setUserName] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+
+  // Get profile data when loads
+  useEffect(() => {
+    async function fetchProfile() {
+      const { data, statusCode } = await getProfile()
+      if (statusCode === 200) {
+        setAvatarUrl(data.avatar_url)
+        setUserName(data.name)
+        setUserEmail(data.email)
+      } else {
+        // Redirect to logout
+        // window.location.href = '/logout'
+        console.log('error', data, statusCode)
+      }
+    }
+    fetchProfile()
+  }, [])
+
 
   return (
     <nav className={clsx('navbar', 'bg-base-100', 'shadow-sm')}>

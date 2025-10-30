@@ -78,8 +78,6 @@ export default function RegistrationForm({
       // Sign up
       const { data, statusCode } = await signUp(email, password, name, profileImage || undefined)
       
-      console.log('response', data, statusCode)
-
       if (statusCode === 201 || statusCode === 200) {
         // Success - matches test expectation
         toast.success('¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta')

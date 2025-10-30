@@ -183,7 +183,6 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
 
       // validate user inactive in db
       const user = await getUserByEmail(email)
-      console.log({ user })
       expect(user.is_active).toBe(false)
     }
   )

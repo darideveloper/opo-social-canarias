@@ -29,6 +29,5 @@ export async function signUp(
   )
   const data = await response.json()
   const statusCode = response.status
-  console.log(data, statusCode)
   return { data, statusCode }
 }

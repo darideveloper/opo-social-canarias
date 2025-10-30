@@ -44,7 +44,6 @@ export default function Forms({ onSubmit, className }: FormsProps) {
 
       // Login
       const { data, statusCode } = await login(email, password)
-      console.log('response', data, statusCode)
 
       if (statusCode == 200) {
         // Direct to dashboard
