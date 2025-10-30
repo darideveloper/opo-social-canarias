@@ -13,6 +13,7 @@ export const plansData = [
     description: 'Para empezar a prepararte sin ataduras',
     price: '35',
     btnText: 'Empezar ahora',
+    btnLink: '/sign-up',
     tagText: '',
     important: false,
     footerText: '',
@@ -49,6 +50,7 @@ export const plansData = [
     description: 'Desbloquea todo el poder de la IA sin permanencia',
     price: '57',
     btnText: 'Elegir Plan Pro',
+    btnLink: '/sign-up',
     tagText: 'MÁS POPULAR',
     important: true,
     footerText: '',
@@ -80,6 +82,7 @@ export const plansData = [
     description: 'El compromiso definitivo con tu plaza. El mejor valor.',
     price: '570',
     btnText: 'Aportar por mi futuro',
+    btnLink: '/sign-up',
     tagText: 'AHORRA 2 MESES',
     important: false,
     footerText:
