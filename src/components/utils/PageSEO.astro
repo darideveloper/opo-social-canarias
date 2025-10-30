@@ -24,7 +24,7 @@ const domain = import.meta.env.VITE_BASE_URL
 // Description and keywords
 const defaultDescription = `${heroTitle} ${heroDescription}`
 const defaultKeywords =
-  'socialia, trabajo social, canarias, oposiciones, estudiar, examenes, conocimiento, practica, ia, generador de casos, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas, generador de examenes, generador de tests, generador de temas, generador de ejercicios, generador de preguntas, generador de respuestas'
+  'trabajo social canarias, oposiciones trabajo social canarias, temario trabajo social, casos prácticos trabajo social, estudio trabajo social, preparación oposiciones trabajo social, examen trabajo social canarias, temario canario trabajo social, generador casos prácticos IA, tests trabajo social, ejercicios oposiciones, preguntas trabajo social, recursos trabajo social canarias, preparar oposiciones, convocatorias trabajo social, plaza trabajo social canarias'
 const description = pageDescription || defaultDescription
 const keywords = `${defaultKeywords}, ${extraKeywords}`
 
@@ -57,7 +57,7 @@ const keywords = `${defaultKeywords}, ${extraKeywords}`
 // Extra JSON
 const extraJson = {
   // Price
-  priceRange: '$$',
+  priceRange: '€€',
 
   // Contact
   // telephone: phoneUnformatted,
@@ -72,15 +72,20 @@ const extraJson = {
       '@type': 'Offer',
       name: plan.name,
       description: plan.description,
-      url: `${domain}/`,
+      url: `${domain}/pricing`,
+      priceCurrency: 'EUR',
+      price: plan.price,
+      availability: 'https://schema.org/InStock',
+      category: 'Servicio de Preparación de Oposiciones',
     })),
   ],
 
   // Founder
   foundingDate: '2025',
   founder: {
-    '@type': 'Company',
+    '@type': 'Organization',
     name: 'Socialia',
+    description: 'Plataforma de preparación de oposiciones de Trabajo Social en Canarias',
   },
 
   // rating
@@ -89,6 +94,9 @@ const extraJson = {
     ratingValue: '5.0',
     reviewCount: '75',
   },
+
+  // Keywords adicionales para el JSON-LD
+  keywords: 'trabajo social canarias, oposiciones trabajo social, preparación oposiciones, casos prácticos trabajo social, temario canario',
 
   // // Location
   // address: {
