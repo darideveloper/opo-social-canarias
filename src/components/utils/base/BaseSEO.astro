@@ -3,17 +3,16 @@ interface Props {
   currentPage: string // Current page
   jsonType: string // Type of the page
   extraJson?: Record<string, any> // Extra JSON data
-  description?: string // Description of the page (optional, to ignore i18n)
-  baseKeywords?: string // Keywords of the page (optional, to ignore i18n)
-  author?: string // Author of the page (optional, to ignore i18n)
-  useTagLine?: boolean // Use tag line from i18n
+  description: string // Description of the page
+  keywords: string // Keywords of the page
+  author: string // Author of the page
 }
 const {
   currentPage,
   jsonType,
   extraJson = {},
-  description = '',
-  baseKeywords = '',
+  description,
+  keywords,
   author = "Dari Dev's Team",
 } = Astro.props as Props
 
@@ -31,10 +30,6 @@ const title = 'Socialia'
 const image = `${domain}/banner.webp`
 
 const twitterHandle = '@DeveloperDari'
-let keywords = baseKeywords
-
-// Split keywords into an array if it's a string
-const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : keywords
 
 // Generate data
 const jsonLd = {
@@ -72,14 +67,10 @@ const ogType = ogTypeMap[jsonType as keyof typeof ogTypeMap] || 'website'
   name='description'
   content={description}
 />
-{
-  keywordsContent && (
-    <meta
-      name='keywords'
-      content={keywordsContent}
-    />
-  )
-}
+<meta
+  name='keywords'
+  content={keywords}
+/>
 <meta
   name='author'
   content={author}
