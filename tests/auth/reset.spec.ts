@@ -201,7 +201,6 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     page: Page,
     email: string,
     password: string,
-    validLogin: boolean = true
   ) {
     // Act: Open login page
     await page.goto(`${BASE_URL}/login`)
@@ -412,7 +411,7 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
       )
 
       // Assert: login with new password
-      await login(page, currentEmail, currentPassword, false)
+      await login(page, currentEmail, currentPassword)
 
       // Validate token still active (unused) in database
       token = await getTokenFromEmail(currentEmail, 'pass')

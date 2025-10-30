@@ -139,3 +139,17 @@ export async function updateToken(token: string, isActive: boolean) {
     throw error
   }
 }
+
+export async function deleteProfileImage(email: string) {
+  try {
+    const user = await getUserByEmail(email)
+    if (!user) {
+      throw new Error(`User ${email} not found`)
+    }
+    await query('UPDATE jwt_auth_profile SET profile_img = $1 WHERE user_id = $2', ['', user.id])
+    console.log(`🗑️ Profile image for user ${email} deleted`)
+  } catch (error) {
+    console.error('Error deleting profile image:', error)
+    throw error
+  }
+}

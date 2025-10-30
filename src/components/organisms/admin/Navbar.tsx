@@ -21,14 +21,14 @@ export default function AdminNavbar() {
   useEffect(() => {
     async function fetchProfile() {
       const { data, statusCode } = await getProfile()
+      const { profile_img, name, email } = data.data
       if (statusCode === 200) {
-        setAvatarUrl(data.avatar_url)
-        setUserName(data.name)
-        setUserEmail(data.email)
+        setAvatarUrl(profile_img)
+        setUserName(name)
+        setUserEmail(email)
       } else {
         // Redirect to logout
-        // window.location.href = '/logout'
-        console.log('error', data, statusCode)
+        window.location.href = '/logout'
       }
     }
     fetchProfile()
