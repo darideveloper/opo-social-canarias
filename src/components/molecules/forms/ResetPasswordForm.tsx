@@ -10,21 +10,13 @@ import Input from '../../atoms/Input'
 import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
 
-type ResetPasswordFormProps = {
-  token: string
-  onSubmit?: (payload: {
-    token: string
-    password: string
-    confirmPassword: string
-  }) => void
-  className?: string
-}
-
 export default function ResetPasswordForm({
   token,
-  onSubmit,
   className,
-}: ResetPasswordFormProps) {
+}: {
+  token: string
+  className?: string
+}) {
   // States
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -60,13 +52,13 @@ export default function ResetPasswordForm({
     if (!validate()) return
     setIsLoading(true)
     try {
-      onSubmit?.({ token, password, confirmPassword })
-
       const { statusCode } = await updatePassword(token, password)
       if (statusCode === 200) {
         setSuccess(true)
       } else {
-        setErrors({ password: 'Error al actualizar la contraseña. Intenta más tarde.' })
+        setErrors({
+          password: 'Error al actualizar la contraseña. Intenta más tarde.',
+        })
         setSuccess(false)
       }
     } finally {

@@ -11,15 +11,11 @@ import ButtonLink from '../../atoms/ButtonLink'
 import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
 
-type ResetPasswordEmailProps = {
-  onSubmit?: (payload: { email: string }) => void
-  className?: string
-}
-
 export default function ResetPasswordEmail({
-  onSubmit,
   className,
-}: ResetPasswordEmailProps) {
+}: {
+  className?: string
+}) {
   // States
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)

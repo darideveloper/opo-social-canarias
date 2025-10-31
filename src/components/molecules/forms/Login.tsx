@@ -11,13 +11,7 @@ import Input from '../../atoms/Input'
 import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
 
-// Types
-type FormsProps = {
-  onSubmit?: (payload: { email: string; password: string }) => void
-  className?: string
-}
-
-export default function Forms({ onSubmit, className }: FormsProps) {
+export default function Forms({ className }: { className?: string }) {
   // States
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -94,9 +88,7 @@ export default function Forms({ onSubmit, className }: FormsProps) {
           />
 
           {/* Passoword extra lavel */}
-          <label
-            className={clsx('label', 'justify-between', 'pt-0')}
-          >
+          <label className={clsx('label', 'justify-between', 'pt-0')}>
             <span className='label-text'>Contraseña</span>
             <a
               href='/reset-password'

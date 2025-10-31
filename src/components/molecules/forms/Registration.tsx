@@ -7,20 +7,11 @@ import ButtonAction from '../../atoms/ButtonAction'
 import H1 from '../../atoms/H1'
 import ImageUpload from '../../atoms/ImageUpload'
 
-type RegistrationProps = {
-  onSubmit?: (payload: {
-    name: string
-    email: string
-    profileImage: File | null
-    password: string
-  }) => void
-  className?: string
-}
-
 export default function RegistrationForm({
-  onSubmit,
   className,
-}: RegistrationProps) {
+}: {
+  className?: string
+}) {
   // States
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -48,14 +39,18 @@ export default function RegistrationForm({
 
     if (!name) next.name = 'El nombre es obligatorio'
     if (!email) next.email = 'El email es obligatorio'
-    
+
     // Email format validation
-    if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    if (
+      email &&
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+    ) {
       next.email = 'Por favor, ingresa un email válido'
     }
-    
+
     if (!password) next.password = 'La contraseña es obligatoria'
-    if (password && password.length < 6) next.password = 'La contraseña debe tener al menos 6 caracteres'
+    if (password && password.length < 6)
+      next.password = 'La contraseña debe tener al menos 6 caracteres'
     if (!passwordValidation)
       next.passwordValidation = 'Debes confirmar tu contraseña'
     if (password && passwordValidation && password !== passwordValidation) {
@@ -76,18 +71,25 @@ export default function RegistrationForm({
     setIsLoading(true)
     try {
       // Sign up
-      const { data, statusCode } = await signUp(email, password, name, profileImage || undefined)
-      
+      const { data, statusCode } = await signUp(
+        email,
+        password,
+        name,
+        profileImage || undefined
+      )
+
       if (statusCode === 201 || statusCode === 200) {
         // Success - matches test expectation
-        toast.success('¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta')
+        toast.success(
+          '¡Registro exitoso! Por favor, verifica tu correo electrónico para activar tu cuenta'
+        )
         setTimeout(() => {
           window.location.href = '/login'
         }, 5000)
       } else if (statusCode === 400) {
         // Bad request - could be validation error
         let errorMessage = 'Error al registrar'
-        
+
         // Check for email validation errors
         if (data?.data?.email && Array.isArray(data.data.email)) {
           // Handle error structure with data.data.email array
@@ -102,11 +104,14 @@ export default function RegistrationForm({
         } else if (data?.message) {
           errorMessage = data.message
           // Check if it's the specific email validation message
-          if (errorMessage.includes('email') && errorMessage.includes('válid')) {
+          if (
+            errorMessage.includes('email') &&
+            errorMessage.includes('válid')
+          ) {
             errorMessage = 'Por favor, ingresa un email válido'
           }
         }
-        
+
         toast.error(errorMessage)
       } else if (statusCode === 409) {
         // Conflict - email already exists - matches test expectation
