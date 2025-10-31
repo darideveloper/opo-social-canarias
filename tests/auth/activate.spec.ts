@@ -15,8 +15,12 @@
  * @fileoverview Comprehensive login authentication test suite
  */
 
+// Libs
 import { test, expect, type Page } from '@playwright/test'
+
+// Helpers
 import { getTokenFromEmail } from '../helpers/db-helpers'
+import { validateMessage, registerUser } from '../helpers/auth-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -25,49 +29,6 @@ let currentEmail = ''
 let currentPassword = ''
 
 test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
-  /**
-   * Get random data
-   * @returns {Promise<{name: string, email: string, password: string}>}
-   */
-  async function getRandomData(): Promise<{
-    name: string
-    email: string
-    password: string
-  }> {
-    // Create random string of 6 chars (only letters and numbers)
-    const randomString = Math.random().toString(36).substring(2, 8)
-
-    const name = `test-${randomString}`
-    const email = `test-${randomString}@gmail.com`
-    const password = `test-${randomString}`
-    return { name, email, password }
-  }
-
-  /**
-   * Register a new user
-   * @param page - Playwright page instance
-   */
-  async function registerUser(page: Page) {
-    // Arrange: use random email and password
-    const { email, name, password } = await getRandomData()
-    currentEmail = email
-    currentPassword = password
-
-    // Navigate to login page and wait for it to fully load
-    await page.goto(`${BASE_URL}/sign-up`)
-    await page.waitForTimeout(2000)
-
-    // Fill data
-    await page.fill('input#name', name)
-    await page.fill('input#email', email)
-    await page.fill('input#password', password)
-    await page.fill('input#passwordValidation', password)
-
-    // Submit form
-    await page.click('button[type="submit"]')
-    await page.waitForTimeout(3000)
-  }
-
   /**
    * Check if user is active
    * @param page - Playwright page instance
@@ -100,9 +61,7 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
    */
   async function validateActivationSuccessScreen(page: Page) {
     // Assert: validate activate account
-    await expect(page.locator('.Toastify')).toHaveText(
-      '¡Cuenta activada exitosamente!'
-    )
+    await validateMessage(page, '¡Cuenta activada exitosamente!')
     await expect(page.locator('main h1')).toHaveText('Activación de Cuenta')
 
     // Validate login button
@@ -117,9 +76,7 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
    */
   async function validateActivationErrorScreen(page: Page) {
     // Assert: validate activate account
-    await expect(page.locator('.Toastify')).toHaveText(
-      'Error al activar la cuenta. Intenta registrarte nuevamente.'
-    )
+    await validateMessage(page, 'Error al activar la cuenta. Intenta registrarte nuevamente.')
     await expect(page.locator('main h1')).toHaveText('Activación de Cuenta')
 
     // Validate login button

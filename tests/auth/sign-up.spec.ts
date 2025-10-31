@@ -18,10 +18,14 @@
  * @fileoverview Comprehensive register authentication test suite
  */
 
-import { test, expect, type Page } from '@playwright/test'
+// Libs
 import path from 'path'
+import { test, expect, type Page } from '@playwright/test'
 import { fileURLToPath } from 'url'
+
+// Helpers
 import { getProfileByUserId, getUserByEmail } from '../helpers/db-helpers'
+import { validateMessage, getRandomData } from '../helpers/auth-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -85,32 +89,9 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
   }
 
   /**
-   * Validate toast message
+   * Validate successful registration
    * @param page - Playwright page instance
-   * @param message - Message to validate
    */
-  async function validateMessage(page: Page, message: string) {
-    // Wait for redirect to complete
-    await page.waitForTimeout(2000)
-
-    // verify message
-    await expect(page.locator('.Toastify')).toHaveText(message)
-  }
-
-  async function getRandomData(): Promise<{
-    name: string
-    email: string
-    password: string
-  }> {
-    // Create random string of 6 chars (only letters and numbers)
-    const randomString = Math.random().toString(36).substring(2, 8)
-
-    const name = `test-${randomString}`
-    const email = `test-${randomString}@gmail.com`
-    const password = `test-${randomString}`
-    return { name, email, password }
-  }
-
   async function validateSuccessRegistration(page: Page) {
     // Wait extra time to see the messages
     await page.waitForTimeout(2000)
@@ -365,7 +346,6 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       // Validate user profile image does not exist in db
       const user = await getUserByEmail(email)
       const profile = await getProfileByUserId(user.id)
-      console.log(profile)
       expect(profile.profile_img).toBe("")
     }
   )

@@ -14,10 +14,14 @@
  * @fileoverview Comprehensive dashboard header test suite
  */
 
-import { test, expect, type Page } from '@playwright/test'
-import { getTokenFromEmail, deleteProfileImage } from '../helpers/db-helpers'
+// Libs
 import path from 'path'
+import { test, expect, type Page } from '@playwright/test'
 import { fileURLToPath } from 'url'
+
+// Helpers
+import { getTokenFromEmail, deleteProfileImage } from '../helpers/db-helpers'
+import { registerUser, activateUser } from '../helpers/auth-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -35,68 +39,6 @@ const selectors = {
 
 
 test.describe('Dashboard Header Tests', { tag: ['@dashboard'] }, () => {
-    /**
-     * Get random data
-     * @returns {Promise<{name: string, email: string, password: string}>}
-     */
-    async function getRandomData(): Promise<{
-        name: string
-        email: string
-        password: string
-    }> {
-        // Create random string of 6 chars (only letters and numbers)
-        const randomString = Math.random().toString(36).substring(2, 8)
-
-        const name = `test-${randomString}`
-        const email = `test-${randomString}@gmail.com`
-        const password = `test-${randomString}`
-        return { name, email, password }
-    }
-
-    /**
-     * Register a new user
-     * @param page - Playwright page instance
-     */
-    async function registerUser(page: Page) {
-        // Arrange: use random email and password
-        const { email, name, password } = await getRandomData()
-        currentEmail = email
-        currentPassword = password
-        currentName = name
-
-        // Navigate to login page and wait for it to fully load
-        await page.goto(`${BASE_URL}/sign-up`)
-        await page.waitForTimeout(2000)
-
-        // Fill data
-        await page.fill('input#name', name)
-        await page.fill('input#email', email)
-        await page.fill('input#password', password)
-        await page.fill('input#passwordValidation', password)
-
-        // Add image to upload
-        await page.setInputFiles('input[name="profileImage"]', path.join(
-            path.dirname(fileURLToPath(import.meta.url)),
-            '../fixtures/test-image.jpg'
-        ))
-
-        // Submit form
-        await page.click('button[type="submit"]')
-        await page.waitForTimeout(3000)
-    }
-
-    /**
-     * Activate user
-     * @param page - Playwright page instance
-     */
-    async function activateUser(page: Page) {
-        // Arrange: get token from email
-        const token = await getTokenFromEmail(currentEmail)
-
-        // Act: navigate to activate page
-        await page.goto(`${BASE_URL}/activate/${token}`)
-        await page.waitForTimeout(2000)
-    }
 
     /**
    * Login with user credentials
@@ -129,10 +71,13 @@ test.describe('Dashboard Header Tests', { tag: ['@dashboard'] }, () => {
      */
     test.beforeEach(async ({ page }) => {
         // Register a new user
-        await registerUser(page)
+        const { email, name, password } = await registerUser(page)
+        currentEmail = email
+        currentPassword = password
+        currentName = name
 
         // Activate user
-        await activateUser(page)
+        await activateUser(page, currentEmail)
     })
 
     /**

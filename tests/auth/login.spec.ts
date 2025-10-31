@@ -18,7 +18,11 @@
  * @fileoverview Comprehensive login authentication test suite
  */
 
+// Libs
 import { test, expect, type Page } from '@playwright/test'
+
+// Helpers
+import { validateMessage } from '../helpers/auth-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -49,7 +53,7 @@ test.describe('Login Authentication Flow', { tag: ['@auth'] }, () => {
     const errorMessage =
       expectedErrorMessage ||
       'La combinación de credenciales no tiene una cuenta activa'
-    await expect(page.locator('.Toastify')).toHaveText(errorMessage)
+    await validateMessage(page, errorMessage)
   }
 
   /**
