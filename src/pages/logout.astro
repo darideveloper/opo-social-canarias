@@ -4,18 +4,7 @@ import Layout from '../layouts/Layout.astro'
 
 // Components
 import PageSEO from '../components/utils/PageSEO.astro'
-
-// Delete a specific cookie
-Astro.cookies.delete('access_token', {
-  path: '/',
-})
-
-Astro.cookies.delete('refresh_token', {
-  path: '/',
-})
-
-// Redirect to login page
-return Astro.redirect('/login')
+import LogoutForm from '../components/molecules/forms/Logout'
 ---
 
 <Layout>
@@ -25,4 +14,5 @@ return Astro.redirect('/login')
     pageDescription='Cierra tu sesión de forma segura en Socialia. Tu progreso se guardará automáticamente para que puedas continuar donde lo dejaste cuando vuelvas.'
     extraKeywords='cerrar sesión, logout socialia, salir cuenta'
   />
+  <LogoutForm client:load />
 </Layout>
