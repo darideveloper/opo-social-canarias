@@ -15,12 +15,10 @@
  */
 
 // Libs
-import path from 'path'
 import { test, expect, type Page } from '@playwright/test'
-import { fileURLToPath } from 'url'
 
 // Helpers
-import { getTokenFromEmail, deleteProfileImage } from '../helpers/db-helpers'
+import { deleteProfileImage } from '../helpers/db-helpers'
 import { registerUser, activateUser } from '../helpers/auth-helpers'
 
 // Main settings
