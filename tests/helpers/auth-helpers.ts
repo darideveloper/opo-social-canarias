@@ -82,3 +82,24 @@ export async function activateUser(page: Page, email: string) {
     await page.goto(`${BASE_URL}/activate/${token}`)
     await page.waitForTimeout(2000)
 }
+
+
+/**
+ * Login with user credentials
+ * @param page - Playwright page instance
+ * @param email - User email
+ * @param password - User password
+ */
+export async function login(page: Page, email: string, password: string) {
+    // Act: Open login page
+    await page.goto(`${BASE_URL}/login`)
+    await page.waitForTimeout(2000)
+
+    // Act: Submit login form
+    await page.fill('input[type="email"]', email)
+    await page.fill('input[type="password"]', password)
+    await page.click('button[type="submit"]')
+
+    // Assert: redirect to home page
+    await expect(page).toHaveURL(`${BASE_URL}/dashboard`)
+}

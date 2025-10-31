@@ -14,10 +14,10 @@
  */
 
 // Libs
-import { test, expect, type Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 // Helpers
-import { registerUser, activateUser } from '../helpers/auth-helpers'
+import { registerUser, activateUser, login } from '../helpers/auth-helpers'
 
 // Main settings
 const BASE_URL = 'http://localhost:4321'
@@ -26,28 +26,6 @@ let currentEmail = ''
 let currentPassword = ''
 
 test.describe('Logout Authentication Flow', { tag: ['@auth'] }, () => {
-
- 
-  /**
-   * Login with user credentials
-   * @param page - Playwright page instance
-   * @param email - User email
-   * @param password - User password
-   */
-  async function login(page: Page, email: string, password: string) {
-    // Act: Open login page
-    await page.goto(`${BASE_URL}/login`)
-    await page.waitForTimeout(2000)
-
-    // Act: Submit login form
-    await page.fill('input[type="email"]', email)
-    await page.fill('input[type="password"]', password)
-    await page.click('button[type="submit"]')
-
-    // Assert: redirect to home page
-    await expect(page).toHaveURL(`${BASE_URL}/dashboard`)
-  }
-
   /**
    * Setup db and register a new user
    * @param page - Playwright page instance
