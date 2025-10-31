@@ -1,0 +1,20 @@
+---
+// Layout
+import AdminLayout from '../../layouts/AdminLayout.astro'
+
+// Utils components
+import PageSEO from '../../components/utils/PageSEO.astro'
+
+// React form component
+import ProfileForm from '../../components/molecules/forms/Profile'
+---
+
+<AdminLayout>
+  <PageSEO
+    slot="seo"
+    currentPage='Perfil - Actualiza tu información'
+    pageDescription='Actualiza tu nombre, imagen de perfil y contraseña.'
+    extraKeywords='perfil usuario, actualizar perfil, cambiar contraseña'
+  />
+  <ProfileForm client:load />
+</AdminLayout>

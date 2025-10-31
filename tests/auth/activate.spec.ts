@@ -91,7 +91,9 @@ test.describe('Activate Authentication Flow', { tag: ['@auth'] }, () => {
    */
   test.beforeEach(async ({ page }) => {
     // Register a new user
-    await registerUser(page)
+    const { email, name, password } = await registerUser(page)
+    currentEmail = email
+    currentPassword = password
   })
 
   /**

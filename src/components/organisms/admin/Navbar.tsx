@@ -103,13 +103,13 @@ export default function AdminNavbar() {
               <div className={clsx('text-xs', 'opacity-70')}>{userEmail}</div>
             </li>
             <li>
-              <a href='/perfil'>
+              <a href='/dashboard/profile'>
                 <FiUser className={clsx('w-4', 'h-4')} />
                 Perfil
               </a>
             </li>
             <li className={clsx('border-b', 'border-base-300')}>
-              <a href='/settings'>
+              <a href='/dashboard/profile'>
                 <FiSettings className={clsx('w-4', 'h-4')} />
                 Configuración
               </a>

@@ -4,10 +4,12 @@ export default function ButtonBase({
   isSoft = false,
   className = "",
   children,
+  disabled = false,
 }: {
   isSoft?: boolean;
   className?: string;
   children: React.ReactNode;
+  disabled?: boolean;
 }) {
   return (
     <div
@@ -18,6 +20,7 @@ export default function ButtonBase({
         isSoft ? "hover:text-base-100" : "hover:text-secondary-content",
         "transition-all",
         "duration-200",
+        disabled && "btn-disabled",
         className
       )}
     >

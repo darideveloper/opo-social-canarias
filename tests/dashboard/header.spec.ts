@@ -71,7 +71,7 @@ test.describe('Dashboard Header Tests', { tag: ['@dashboard'] }, () => {
      */
     test.beforeEach(async ({ page }) => {
         // Register a new user
-        const { email, name, password } = await registerUser(page)
+        const { email, name, password } = await registerUser(page, true)
         currentEmail = email
         currentPassword = password
         currentName = name

@@ -140,6 +140,9 @@ test.describe('Reset Password Authentication Flow', { tag: ['@auth'] }, () => {
     await page.fill('input#password', password)
     await page.fill('input#confirmPassword', confirmPassword)
     await page.click('button[type="submit"]')
+
+    // Wait 2 seconds
+    await page.waitForTimeout(2000)
   }
 
   /**

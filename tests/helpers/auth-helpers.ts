@@ -15,12 +15,12 @@ const BASE_URL = 'http://localhost:4321'
  * @returns {Promise<{name: string, email: string, password: string}>}
  */
 export async function getRandomData() {
-    // Create random string of 6 chars (only letters and numbers)
-    const randomString = Math.random().toString(36).substring(2, 8)
+    // Create random string of 8 chars (only letters and numbers)
+    const randomString = Math.random().toString(36).substring(2, 10)
 
     const name = `test-${randomString}`
     const email = `test-${randomString}@gmail.com`
-    const password = `123456`
+    const password = `test-password-${randomString}`
     return { name, email, password }
 }
 

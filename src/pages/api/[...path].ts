@@ -18,7 +18,6 @@ export const ALL: APIRoute = async ({ params, request }) => {
     const { path } = params
     const { method } = request;
     const accessToken = cookies.access_token
-    const refreshToken = cookies.refresh_token
     const contentType = request.headers.get('Content-Type')
 
     // Read body of request

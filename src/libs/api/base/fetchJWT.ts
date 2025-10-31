@@ -2,9 +2,9 @@ export async function fetchJWT(
   endpoint: string,
   method: string,
   body: any = null,
+  isJson: boolean = true,
   redirect: string = 'follow',
   credentials: string = 'include',
-  isJson: boolean = true
 ) {
 
   // get backend api base from .env

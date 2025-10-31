@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { clsx } from 'clsx'
 
 type ImageUploadProps = {
@@ -24,6 +24,11 @@ export default function ImageUpload({
 }: ImageUploadProps) {
   const [preview, setPreview] = useState<string>(defaultPreview);
   const inputId = id ?? name;
+
+  // Update preview when defaultPreview prop changes
+  useEffect(() => {
+    setPreview(defaultPreview);
+  }, [defaultPreview]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
