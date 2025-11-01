@@ -125,4 +125,5 @@ p {
 /* Global shared styles */
 form {
   margin: 30px auto;
+  border-radius: 20px;
 }
