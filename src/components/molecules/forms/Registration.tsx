@@ -50,7 +50,7 @@ export default function RegistrationForm({
 
     if (!password) next.password = 'La contraseña es obligatoria'
     if (password && password.length < 6)
-      next.password = 'La contraseña debe tener al menos 6 caracteres'
+      next.password = 'La contraseña debe tener al menos 8 caracteres'
     if (!passwordValidation)
       next.passwordValidation = 'Debes confirmar tu contraseña'
     if (password && passwordValidation && password !== passwordValidation) {

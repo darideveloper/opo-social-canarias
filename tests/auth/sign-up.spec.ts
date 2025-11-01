@@ -138,7 +138,7 @@ test.describe('Register Authentication Flow', { tag: ['@auth'] }, () => {
       // Assert: Verify error message
       const errorMessageElement = page.locator('.label-text-alt.text-error')
       await expect(errorMessageElement).toHaveText(
-        'La contraseña debe tener al menos 6 caracteres'
+        'La contraseña debe tener al menos 8 caracteres'
       )
     }
   )
