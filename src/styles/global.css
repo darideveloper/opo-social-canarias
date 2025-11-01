@@ -121,3 +121,8 @@ p {
 /* ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brown-light);
 } */
+
+/* Global shared styles */
+form {
+  margin: 30px auto;
+}
